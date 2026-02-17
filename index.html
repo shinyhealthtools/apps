@@ -2,623 +2,925 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web HTML Apps</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <title>shinyhealthtools – interactive web apps for data analysis (R/Shiny + HTML tools)</title>
+    
+    <!-- PRIMARY META DESCRIPTION (highlights both R/Shiny and HTML tools) -->
+    <meta name="description" content="Free, intuitive web applications for sample size, ROC curves, survival analysis, factor analysis, data conversion & more. Includes R/Shiny apps + standalone HTML calculators. Built for health researchers—no coding required. 21+ interactive tools.">
+    
+    <!-- KEYWORDS cover both types -->
+    <meta name="keywords" content="R Shiny, HTML web apps, data analysis, statistical software, sample size calculator, ROC curve, survival analysis, factor analysis, SPSS converter, mediation analysis, health research tools, free statistics apps, online statistical calculators">
+    
+    <!-- OPEN GRAPH / SOCIAL PREVIEW -->
+    <meta property="og:title" content="shinyhealthtools – free interactive data analysis apps (R/Shiny + HTML)">
+    <meta property="og:description" content="21+ R/Shiny applications plus standalone HTML tools for health research: sample size, ROC curves, survival plots, factor analysis, data conversion, and more. No installation, free forever.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://shinyhealthtools.com">
+    <meta property="og:image" content="https://raw.githubusercontent.com/mudassiribrahim12/me/main/og-preview.jpg">
+    <meta property="og:image:alt" content="shinyhealthtools dashboard preview with R/Shiny and HTML apps">
+    
+    <!-- TWITTER CARD -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="shinyhealthtools – interactive web apps for data analysis (R/Shiny + HTML)">
+    <meta name="twitter:description" content="Free R/Shiny apps and standalone HTML tools for sample size, ROC, survival, factor analysis, data conversion & more. Built by a health researcher.">
+    <meta name="twitter:image" content="https://raw.githubusercontent.com/mudassiribrahim12/me/main/og-preview.jpg">
+    
+    <!-- fonts & icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        /* ---------- reset & base – crisp, glass inspired ---------- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.6;
-            color: #000000;
-            background-color: #ffffff;
-            padding: 40px 20px;
-            max-width: 700px;
-            margin: 0 auto;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #ffffff;
+            color: #1e1e1e;
+            line-height: 1.5;
+            font-weight: 500;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+            transition: background 0.2s, color 0.2s;
             min-height: 100vh;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background-color 0.3s, color 0.3s;
+            flex-direction: column;
         }
-
+        body.dark-mode {
+            background: #121212;
+            color: #f0f0f0;
+        }
         .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px;
             width: 100%;
-            padding: 20px;
         }
-
-        .theme-toggle {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            z-index: 100;
+        @media (max-width: 600px) {
+            .container { padding: 0 20px; }
         }
-
-        .toggle-btn {
-            background: #f0f0f0;
-            border: none;
-            border-radius: 20px;
-            width: 60px;
-            height: 30px;
-            position: relative;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            outline: none;
+        /* ---------- glass header ---------- */
+        .site-header {
+            padding: 1.5rem 0 0.8rem;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            background: rgba(255,255,255,0.7);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
-
-        .toggle-btn::after {
-            content: '☀️';
-            position: absolute;
-            left: 5px;
-            top: 3px;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background: white;
-            transition: transform 0.3s;
+        body.dark-mode .site-header {
+            background: rgba(18,18,18,0.7);
+            border-bottom-color: rgba(255,255,255,0.08);
+        }
+        .header-inner {
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 14px;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.8rem 1.5rem;
         }
-
-        .dark-mode .toggle-btn {
-            background: #555;
+        .logo a {
+            font-size: 1.6rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            text-decoration: none;
+            color: inherit;
+            background: linear-gradient(145deg, #1e3c3a, #2a5f5a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            transition: opacity 0.2s;
         }
-
-        .dark-mode .toggle-btn::after {
-            content: '🌙';
-            transform: translateX(30px);
+        .logo a:hover { opacity: 0.8; }
+        body.dark-mode .logo a {
+            background: linear-gradient(145deg, #b0e0d6, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-
-        header {
-            margin-bottom: 50px;
-            text-align: center;
-            position: relative;
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
         }
-
-        h1 {
-            font-size: 2.8rem;
-            font-weight: 350;
-            margin-bottom: 15px;
-            letter-spacing: -0.5px;
-            color: #000000;
-            transition: color 0.3s;
-        }
-
-        .subtitle {
-            font-size: 1.2rem;
-            color: #000000;
-            font-weight: 300;
-            max-width: 500px;
-            margin: 0 auto 30px auto;
-            transition: color 0.3s;
-            opacity: 0.8;
-        }
-
-        .links-section {
-            margin-top: 40px;
-        }
-
-        .links-section h2 {
-            font-size: 1.4rem;
-            font-weight: 400;
-            color: #000000;
-            margin-bottom: 25px;
-            text-align: center;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: color 0.3s;
-        }
-
-        .apps-list {
+        .nav-links {
+            display: flex;
+            gap: 2rem;
             list-style: none;
         }
-
-        .apps-list li {
-            margin-bottom: 30px;
-            padding-bottom: 30px;
-            border-bottom: 1px solid #e0e0e0;
-            transition: border-color 0.3s;
-        }
-
-        .apps-list li:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-
-        .app-name {
-            font-size: 1.3rem;
-            color: #000000;
-            margin-bottom: 8px;
-            font-weight: 600;
-            cursor: default;
-        }
-
-        .app-description {
+        .nav-links a {
+            text-decoration: none;
+            color: inherit;
             font-size: 1rem;
-            color: #000000;
-            line-height: 1.6;
-            margin-bottom: 12px;
-            max-width: 600px;
-            cursor: default;
-            opacity: 0.9;
+            font-weight: 500;
+            opacity: 0.8;
+            transition: all 0.15s ease;
+            border-bottom: 2px solid transparent;
+            padding-bottom: 4px;
         }
-
-        .url-container {
+        .nav-links a:hover {
+            opacity: 1;
+            border-bottom-color: #2a5f5a;
+        }
+        .nav-links a.active {
+            opacity: 1;
+            font-weight: 600;
+            border-bottom-color: #2a5f5a;
+        }
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.3rem;
+            color: inherit;
+            opacity: 0.8;
+            padding: 0 4px;
+            transition: opacity 0.15s, transform 0.1s;
+        }
+        .theme-toggle:hover { 
+            opacity: 1; 
+            transform: scale(1.1);
+        }
+        .mobile-menu-btn { display: none; }
+        @media (max-width: 600px) {
+            .nav-links { display: none; }
+            .mobile-menu-btn {
+                display: inline-block;
+                background: none;
+                border: none;
+                font-size: 1.6rem;
+                color: inherit;
+                cursor: pointer;
+                transition: opacity 0.15s;
+            }
+            .mobile-menu-btn:hover { opacity: 0.7; }
+        }
+        /* main */
+        main { flex: 1; padding: 2.8rem 0 4rem; }
+        /* ---------- home page ---------- */
+        .intro-block { margin-bottom: 2rem; }
+        .intro-block h1 {
+            font-size: 2.4rem;
+            font-weight: 650;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            margin-bottom: 1.8rem;
+        }
+        .intro-block h1 span {
+            background: #f0f0f0;
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-left: 1rem;
+            vertical-align: middle;
+        }
+        body.dark-mode .intro-block h1 span { background: #2a2a2a; }
+        .intro-text {
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin-bottom: 2.2rem;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+        .intro-text p + p { margin-top: 1.2rem; }
+        .feature-list {
+            list-style: none;
+            margin: 2rem 0 2.5rem;
+        }
+        .feature-list li {
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-top: 5px;
-        }
-
-        .app-url {
-            font-size: 0.9rem;
-            color: #555555;
-            word-break: break-all;
-            font-family: monospace;
-            padding: 6px 10px;
-            background: #f9f9f9;
-            border-radius: 4px;
-            border: 1px solid #ddd;
-            flex: 1;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .app-url:hover {
-            background: #f0f0f0;
-            border-color: #ccc;
-        }
-
-        .copy-btn {
-            background: #000000;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            padding: 6px 12px;
-            font-size: 0.8rem;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            white-space: nowrap;
+            gap: 1rem;
+            margin-bottom: 0.9rem;
             font-weight: 500;
         }
-
-        .copy-btn:hover {
-            background: #333333;
-        }
-
-        .copy-btn.copied {
-            background: #28a745;
-        }
-
-        .open-btn {
-            background: transparent;
-            color: #000000;
-            border: 1px solid #000000;
-            border-radius: 4px;
-            padding: 6px 12px;
-            font-size: 0.8rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            white-space: nowrap;
-            text-decoration: none;
-            display: inline-block;
+        .feature-list i { width: 1.6rem; color: #2a5f5a; font-size: 1.2rem; }
+        .privacy-note {
+            background: rgba(42,95,90,0.05);
+            border-left: 4px solid #2a5f5a;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            margin: 2rem 0 0;
+            font-size: 0.95rem;
             font-weight: 500;
         }
-
-        .open-btn:hover {
-            background: #000000;
-            color: white;
+        body.dark-mode .privacy-note {
+            background: rgba(255,255,255,0.03);
+            border-left-color: #5fb0a5;
         }
-
-        .url-actions {
+        .cta-row {
             display: flex;
-            gap: 8px;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin: 2.2rem 0 1rem;
         }
-
-        .toast {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            background: #000000;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 6px;
-            font-size: 0.9rem;
-            opacity: 0;
-            transition: transform 0.3s, opacity 0.3s;
-            z-index: 1000;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        .mini-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: rgba(42,95,90,0.1);
+            border: 1px solid rgba(42,95,90,0.2);
+            border-radius: 36px;
+            padding: 0.7rem 1.8rem;
+            text-decoration: none;
+            color: inherit;
+            font-weight: 550;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            backdrop-filter: blur(2px);
         }
-
-        .toast.show {
-            transform: translateX(-50%) translateY(0);
-            opacity: 1;
+        .mini-link:hover {
+            background: rgba(42,95,90,0.2);
+            border-color: #2a5f5a;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(42,95,90,0.1);
         }
-
-        footer {
-            margin-top: 50px;
-            text-align: center;
-            color: #000000;
-            font-size: 0.9rem;
-            padding-top: 20px;
-            transition: color 0.3s;
+        body.dark-mode .mini-link {
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(255,255,255,0.15);
+        }
+        body.dark-mode .mini-link:hover {
+            background: rgba(255,255,255,0.1);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+        /* ---------- software page – alphabet filter + ranking ---------- */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 2.5rem 0 1.5rem;
+        }
+        .section-header h2 {
+            font-weight: 600;
+            font-size: 1.8rem;
+            letter-spacing: -0.02em;
+        }
+        .stats-badge {
+            display: flex;
+            gap: 1.5rem;
+            font-size: 0.95rem;
             opacity: 0.7;
+            font-weight: 500;
         }
-
-        /* Dark mode styles */
-        body.dark-mode {
-            background-color: #121212;
-            color: #ffffff;
+        /* A–Z filter bar – all letters active */
+        .alphabet-filter {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            justify-content: center;
+            margin: 1.5rem 0 1rem;
+            background: rgba(255,255,255,0.5);
+            padding: 1rem 0.5rem;
+            border-radius: 48px;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(0,0,0,0.05);
         }
-
-        body.dark-mode h1 {
-            color: #ffffff;
+        body.dark-mode .alphabet-filter {
+            background: rgba(30,30,30,0.5);
+            border-color: rgba(255,255,255,0.05);
         }
-
-        body.dark-mode .subtitle {
-            color: #ffffff;
-            opacity: 0.8;
+        .letter-btn {
+            width: 2.5rem;
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid transparent;
+            border-radius: 50%;
+            background: rgba(42,95,90,0.1);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s;
+            color: inherit;
+            font-size: 1rem;
         }
-
-        body.dark-mode .links-section h2 {
-            color: #ffffff;
+        .letter-btn:hover {
+            background: rgba(42,95,90,0.3);
+            transform: scale(1.1);
         }
-
-        body.dark-mode .apps-list li {
-            border-bottom-color: #333;
+        .letter-btn.active {
+            background: #2a5f5a;
+            color: white;
+            border-color: #ffffff80;
         }
-
-        body.dark-mode .app-name,
-        body.dark-mode .app-description {
-            color: #ffffff;
+        /* "all apps" reset button */
+        .reset-filter {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(42,95,90,0.1);
+            border: 1px solid rgba(42,95,90,0.2);
+            border-radius: 30px;
+            padding: 0.5rem 1.5rem;
+            margin: 0 0 1.5rem 0;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.15s;
+            width: fit-content;
         }
-
-        body.dark-mode .app-description {
-            opacity: 0.9;
+        .reset-filter:hover {
+            background: rgba(42,95,90,0.2);
+            border-color: #2a5f5a;
         }
-
-        body.dark-mode .app-url {
-            color: #cccccc;
+        .filter-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 1rem;
+            margin: 1rem 0 2rem;
+        }
+        .keyword-filter {
+            flex: 1;
+            min-width: 250px;
+        }
+        .keyword-filter input {
+            width: 100%;
+            padding: 0.9rem 1.4rem;
+            background: rgba(255,255,255,0.8);
+            border: 2px solid rgba(0,0,0,0.1);
+            border-radius: 48px;
+            font-family: inherit;
+            font-size: 1rem;
+            color: inherit;
+            font-weight: 500;
+            transition: border 0.15s;
+            backdrop-filter: blur(2px);
+        }
+        body.dark-mode .keyword-filter input {
+            background: rgba(30,30,30,0.8);
+            border-color: rgba(255,255,255,0.15);
+        }
+        .keyword-filter input:focus {
+            outline: none;
+            border-color: #2a5f5a;
+        }
+        /* cards */
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+            gap: 1.8rem;
+            margin: 1.5rem 0 2rem;
+        }
+        .app-card {
+            background: rgba(255,255,255,0.75);
+            backdrop-filter: blur(8px);
+            border: 2px solid rgba(0,0,0,0.08);
+            border-radius: 24px;
+            padding: 1.4rem 1.4rem 1.6rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.02);
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        body.dark-mode .app-card {
+            background: rgba(30,30,30,0.7);
+            border-color: rgba(255,255,255,0.12);
+        }
+        .app-card:hover {
+            transform: translateY(-4px);
+            border-color: #2a5f5a;
+            box-shadow: 0 16px 30px rgba(42,95,90,0.15);
+        }
+        .card-header {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .app-logo {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.08);
+        }
+        body.dark-mode .app-logo {
             background: #2a2a2a;
-            border-color: #444;
+            border-color: rgba(255,255,255,0.1);
         }
-
-        body.dark-mode .app-url:hover {
-            background: #333;
-            border-color: #555;
+        .app-logo img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
         }
-
-        body.dark-mode .copy-btn {
-            background: #ffffff;
-            color: #121212;
+        .title-views {
+            flex: 1;
         }
-
-        body.dark-mode .copy-btn:hover {
-            background: #e0e0e0;
+        .app-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: 0.2rem;
         }
-
-        body.dark-mode .copy-btn.copied {
-            background: #28a745;
-            color: white;
-        }
-
-        body.dark-mode .open-btn {
-            color: #ffffff;
-            border-color: #ffffff;
-        }
-
-        body.dark-mode .open-btn:hover {
-            background: #ffffff;
-            color: #121212;
-        }
-
-        body.dark-mode .toast {
-            background: #ffffff;
-            color: #121212;
-        }
-
-        body.dark-mode footer {
-            color: #ffffff;
+        .view-badge {
+            font-size: 0.8rem;
+            font-weight: 500;
             opacity: 0.7;
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
-
-        @media (max-width: 768px) {
-            body {
-                padding: 60px 15px 30px;
-            }
-            
-            .theme-toggle {
-                top: 15px;
-                right: 15px;
-            }
-            
-            h1 {
-                font-size: 2.2rem;
-            }
-            
-            .container {
-                padding: 10px;
-            }
-            
-            .app-name {
-                font-size: 1.2rem;
-            }
-            
-            .url-container {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 8px;
-            }
-            
-            .url-actions {
-                justify-content: flex-start;
-            }
+        .app-description {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin: 0.5rem 0 1.2rem;
+            opacity: 0.85;
+            font-weight: 500;
+            flex: 1;
         }
-
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 1.9rem;
-            }
-            
-            .subtitle {
-                font-size: 1.05rem;
-            }
-            
-            .links-section h2 {
-                font-size: 1.2rem;
-            }
-            
-            .toggle-btn {
-                width: 55px;
-                height: 28px;
-            }
-            
-            .toggle-btn::after {
-                width: 22px;
-                height: 22px;
-                font-size: 12px;
-            }
-            
-            .dark-mode .toggle-btn::after {
-                transform: translateX(27px);
-            }
+        .app-actions {
+            display: flex;
+            gap: 1.2rem;
+            margin-top: auto;
+            border-top: 1px solid rgba(0,0,0,0.08);
+            padding-top: 1rem;
+        }
+        body.dark-mode .app-actions {
+            border-top-color: rgba(255,255,255,0.08);
+        }
+        .app-actions a {
+            text-decoration: none;
+            color: inherit;
+            font-size: 0.9rem;
+            font-weight: 550;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            opacity: 0.8;
+            transition: all 0.15s ease;
+            padding: 4px 8px;
+            border-radius: 20px;
+        }
+        .app-actions a:hover {
+            opacity: 1;
+            background: rgba(42,95,90,0.1);
+            transform: translateY(-1px);
+        }
+        body.dark-mode .app-actions a:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        .html-app-card .view-badge { display: none; }
+        .html-section { margin-top: 3.5rem; }
+        .views-mini {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 2px solid rgba(0,0,0,0.08);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+        body.dark-mode .views-mini {
+            border-top-color: rgba(255,255,255,0.08);
+        }
+        .top-views {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.8rem 2.5rem;
+            margin: 1rem 0 0.5rem;
+        }
+        .top-views span {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: transform 0.1s;
+        }
+        .top-views span:hover {
+            transform: scale(1.02);
+            color: #2a5f5a;
+        }
+        .top-views i { color: #2a5f5a; }
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 4rem 0;
+            opacity: 0.6;
+        }
+        .empty-state button {
+            background: none;
+            border: 2px solid rgba(0,0,0,0.1);
+            border-radius: 30px;
+            padding: 0.6rem 1.5rem;
+            margin-top: 1rem;
+            cursor: pointer;
+            color: inherit;
+            font-weight: 500;
+            transition: all 0.15s;
+        }
+        .empty-state button:hover {
+            border-color: #2a5f5a;
+            background: rgba(42,95,90,0.1);
+        }
+        /* footer */
+        .site-footer {
+            border-top: 2px solid rgba(0,0,0,0.08);
+            padding: 2rem 0;
+            font-size: 0.9rem;
+            font-weight: 500;
+            opacity: 0.8;
+            background: rgba(255,255,255,0.5);
+            backdrop-filter: blur(4px);
+        }
+        body.dark-mode .site-footer {
+            background: rgba(18,18,18,0.5);
+            border-top-color: rgba(255,255,255,0.08);
+        }
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .footer-inner a {
+            color: inherit;
+            text-decoration: none;
+            transition: opacity 0.15s;
+            padding: 4px 8px;
+            border-radius: 20px;
+        }
+        .footer-inner a:hover {
+            opacity: 1;
+            background: rgba(42,95,90,0.1);
+        }
+        /* smooth scroll */
+        html {
+            scroll-behavior: smooth;
         }
     </style>
 </head>
 <body>
-    <div class="theme-toggle">
-        <button class="toggle-btn" id="themeToggle" aria-label="Toggle dark mode"></button>
-    </div>
-    
-    <div class="container">
-        <main>
-            <div class="links-section">
-                <h2>Resources</h2>
-                            <p class="subtitle">Interactive web-based HTML applications for statistical analysis and research calculations.</p>
-                <ul class="apps-list">
-                    <li>
-                        <div class="app-name">CATrend Analyzer</div>
-                        <div class="app-description">Cochran-Armitage trend test calculator for analyzing dose-response relationships and ordinal categorical data trends.</div>
-                        <div class="url-container">
-                            <div class="app-url" data-url="https://catrendanalyzer.mudasiribrahim.com">
-                                https://catrendanalyzer.mudasiribrahim.com
-                            </div>
-                            <div class="url-actions">
-                                <button class="copy-btn">Copy</button>
-                                <a href="https://catrendanalyzer.mudasiribrahim.com" class="open-btn" target="_blank">Open</a>
-                            </div>
-                        </div>
-                    </li>
-                    
-                     <li>
-                        <div class="app-name">Transpose Table</div>
-                        <div class="app-description">Convert cross-tabulation data into column format for statistical analysis. Input your contingency table and get individual observations.</div>
-                        <div class="url-container">
-                            <div class="app-url" data-url="https://calcustats.lite.mudasiribrahim.com">
-                                https://transposetable.mudasiribrahim.com
-                            </div>
-                            <div class="url-actions">
-                                <button class="copy-btn">Copy</button>
-                                <a href="https://transposetable.mudasiribrahim.com" class="open-btn" target="_blank">Open</a>
-                            </div>
-                        </div>
-                    </li>
-                    
-                    <li>
-                        <div class="app-name">CalcuStats Lite</div>
-                        <div class="app-description">Sample size calculator using Taro Yamane formula, Cochran's formula, and other statistical formulas with proportional allocation for survey research.</div>
-                        <div class="url-container">
-                            <div class="app-url" data-url="https://calcustats.lite.mudasiribrahim.com">
-                                https://calcustats.lite.mudasiribrahim.com
-                            </div>
-                            <div class="url-actions">
-                                <button class="copy-btn">Copy</button>
-                                <a href="https://calcustats.lite.mudasiribrahim.com" class="open-btn" target="_blank">Open</a>
-                            </div>
-                        </div>
-                    </li>
-                    
-                    <li>
-                        <div class="app-name">Systematic Sampling Calculator</div>
-                        <div class="app-description">Calculate sampling interval (k) for systematic random sampling with precision and confidence level options.</div>
-                        <div class="url-container">
-                            <div class="app-url" data-url="https://systematic.sampling.mudasiribrahim.com">
-                                https://systematic.sampling.mudasiribrahim.com
-                            </div>
-                            <div class="url-actions">
-                                <button class="copy-btn">Copy</button>
-                                <a href="https://systematic.sampling.mudasiribrahim.com" class="open-btn" target="_blank">Open</a>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </main>
-        
-        <footer>
-            <p>Copyright © <span id="currentYear"></span> Mudasir Mohammed Ibrahim</p>
-        </footer>
-    </div>
+    <div id="root"></div>
 
-    <div class="toast" id="copyToast">URL copied to clipboard!</div>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-    <script>
-        // Set current year in footer
-        document.getElementById('currentYear').textContent = new Date().getFullYear();
-        
-        // Dark mode toggle functionality
-        const themeToggle = document.getElementById('themeToggle');
-        const body = document.body;
-        const copyToast = document.getElementById('copyToast');
-        
-        // Check for saved theme preference or prefer-color-scheme
-        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
-        const savedTheme = localStorage.getItem('theme');
-        
-        // Apply theme based on saved preference or system preference
-        if (savedTheme === 'dark' || (!savedTheme && prefersDarkScheme.matches)) {
-            body.classList.add('dark-mode');
-        }
-        
-        // Toggle theme on button click
-        themeToggle.addEventListener('click', () => {
-            body.classList.toggle('dark-mode');
-            
-            // Save preference to localStorage
-            const isDarkMode = body.classList.contains('dark-mode');
-            localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
-        });
-        
-        // Listen for system theme changes
-        prefersDarkScheme.addEventListener('change', (e) => {
-            // Only auto-switch if user hasn't manually set a preference
-            if (!localStorage.getItem('theme')) {
-                if (e.matches) {
-                    body.classList.add('dark-mode');
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        const ShinyHealthTools = () => {
+            // dark mode
+            const [darkMode, setDarkMode] = useState(() => {
+                const saved = localStorage.getItem('theme');
+                if (saved === 'dark') {
+                    document.body.classList.add('dark-mode');
+                    return true;
+                }
+                if (saved === 'light') {
+                    document.body.classList.remove('dark-mode');
+                    return false;
+                }
+                const prefers = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                if (prefers) document.body.classList.add('dark-mode');
+                return prefers;
+            });
+
+            const toggleTheme = () => {
+                const newMode = !darkMode;
+                setDarkMode(newMode);
+                document.body.classList.toggle('dark-mode', newMode);
+                localStorage.setItem('theme', newMode ? 'dark' : 'light');
+            };
+
+            const [activeTab, setActiveTab] = useState('home');
+            const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+            // view counts
+            const [appViews, setAppViews] = useState({
+                FactorGuard: 16,
+                CalcuStats: 16677,
+                "CATrend Analyzer": 7598,
+                "ROC Curve Builder": 16010,
+                Data2SPSS: 12849,
+                MedModr: 16068,
+                "EpiDem Suite": 17089,
+                ggPubPlot: 14552,
+                "APA Table Generator": 3329,
+                SysSampler: 3609,
+                "CMH Analyzer": 6853,
+                "TNMTC DataLab": 14408,
+                "PharmaCalc Pro": 15510,
+                "RegEffect Xplorer": 15381,
+                "Data TransformR": 16859,
+                CleanMyData: 14660,
+                "KMPlot Genie": 16874,
+                QuickStatsGen: 15106,
+                "Robust Regressor": 15586,
+                TagSelect: 16725,
+                FAnalyzr: 16885
+            });
+
+            const totalViews = Object.values(appViews).reduce((a, b) => a + b, 0);
+
+            // ----- ORIGINAL APP DESCRIPTIONS (restored) -----
+            const shinyApps = [
+                { id:1, name:"FactorGuard", desc:"A factor-retention decision tool for EFA", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/FactorGuard.png", run:"https://mudassiribrahim2026.shinyapps.io/FactorGuard/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/FactorGuard.R" },
+                { id:2, name:"CalcuStats", desc:"Tool for sample size calculation, power analysis, and descriptive statistics", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/CalcuStats.png", run:"https://mudassiribrahim2025.shinyapps.io/CalcuStats/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/CalcuStats.R" },
+                { id:3, name:"CATrend Analyzer", desc:"Cochran-Armitage test for trend tool", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/CAtrend.png", run:"https://newappstesting.shinyapps.io/CATrendAnalyzer/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/CATrendAnalyzer.R" },
+                { id:4, name:"ROC Curve Builder", desc:"ROC curve analysis and diagnostic test evaluation", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/ROC.png", run:"https://mudassiribrahim30.shinyapps.io/ROC_CURVE/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/ROC%20Curve%20Builder.R" },
+                { id:5, name:"Data2SPSS", desc:"Convert datasets in CSV, Excel, Rdata, Stata, or SAS format into SPSS (.sav) files", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/Data2SPSS.png", run:"https://newappstesting.shinyapps.io/Data2SPSS/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/Data2SPSS" },
+                { id:6, name:"MedModr", desc:"Mediation and moderation analysis tool for research studies", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/MedModr.png", run:"https://mudassiribrahim30.shinyapps.io/MedModr/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/MedModr.R" },
+                { id:7, name:"EpiDem Suite", desc:"Epidemiological data analysis suite for public health research", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/EpiDem.png", run:"https://mudassiribrahim2025.shinyapps.io/EpiDemSuite/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/EpiDem%20Suite.R" },
+                { id:8, name:"ggPubPlot", desc:"Publication-ready ggplot2 visualizations with customization", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/ggLogo.png", run:"https://mudassiribrahim2025.shinyapps.io/ggPubPlot/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/ggPubPlot.R" },
+                { id:9, name:"APA Table Generator", desc:"Generate APA formatted tables for research papers and publications", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/APA%20logo.png", run:"https://newappstesting.shinyapps.io/APATableGenerator/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/APA%20Table%20Generator%20Pro.R" },
+                { id:10, name:"SysSampler", desc:"Systematic sampling tool for research studies with custom random start", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/Sys%20Sampler.png", run:"https://mudassiribrahim2025b.shinyapps.io/SysSampler/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/SysSampler" },
+                { id:11, name:"CMH Analyzer", desc:"Cochran-Mantel-Haenszel analysis tool for stratified data", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/CMH.png", run:"https://newappstesting.shinyapps.io/CMHAnalyzer/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/CMHAnalyzer.R" },
+                { id:12, name:"TNMTC DataLab", desc:"Comprehensive data analysis software", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/TNMTC.png", run:"https://newappstesting.shinyapps.io/NMTCDataLab/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/NMTC%20APP.R" },
+                { id:13, name:"PharmaCalc Pro", desc:"Pharmaceutical calculations for dosage", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/Pharma.png", run:"https://mudassiribrahim2025b.shinyapps.io/PharmaCalcPro/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/PharmaCalcPro.R" },
+                { id:14, name:"RegEffect Xplorer", desc:"Explore regression effects visually with interactive plots", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/RegEf.png", run:"https://mudassiribrahim2025b.shinyapps.io/RegEffectXplorer/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/RegEffectXplorer.R" },
+                { id:15, name:"Data TransformR", desc:"Data transformation and preprocessing tool for analytics", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/DataTrans.png", run:"https://mudassiribrahim2025b.shinyapps.io/DataTransformR/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/DataTransformR.R" },
+                { id:16, name:"CleanMyData", desc:"Data screening and cleaning tool with visualization", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/CleanMyData.png", run:"https://mudassiribrahim2025b.shinyapps.io/CleanMyData/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/CleanMyData.R" },
+                { id:17, name:"KMPlot Genie", desc:"Kaplan-Meier survival plot generator for clinical studies", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/KMPlot.png", run:"https://mudassiribrahim30.shinyapps.io/KMPlotGenie/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/KMPlotGenie.R" },
+                { id:18, name:"QuickStatsGen", desc:"Custom Data Generator for Statistical Practice and Education", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/QuickStats.png", run:"https://mudassiribrahim2025.shinyapps.io/QuickStatsGen/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/QuickStatsGen.R" },
+                { id:19, name:"Robust Regressor", desc:"Robust regression analysis for outlier-resistant modeling", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/Robust.png", run:"https://mudassiribrahim2025.shinyapps.io/Robustregression/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/Robust%20%20Regressor.R" },
+                { id:20, name:"TagSelect", desc:"Participant selection tool for research studies", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/TagSelect.png", run:"https://mudassiribrahim30.shinyapps.io/Tagselect/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/TagSelect.R" },
+                { id:21, name:"FAnalyzr", desc:"Factor analysis and dimensionality reduction tool", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/FA.png", run:"https://mudassiribrahim30.shinyapps.io/fanalyzr/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/FAnalyzr.R" }
+            ];
+
+            const htmlApps = [
+                { id:'h1', name:"CATrend Analyzer (HTML)", desc:"Cochran‑Armitage trend test calculator for dose‑response and ordinal trends. Instant p‑values.", url:"https://catrendanalyzer.mudasiribrahim.com" },
+                { id:'h2', name:"Transpose Table", desc:"Convert cross‑tabulation data into column format for logistic regression or frequency analysis.", url:"https://transposetable.mudasiribrahim.com" },
+                { id:'h3', name:"CalcuStats Lite", desc:"Sample size calculator (Taro Yamane, Cochran) with proportional allocation for multi‑stage surveys.", url:"https://calcustats.lite.mudasiribrahim.com" },
+                { id:'h4', name:"Systematic Sampling Calculator", desc:"Compute sampling interval k with precision and confidence level options for survey research.", url:"https://systematic.sampling.mudasiribrahim.com" }
+            ];
+
+            const shinyWithViews = shinyApps.map(a => ({ ...a, views: appViews[a.name] || 0, type: 'shiny' }));
+
+            // Alphabet filter – all letters active
+            const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+            const [selectedLetter, setSelectedLetter] = useState('');
+
+            // Keyword search
+            const [keyword, setKeyword] = useState('');
+
+            // Apps starting with a letter (used to determine which letters have apps – all active anyway)
+            const appsStartingWith = (letter) => {
+                return shinyWithViews.filter(app => app.name.toUpperCase().startsWith(letter));
+            };
+
+            // Main filtered list
+            const getFilteredApps = () => {
+                let filtered = shinyWithViews;
+                if (selectedLetter) {
+                    filtered = filtered.filter(app => app.name.toUpperCase().startsWith(selectedLetter));
+                }
+                if (keyword.trim() !== '') {
+                    const terms = keyword.toLowerCase().split(/\s+/);
+                    const scored = filtered.map(app => {
+                        const nameLower = app.name.toLowerCase();
+                        const descLower = app.desc.toLowerCase();
+                        let score = 0;
+                        terms.forEach(term => {
+                            if (nameLower.includes(term)) score += 3;
+                            if (descLower.includes(term)) score += 1;
+                        });
+                        return { ...app, score };
+                    });
+                    filtered = scored.filter(a => a.score > 0).sort((a,b) => b.score - a.score);
                 } else {
-                    body.classList.remove('dark-mode');
+                    filtered = filtered.sort((a,b) => a.name.localeCompare(b.name));
                 }
-            }
-        });
-        
-        // Copy URL functionality
-        document.querySelectorAll('.copy-btn').forEach((copyBtn, index) => {
-            copyBtn.addEventListener('click', async (e) => {
-                const urlContainer = e.target.closest('.url-container');
-                const urlElement = urlContainer.querySelector('.app-url');
-                const url = urlElement.getAttribute('data-url');
-                
-                try {
-                    await navigator.clipboard.writeText(url);
+                return filtered;
+            };
+
+            const filteredApps = getFilteredApps();
+            const topApps = [...shinyWithViews].sort((a,b)=>b.views-a.views).slice(0,5);
+
+            // all links open in same tab
+            const handleLinkClick = (e, url) => {
+                e.preventDefault();
+                window.location.href = url;
+            };
+
+            // about me link
+            const handleAboutClick = (e) => {
+                e.preventDefault();
+                window.location.href = 'https://www.mudasiribrahim.com';
+            };
+
+            const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+            const switchTab = (tab) => {
+                setActiveTab(tab);
+                setMobileMenuOpen(false);
+                scrollToTop();
+                setSelectedLetter('');
+                setKeyword('');
+            };
+
+            const currentYear = new Date().getFullYear();
+
+            const Home = () => (
+                <div className="intro-block">
+                    <h1>introduction<span>v2</span></h1>
+                    <div className="intro-text">
+                        <p>While analysing health data daily, from sample size justifications to ROC curves and converting messy exports, I kept hitting the same walls: either the tool didn't exist, required coding, or was paywalled. That friction pushed me to build these focused Shiny apps. I use them in my own research almost every day.</p>
+                        <p>All apps are built entirely in <strong>R</strong> using the <strong>Shiny</strong> framework, hosted on <strong>shinyapps.io</strong>. Behind the scenes they rely on the <strong>tidyverse</strong> (dplyr, tidyr, ggplot2), <strong>recipes</strong> for preprocessing, <strong>broom</strong> for tidy outputs, <strong>survival</strong> for KM plots, <strong>psych</strong> for factor analysis, and many more specialised packages. Every tool is open source and free.</p>
+                           <p>💡 100% open-source. 100% free. Built for researchers, by a researcher</p>
+                        
+                    </div>
                     
-                    // Show success feedback
-                    e.target.textContent = 'Copied!';
-                    e.target.classList.add('copied');
-                    
-                    // Show toast notification
-                    copyToast.classList.add('show');
-                    
-                    // Reset button after 2 seconds
-                    setTimeout(() => {
-                        e.target.textContent = 'Copy';
-                        e.target.classList.remove('copied');
-                    }, 2000);
-                    
-                    // Hide toast after 3 seconds
-                    setTimeout(() => {
-                        copyToast.classList.remove('show');
-                    }, 3000);
-                    
-                } catch (err) {
-                    console.error('Failed to copy URL: ', err);
-                    
-                    // Fallback method for older browsers
-                    const textArea = document.createElement('textarea');
-                    textArea.value = url;
-                    document.body.appendChild(textArea);
-                    textArea.select();
-                    document.execCommand('copy');
-                    document.body.removeChild(textArea);
-                    
-                    // Show success feedback even with fallback
-                    e.target.textContent = 'Copied!';
-                    e.target.classList.add('copied');
-                    copyToast.classList.add('show');
-                    
-                    setTimeout(() => {
-                        e.target.textContent = 'Copy';
-                        e.target.classList.remove('copied');
-                    }, 2000);
-                    
-                    setTimeout(() => {
-                        copyToast.classList.remove('show');
-                    }, 3000);
-                }
-            });
-        });
-        
-        // Also allow clicking on URL to copy
-        document.querySelectorAll('.app-url').forEach((urlElement) => {
-            urlElement.addEventListener('click', async (e) => {
-                const url = e.target.getAttribute('data-url');
-                const copyBtn = e.target.closest('.url-container').querySelector('.copy-btn');
-                
-                try {
-                    await navigator.clipboard.writeText(url);
-                    
-                    // Show success feedback
-                    copyBtn.textContent = 'Copied!';
-                    copyBtn.classList.add('copied');
-                    
-                    // Show toast notification
-                    copyToast.classList.add('show');
-                    
-                    // Reset button after 2 seconds
-                    setTimeout(() => {
-                        copyBtn.textContent = 'Copy';
-                        copyBtn.classList.remove('copied');
-                    }, 2000);
-                    
-                    // Hide toast after 3 seconds
-                    setTimeout(() => {
-                        copyToast.classList.remove('show');
-                    }, 3000);
-                    
-                } catch (err) {
-                    console.error('Failed to copy URL: ', err);
-                    
-                    // Fallback method
-                    const textArea = document.createElement('textarea');
-                    textArea.value = url;
-                    document.body.appendChild(textArea);
-                    textArea.select();
-                    document.execCommand('copy');
-                    document.body.removeChild(textArea);
-                    
-                    // Show success feedback
-                    copyBtn.textContent = 'Copied!';
-                    copyBtn.classList.add('copied');
-                    copyToast.classList.add('show');
-                    
-                    setTimeout(() => {
-                        copyBtn.textContent = 'Copy';
-                        copyBtn.classList.remove('copied');
-                    }, 2000);
-                    
-                    setTimeout(() => {
-                        copyToast.classList.remove('show');
-                    }, 3000);
-                }
-            });
-        });
+                    <ul className="feature-list">
+                        <li><i className="fas fa-cube"></i> 21 R/Shiny apps + 4 HTML web tools</li>
+                        <li><i className="fas fa-code-branch"></i> Backend: R, Shiny, tidyverse, and friends</li>
+                        <li><i className="fas fa-cloud-upload-alt"></i> Hosted on shinyapps.io – no installation needed</li>
+                        <li><i className="fas fa-heart"></i> Zero cost, forever – because research tools should be accessible</li>
+                    </ul>
+                    <div className="cta-row">
+                        <a href="#" className="mini-link" onClick={(e)=>{ e.preventDefault(); switchTab('software'); }}>
+                            <i className="fas fa-arrow-right"></i> explore apps
+                        </a>
+                    </div>
+
+                    <div className="privacy-note">
+                        <i className="fas fa-shield-alt" style={{ marginRight: '0.8rem', color: '#2a5f5a' }}></i>
+                        <strong>Your privacy:</strong> This site stores only your theme preference (light/dark mode) locally on your browser. The apps themselves do not collect, store, or share any user data. No tracking, no cookies.
+                    </div>
+
+                    <p style={{ fontSize:'0.95rem', opacity:0.7, marginTop:'2rem', fontWeight:500 }}>
+                        {shinyApps.length} R/Shiny tools · {totalViews.toLocaleString()} total views
+                    </p>
+                </div>
+            );
+
+            const Software = () => (
+                <>
+                    <div className="section-header">
+                        <h2>R/shiny applications</h2>
+                        <div className="stats-badge">
+                            <span>{filteredApps.length} apps</span>
+                            <span>{totalViews.toLocaleString()} views</span>
+                        </div>
+                    </div>
+
+                    <div className="filter-row">
+                        <div className="keyword-filter">
+                            <input 
+                                type="text" 
+                                placeholder="filter by analysis type (e.g., survival, factor, sample size)..." 
+                                value={keyword} 
+                                onChange={e => { setKeyword(e.target.value); setSelectedLetter(''); }}
+                            />
+                        </div>
+                        {(selectedLetter || keyword) && (
+                            <div className="reset-filter" onClick={() => { setSelectedLetter(''); setKeyword(''); }}>
+                                <i className="fas fa-times"></i> clear filters
+                            </div>
+                        )}
+                    </div>
+
+                    {/* A–Z filter – all letters active */}
+                    <div className="alphabet-filter">
+                        {alphabet.map(letter => {
+                            const isActive = selectedLetter === letter;
+                            return (
+                                <button
+                                    key={letter}
+                                    className={`letter-btn ${isActive ? 'active' : ''}`}
+                                    onClick={() => {
+                                        setSelectedLetter(isActive ? '' : letter);
+                                        setKeyword('');
+                                    }}
+                                >
+                                    {letter}
+                                </button>
+                            );
+                        })}
+                    </div>
+
+                    <div className="apps-grid">
+                        {filteredApps.length > 0 ? filteredApps.map(app => (
+                            <div key={app.id} className="app-card">
+                                <div className="card-header">
+                                    <div className="app-logo">
+                                        <img src={app.logo} alt={app.name} onError={(e)=> e.target.style.display='none'} />
+                                    </div>
+                                    <div className="title-views">
+                                        <div className="app-name">{app.name}</div>
+                                        <div className="view-badge">
+                                            <i className="far fa-eye"></i> {app.views.toLocaleString()}
+                                        </div>
+                                    </div>
+                                </div>
+                                <p className="app-description">{app.desc}</p>
+                                <div className="app-actions">
+                                    <a href={app.run} onClick={(e) => handleLinkClick(e, app.run)}><i className="fas fa-play"></i> launch</a>
+                                    <a href={app.code} onClick={(e) => handleLinkClick(e, app.code)}><i className="fab fa-github"></i> code</a>
+                                </div>
+                            </div>
+                        )) : (
+                            <div className="empty-state">
+                                <i className="fas fa-filter" style={{fontSize:'2rem', marginBottom:'1rem', opacity:0.4}}></i>
+                                <p>no apps match your criteria</p>
+                                <button onClick={()=>{ setSelectedLetter(''); setKeyword(''); }}>clear filters</button>
+                            </div>
+                        )}
+                    </div>
+
+                    {/* HTML section */}
+                    <div className="html-section">
+                        <div className="section-header" style={{marginTop:'1rem'}}>
+                            <h2>HTML web apps</h2>
+                            <div className="stats-badge">
+                                <span>{htmlApps.length} tools</span>
+                            </div>
+                        </div>
+                        <div className="apps-grid">
+                            {htmlApps.map(app => (
+                                <div key={app.id} className="app-card html-app-card">
+                                    <div className="card-header">
+                                        <div className="app-logo">
+                                            <i className="fas fa-code" style={{fontSize:'1.8rem', color:'#2a5f5a'}}></i>
+                                        </div>
+                                        <div className="title-views">
+                                            <div className="app-name">{app.name}</div>
+                                        </div>
+                                    </div>
+                                    <p className="app-description">{app.desc}</p>
+                                    <div className="app-actions">
+                                        <a href={app.url} onClick={(e) => handleLinkClick(e, app.url)}><i className="fas fa-external-link-alt"></i> open</a>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="views-mini">
+                        <div style={{marginBottom:'1rem', fontWeight:600}}>most viewed shiny apps</div>
+                        <div className="top-views">
+                            {topApps.map(a => (
+                                <span key={a.id}><i className="fas fa-chart-line"></i> {a.name} {a.views.toLocaleString()}</span>
+                            ))}
+                        </div>
+                        <div style={{marginTop:'1.5rem', fontSize:'0.85rem', opacity:0.6}}>
+                            view counts sourced from <a href="https://shinyappstore.com/search/user/1732" target="_blank" rel="noopener" style={{color:'inherit', textDecoration:'underline'}}>shiny app store</a>
+                        </div>
+                    </div>
+                </>
+            );
+
+            return (
+                <div style={{display:'flex', flexDirection:'column', minHeight:'100vh'}}>
+                    <header className="site-header">
+                        <div className="container">
+                            <div className="header-inner">
+                                <div className="logo">
+                                    <a href="#" onClick={(e)=>{ e.preventDefault(); switchTab('home'); }}>shinyhealthtools</a>
+                                </div>
+                                <div className="nav-right">
+                                    <ul className="nav-links">
+                                        <li><a href="#" onClick={(e)=>{ e.preventDefault(); switchTab('home'); }} className={activeTab==='home'?'active':''}>home</a></li>
+                                        <li><a href="#" onClick={(e)=>{ e.preventDefault(); switchTab('software'); }} className={activeTab==='software'?'active':''}>software</a></li>
+                                        <li><a href="#" onClick={handleAboutClick} className={activeTab==='about'?'active':''}>about me</a></li>
+                                    </ul>
+                                    <button className="theme-toggle" onClick={toggleTheme} title={darkMode?'light mode':'dark mode'}>
+                                        <i className={darkMode ? 'fas fa-sun' : 'fas fa-moon'}></i>
+                                    </button>
+                                    <button className="mobile-menu-btn" onClick={()=>setMobileMenuOpen(!mobileMenuOpen)}>
+                                        <i className="fas fa-bars"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            {mobileMenuOpen && (
+                                <div style={{marginTop:'1.2rem', display:'flex', flexDirection:'column', gap:'0.8rem'}}>
+                                    <a href="#" onClick={(e)=>{ e.preventDefault(); switchTab('home'); }} style={{color:'inherit', textDecoration:'none', fontSize:'1.1rem', padding:'0.3rem 0'}} onMouseEnter={(e)=>e.target.style.opacity='0.8'} onMouseLeave={(e)=>e.target.style.opacity='1'}>home</a>
+                                    <a href="#" onClick={(e)=>{ e.preventDefault(); switchTab('software'); }} style={{color:'inherit', textDecoration:'none', fontSize:'1.1rem', padding:'0.3rem 0'}} onMouseEnter={(e)=>e.target.style.opacity='0.8'} onMouseLeave={(e)=>e.target.style.opacity='1'}>software</a>
+                                    <a href="#" onClick={handleAboutClick} style={{color:'inherit', textDecoration:'none', fontSize:'1.1rem', padding:'0.3rem 0'}} onMouseEnter={(e)=>e.target.style.opacity='0.8'} onMouseLeave={(e)=>e.target.style.opacity='1'}>about me</a>
+                                </div>
+                            )}
+                        </div>
+                    </header>
+
+                    <main>
+                        <div className="container">
+                            {activeTab === 'home' ? <Home /> : <Software />}
+                        </div>
+                    </main>
+
+                    <footer className="site-footer">
+                        <div className="container">
+                            <div className="footer-inner">
+                                <span>Copyright © {currentYear} shinyhealthtools – Mudasir Mohammed Ibrahim</span>
+                                <span style={{display:'flex', gap:'1.5rem'}}>
+                                    <a href="#" onClick={scrollToTop} style={{color:'inherit', textDecoration:'none'}}>↑ back to top</a>
+                                    <a href="https://github.com/mudassiribrahim30" target="_blank" rel="noopener" style={{color:'inherit'}}><i className="fab fa-github"></i></a>
+                                </span>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            );
+        };
+
+        ReactDOM.render(<ShinyHealthTools />, document.getElementById('root'));
     </script>
 </body>
 </html>
