@@ -4,6 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
     <title>shinyhealthtools – interactive web apps for data analysis</title>
+    
+    <!-- PRIMARY META DESCRIPTION (highlights both R/Shiny and HTML tools) -->
+    <meta name="description" content="Free, intuitive R/Shiny web applications for sample size, ROC curves, survival analysis, factor analysis, data conversion & more. Built for health researchers—no coding required. 10+ interactive tools.">
+    
+    <!-- KEYWORDS cover both types -->
+    <meta name="keywords" content="R Shiny, data analysis, statistical software, sample size calculator, ROC curve, survival analysis, factor analysis, SPSS converter, mediation analysis, health research tools, free statistics apps, online statistical calculators">
+    
+    <!-- OPEN GRAPH / SOCIAL PREVIEW -->
+    <meta property="og:title" content="shinyhealthtools – free interactive data analysis apps (R/Shiny)">
+    <meta property="og:description" content="10+ R/Shiny applications for health research: sample size, ROC curves, survival plots, factor analysis, data conversion, and more. No installation, free forever.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://shinyhealthtools.com">
+    <meta property="og:image" content="https://raw.githubusercontent.com/mudassiribrahim12/me/main/og-preview.jpg">
+    <meta property="og:image:alt" content="shinyhealthtools dashboard preview with R/Shiny apps">
+    
+    <!-- TWITTER CARD -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="shinyhealthtools – interactive web apps for data analysis (R/Shiny)">
+    <meta name="twitter:description" content="Free R/Shiny apps for sample size, ROC, survival, factor analysis, data conversion & more. Built by a health researcher.">
+    <meta name="twitter:image" content="https://raw.githubusercontent.com/mudassiribrahim12/me/main/og-preview.jpg">
+    
     <!-- fonts & icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -327,6 +348,7 @@
 
         const handleAboutClick = (e) => {
           e.preventDefault();
+          // open in same tab (stay within website tab)
           window.location.href = 'https://www.mudasiribrahim.com';
           setMobileMenuOpen(false);
         };
@@ -376,7 +398,7 @@
           <div className="modal-overlay" onClick={onClose}>
             <div className="modal-content" ref={modalRef} onClick={e => e.stopPropagation()}>
               <h3>🔒 privacy notice</h3>
-              <p>The apps themselves do not collect, store, or share any user data. No tracking, no cookies. Your data stays on your device.</p>
+              <p>The apps do not collect, store, or share any user data. No tracking, no cookies. Your data stays on your device.</p>
               <button className="modal-close" onClick={onClose}>close</button>
             </div>
           </div>
@@ -499,6 +521,9 @@
 
       const AppCard = ({ app }) => {
         const [imgLoaded, setImgLoaded] = useState(false);
+        
+        // Use normal links that open in same tab (default behavior for <a> with target="_self")
+        // We remove target="_blank" so they open in the same website tab as requested.
         return (
           <div className="card" style={{ animationDelay: '0s', height: '100%' }}>
             <div className="card-glow" />
@@ -515,8 +540,9 @@
               </div>
               <p style={{ color: '#b1a9da', fontSize: '0.95rem', marginBottom: '1.5rem', minHeight: '60px' }}>{app.desc}</p>
               <div className="card-footer" style={{ borderTop: '1px dashed rgba(255,255,255,0.1)', paddingTop: '1rem', display: 'flex', justifyContent: 'space-between' }}>
-                <a href={app.run} target="_blank" rel="noopener noreferrer" style={{ color: '#cbc3ff', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.3rem' }}><i className="fas fa-play"></i> launch</a>
-                <a href={app.code} target="_blank" rel="noopener noreferrer" style={{ color: '#cbc3ff', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.3rem' }}><i className="fab fa-github"></i> code</a>
+                {/* REMOVED target="_blank" so links open in same tab */}
+                <a href={app.run} style={{ color: '#cbc3ff', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.3rem' }}><i className="fas fa-play"></i> launch</a>
+                <a href={app.code} style={{ color: '#cbc3ff', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.3rem' }}><i className="fab fa-github"></i> code</a>
               </div>
             </div>
           </div>
