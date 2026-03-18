@@ -374,7 +374,8 @@
         cursor: pointer;
       }
       
-            /* FORCE ALL TEXT IN DARKMODE TO BE WHITE - ADD THIS */
+  
+        /* FORCE ALL TEXT IN DARKMODE TO BE WHITE - ADD THIS */
       body.dark-theme,
       body.dark-theme * {
         color: #ffffff !important;
@@ -420,6 +421,27 @@
       
       body.dark-theme .card .card-footer a {
         color: #0b3b5c !important;
+      }
+      
+      /* FIX FOR "WHY RESEARCHERS RELY ON THESE TOOLS" CARDS - SHOW ICONS */
+      body.dark-theme .why-tools-grid .card i,
+      body.dark-theme .why-tools-grid i[class*="fa-"] {
+        color: #0b3b5c !important;
+        opacity: 1 !important;
+        display: inline-block !important;
+        visibility: visible !important;
+      }
+      
+      body.dark-theme .why-tools-grid .card {
+        background: #f8fafd !important;
+      }
+      
+      body.dark-theme .why-tools-grid .card h3 {
+        color: #0b1c2e !important;
+      }
+      
+      body.dark-theme .why-tools-grid .card p {
+        color: #2d3a4f !important;
       }
       
       /* Make dark mode toggle button visible */
@@ -582,7 +604,7 @@
       .social-search button i {
         font-size: 1rem !important;
       }
-
+  
       /* Footer vertical columns */
       .footer-columns {
         display: flex;
