@@ -3,27 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
-    <title>ShinyHealthTools – Web Statistical Tools</title>
+    <title>ShinyHealthTools | The #1 Platform for Intuitive R/Shiny Statistical Applications</title>
     
     <!-- PRIMARY META DESCRIPTION – enterprise tone, SPSS style -->
-    <meta name="description" content="ShinyHealthTools delivers validated R/Shiny applications for sample size, ROC, survival, factor analysis & data conversion. Trusted by academic medical centers. No coding, open-source, ISO 27001 aligned processes.">
+    <meta name="title" content="ShinyHealthTools | The #1 Platform for Intuitive R/Shiny Statistical Applications">
+    <meta name="description" content="ShinyHealthTools delivers 21 validated R/Shiny applications for sample size calculations, survival analysis, mediation analysis (simple and serial), ROC analysis, exploratory and confirmatory factor analysis, data conversion, trend analysis, and significant others. Trusted by health researchers and data analysts. No coding, open-source, ISO 27001 aligned processes.">
     
     <!-- KEYWORDS – institutional audience -->
-    <meta name="keywords" content="statistical software, enterprise data analysis, R Shiny, SPSS alternative, sample size calculator, survival analysis, factor analysis, health research tools, ROC curve, clinical trial design, open source statistics">
+    <meta name="keywords" content="statistical software, data analysis, web applications, research, R Shiny, SPSS alternative, Mplus alternative, Stata alternative, R alternative, Excel alternative, SmartPLS alternative, Process MACRO alternative, SAS alternative, sample size calculator, survival analysis, factor analysis, health research tools, ROC curve, clinical trial design, open source statistics">
+  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <link rel="icon" href="https://raw.githubusercontent.com/mudassiribrahim12/https://github.com/mudassiribrahim12/ShinyHealthTools/main/favicon-32x32.png" type="image/png">
+<link itemprop="image" href="https://raw.githubusercontent.com/mudassiribrahim12/https://github.com/mudassiribrahim12/ShinyHealthTools/main/favicon-32x32.png">
+<meta property="og:logo" content="https://raw.githubusercontent.com/mudassiribrahim12/https://github.com/mudassiribrahim12/ShinyHealthTools/main/favicon-32x32.png">
+<meta name="twitter:logo" content="https://raw.githubusercontent.com/mudassiribrahim12/https://github.com/mudassiribrahim12/ShinyHealthTools/main/favicon-32x32.png">
+
+<link rel="apple-touch-icon" sizes="180x180" href="https://raw.githubusercontent.com/mudassiribrahim12/ShinyHealthTools/main/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://raw.githubusercontent.com/mudassiribrahim12/ShinyHealthTools/main/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://raw.githubusercontent.com/mudassiribrahim12/ShinyHealthTools/main/favicon-16x16.png">
+<link rel="manifest" href="https://raw.githubusercontent.com/mudassiribrahim12/ShinyHealthTools/main/site.webmanifest">
     
     <!-- OPEN GRAPH / SOCIAL PREVIEW – professional -->
-    <meta property="og:title" content="ShinyHealthTools – enterprise-grade interactive tools">
-    <meta property="og:description" content="21 validated statistical applications used by global health institutions. Sample size, survival, ROC, factor analysis, data conversion. Free forever.">
+    <meta property="og:title" content="ShinyHealthTools | The #1 Platform for Intuitive R/Shiny Statistical Applications">
+    <meta property="og:description" content="21 validated statistical applications for sample size, survival, ROC, factor analysis, data conversion, and significant others. Trusted by researchers and data analysts worldwide. Free forever.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://ShinyHealthTools.org">
-    <meta property="og:image" content="https://raw.githubusercontent.com/mudassiribrahim12/me/main/og-preview.jpg">
-    <meta property="og:image:alt" content="ShinyHealthTools dashboard – institutional suite">
+    <meta property="og:url" content="https://apps.mudasiribrahim.com">
+    <meta property="og:image" content="https://raw.githubusercontent.com/mudassiribrahim12/ShinyHealthTools/main/og-preview.jpg">
+    <meta property="og:image:alt" content="ShinyHealthTools | The #1 Platform for Intuitive R/Shiny Statistical Applications">
     
     <!-- TWITTER CARD -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="ShinyHealthTools – enterprise statistical tools">
-    <meta name="twitter:description" content="Validated R/Shiny apps for sample size, ROC, survival, factor analysis & data conversion. Trusted by researchers worldwide.">
-    <meta name="twitter:image" content="https://raw.githubusercontent.com/mudassiribrahim12/me/main/og-preview.jpg">
+    <meta name="twitter:description" content="Validated R/Shiny apps for sample size, ROC, survival, factor analysis, data conversion, and significant others. Trusted by researchers and data analysts worldwide. Free forever.">
+    <meta name="twitter:image" content="https://raw.githubusercontent.com/mudassiribrahim12/ShinyHealthTools/main/og-preview.jpg">
+    
+    <meta name="google-site-verification" content="PGq_oDNzKGPvdcDK-DzNc2VYrCckkJxWLyiqq7OdHq0" />
     
     <!-- fonts & icons – Montserrat for bold clarity, plus fallback -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,6 +47,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Fira Code for VS Code style animation -->
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
       html {
@@ -994,10 +1011,12 @@
         align-items: center;
         gap: 12px;
         margin-bottom: 15px;
+        flex-wrap: wrap;
       }
       .blog-post-icon {
         color: #5f7d9c;
         font-size: 1.3rem;
+        flex-shrink: 0;
       }
       .blog-post-title {
         font-size: 1.3rem;
@@ -1006,6 +1025,7 @@
         margin: 0;
         flex: 1;
         font-family: 'Montserrat', sans-serif;
+        min-width: 200px;
       }
       body.dark-theme .blog-post-title {
         color: #eef4fa;
@@ -1016,8 +1036,29 @@
         display: flex;
         align-items: center;
         gap: 6px;
-        white-space: nowrap;
         font-weight: 500;
+        white-space: nowrap;
+        margin-left: auto;
+      }
+      @media (max-width: 768px) {
+        .blog-post-header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 8px;
+        }
+        .blog-post-title {
+          min-width: 100%;
+          font-size: 1.2rem;
+        }
+        .blog-post-date {
+          margin-left: 0;
+          white-space: normal;
+          font-size: 0.85rem;
+          width: 100%;
+        }
+        .blog-post-date i {
+          flex-shrink: 0;
+        }
       }
       .blog-post-excerpt {
         color: #1e2a3a;
@@ -1117,6 +1158,71 @@
           position: static;
         }
       }
+
+      /* Header animation styles */
+      .top-header {
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, box-shadow 0.3s ease;
+        will-change: transform, opacity;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+      }
+      
+      .top-header.header-hidden {
+        transform: translateY(-100%);
+        opacity: 0;
+        box-shadow: none;
+      }
+      
+      .navbar {
+        transition: top 0.3s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+        will-change: top, background, box-shadow;
+      }
+      
+      .navbar.navbar-fixed {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        animation: slideDown 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      }
+      
+      .navbar.navbar-sticky {
+        position: sticky;
+        top: 42px;
+      }
+      
+      .navbar.navbar-scrolled {
+        background: #000000;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-bottom-color: #444444;
+      }
+      
+      body.dark-theme .navbar.navbar-scrolled {
+        background: #000000;
+      }
+      
+      @keyframes slideDown {
+        from {
+          transform: translateY(-100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+      
+      /* Ensure no gap at top */
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      
+      #root {
+        margin-top: 0;
+        padding-top: 0;
+      }
     </style>
 </head>
 <body>
@@ -1131,27 +1237,27 @@
 
       // ---------- ALL APP DATA ----------
       const shinyApps = [
-        { id:1, name:"FactorGuard", desc:"A factor-retention decision tool for EFA", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/FactorGuard.png", run:"https://mudassiribrahim2026.shinyapps.io/FactorGuard/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/FactorGuard.R" },
-        { id:2, name:"CalcuStats", desc:"Tool for sample size calculation, power analysis, and descriptive statistics for clinical trials & observational studies", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/CalcuStats.png", run:"https://mudassiribrahim2025.shinyapps.io/CalcuStats/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/CalcuStats.R" },
-        { id:3, name:"CATrend Analyzer", desc:"Cochran-Armitage trend test for dose-response & regulatory submissions", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/CAtrend.png", run:"https://newappstesting.shinyapps.io/CATrendAnalyzer/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/CATrendAnalyzer.R" },
-        { id:4, name:"ROC Curve Builder", desc:"ROC curve analysis and diagnostic test evaluation", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/ROC.png", run:"https://mudassiribrahim30.shinyapps.io/ROC_CURVE/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/ROC%20Curve%20Builder.R" },
-        { id:5, name:"Data2SPSS", desc:"Effortlessly convert datasets in RData, Stata, SAS, Excel, or CSV formats to SPSS (.sav)", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/Data2SPSS.png", run:"https://newappstesting.shinyapps.io/Data2SPSS/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/Data2SPSS" },
-        { id:6, name:"MedModr", desc:"Mediation and moderation analysis tool for research studies", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/MedModr.png", run:"https://mudassiribrahim30.shinyapps.io/MedModr/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/MedModr.R" },
-        { id:7, name:"EpiDem Suite", desc:"Epidemiological data analysis suite for public health research", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/EpiDem.png", run:"https://mudassiribrahim2025.shinyapps.io/EpiDemSuite/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/EpiDem%20Suite.R" },
-        { id:8, name:"ggPubPlot", desc:"Tool for generating publication-ready graphics (ggplot2) with journal formatting", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/ggLogo.png", run:"https://mudassiribrahim2025.shinyapps.io/ggPubPlot/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/ggPubPlot.R" },
-        { id:9, name:"APA Table Generator", desc:"Generate APA formatted tables for research papers and publications", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/APA%20logo.png", run:"https://newappstesting.shinyapps.io/APATableGenerator/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/APA%20Table%20Generator%20Pro.R" },
-        { id:10, name:"SysSampler", desc:"Systematic sampling tool for survey methodology", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/Sys%20Sampler.png", run:"https://mudassiribrahim2025b.shinyapps.io/SysSampler/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/SysSampler" },
-        { id:11, name:"CMH Analyzer", desc:"Cochran-Mantel-Haenszel analysis tool for stratified data", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/CMH.png", run:"https://newappstesting.shinyapps.io/CMHAnalyzer/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/CMHAnalyzer.R" },
-        { id:12, name:"R DataLab", desc:"Statistical analysis tool for clinical data exploration", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/RdataLab.png", run:"https://newappstesting.shinyapps.io/RDataLab/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/RDataLab.R" },
-        { id:13, name:"PharmaCalc Pro", desc:"Pharmaceutical calculations for dosage", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/Pharma.png", run:"https://mudassiribrahim2025b.shinyapps.io/PharmaCalcPro/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/PharmaCalcPro.R" },
-        { id:14, name:"RegEffect Xplorer", desc:"Explore regression effects visually with interactive plots", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/RegEf.png", run:"https://mudassiribrahim2025b.shinyapps.io/RegEffectXplorer/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/RegEffectXplorer.R" },
-        { id:15, name:"Data TransformR", desc:"Data transformation and preprocessing tool for analytics", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/DataTrans.png", run:"https://mudassiribrahim2025b.shinyapps.io/DataTransformR/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/DataTransformR.R" },
-        { id:16, name:"CleanMyData", desc:"Data screening and cleaning tool with visualization", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/CleanMyData.png", run:"https://mudassiribrahim2025b.shinyapps.io/CleanMyData/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/CleanMyData.R" },
-        { id:17, name:"KMPlot Genie", desc:"Kaplan–Meier survival curves generator with log-rank tests", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/KMPlot.png", run:"https://mudassiribrahim30.shinyapps.io/KMPlotGenie/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/KMPlotGenie.R" },
-        { id:18, name:"QuickStatsGen", desc:"Simulated data generator for education & protocol development", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/QuickStats.png", run:"https://mudassiribrahim2025.shinyapps.io/QuickStatsGen/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/QuickStatsGen.R" },
-        { id:19, name:"Robust Regressor", desc:"Robust regression analysis for outlier-resistant modeling", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/Robust.png", run:"https://mudassiribrahim2025.shinyapps.io/Robustregression/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/Robust%20%20Regressor.R" },
-        { id:20, name:"TagSelect", desc:"Participant selection and randomization tool", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/TagSelect.png", run:"https://mudassiribrahim30.shinyapps.io/Tagselect/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/TagSelect.R" },
-        { id:21, name:"FAnalyzr", desc:"Factor analysis and dimensionality reduction tool", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/FA.png", run:"https://mudassiribrahim30.shinyapps.io/fanalyzr/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/FAnalyzr.R" }
+        { id:1, name:"FactorGuard", desc:"A decision-support tool for factor retention in exploratory factor analysis (EFA), helping researchers determine the optimal number of factors in their data.", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/FactorGuard.png", run:"https://mudassiribrahim2026.shinyapps.io/FactorGuard/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/FactorGuard.R" },
+        { id:2, name:"CalcuStats", desc:"Comprehensive tool for sample size calculation, power analysis, and descriptive statistics, suitable for clinical trials and observational studies.", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/CalcuStats.png", run:"https://mudassiribrahim2025.shinyapps.io/CalcuStats/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/CalcuStats.R" },
+        { id:3, name:"CATrend Analyzer", desc:"Performs Cochran-Armitage trend tests for dose-response analysis and regulatory submissions.", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/CAtrend.png", run:"https://newappstesting.shinyapps.io/CATrendAnalyzer/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/CATrendAnalyzer.R" },
+        { id:4, name:"ROC Curve Builder", desc:"Generates ROC curves and evaluates diagnostic test performance for clinical research.", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/ROC.png", run:"https://mudassiribrahim30.shinyapps.io/ROC_CURVE/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/ROC%20Curve%20Builder.R" },
+        { id:5, name:"Data2SPSS", desc:"Effortlessly converts datasets from RData, Stata, SAS, Excel, or CSV formats into SPSS (.sav) files.", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/Data2SPSS.png", run:"https://newappstesting.shinyapps.io/Data2SPSS/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/Data2SPSS" },
+        { id:6, name:"MedModr", desc:"Tool for conducting mediation and moderation analyses in research studies, supporting both simple and serial models.", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/MedModr.png", run:"https://mudassiribrahim30.shinyapps.io/MedModr/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/MedModr.R" },
+        { id:7, name:"EpiDem Suite", desc:"A suite for epidemiological data analysis, enabling public health researchers to perform a range of statistical assessments.", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/EpiDem.png", run:"https://mudassiribrahim2025.shinyapps.io/EpiDemSuite/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/EpiDem%20Suite.R" },
+        { id:8, name:"ggPubPlot", desc:"Generates publication-ready graphics using ggplot2 with journal-style formatting for research papers.", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/ggLogo.png", run:"https://mudassiribrahim2025.shinyapps.io/ggPubPlot/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/ggPubPlot.R" },
+        { id:9, name:"APA Table Generator", desc:"Creates APA-formatted tables for publications, making manuscript preparation faster and more accurate.", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/APA%20logo.png", run:"https://newappstesting.shinyapps.io/APATableGenerator/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/APA%20Table%20Generator%20Pro.R" },
+        { id:10, name:"SysSampler", desc:"Systematic sampling tool for survey design and methodology, facilitating structured participant selection.", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/Sys%20Sampler.png", run:"https://mudassiribrahim2025b.shinyapps.io/SysSampler/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/SysSampler" },
+        { id:11, name:"CMH Analyzer", desc:"Performs Cochran-Mantel-Haenszel analysis for stratified categorical data.", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/CMH.png", run:"https://newappstesting.shinyapps.io/CMHAnalyzer/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/CMHAnalyzer.R" },
+        { id:12, name:"R DataLab", desc:"A versatile statistical analysis platform for exploring clinical and research datasets.", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/RdataLab.png", run:"https://newappstesting.shinyapps.io/RDataLab/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/RDataLab.R" },
+        { id:13, name:"PharmaCalc Pro", desc:"Performs pharmaceutical calculations, including dosage and formulation computations.", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/Pharma.png", run:"https://mudassiribrahim2025b.shinyapps.io/PharmaCalcPro/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/PharmaCalcPro.R" },
+        { id:14, name:"RegEffect Xplorer", desc:"Interactive tool to visualize regression effects and explore relationships between variables.", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/RegEf.png", run:"https://mudassiribrahim2025b.shinyapps.io/RegEffectXplorer/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/RegEffectXplorer.R" },
+        { id:15, name:"Data TransformR", desc:"Tool for data transformation and preprocessing, preparing datasets for analysis.", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/DataTrans.png", run:"https://mudassiribrahim2025b.shinyapps.io/DataTransformR/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/DataTransformR.R" },
+        { id:16, name:"CleanMyData", desc:"Data screening and cleaning tool with visualizations to detect missing values and inconsistencies.", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/CleanMyData.png", run:"https://mudassiribrahim2025b.shinyapps.io/CleanMyData/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/CleanMyData.R" },
+        { id:17, name:"KMPlot Genie", desc:"Generates Kaplan–Meier survival curves with log-rank tests for time-to-event analyses.", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/KMPlot.png", run:"https://mudassiribrahim30.shinyapps.io/KMPlotGenie/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/KMPlotGenie.R" },
+        { id:18, name:"QuickStatsGen", desc:"Simulates datasets for educational purposes, protocol development, and statistical testing.", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/QuickStats.png", run:"https://mudassiribrahim2025.shinyapps.io/QuickStatsGen/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/QuickStatsGen.R" },
+        { id:19, name:"Robust Regressor", desc:"Performs robust regression using robustbase package for outlier-resistant modeling and reliable parameter estimation.", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/Robust.png", run:"https://mudassiribrahim2025.shinyapps.io/Robustregression/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/Robust%20%20Regressor.R" },
+        { id:20, name:"TagSelect", desc:"Facilitates participant selection and randomization for research studies and clinical trials.", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/TagSelect.png", run:"https://mudassiribrahim30.shinyapps.io/Tagselect/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/TagSelect.R" },
+        { id:21, name:"FAnalyzr", desc:"Supports exploratory and confirmatory factor analysis as well as dimensionality reduction, enabling researchers to simplify and interpret complex datasets effectively.", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/FA.png", run:"https://mudassiribrahim30.shinyapps.io/fanalyzr/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/FAnalyzr.R" }
       ];
 
       const featuredApps = shinyApps.slice(0, 6);
@@ -1284,10 +1390,10 @@ ggplot(data, aes(x = group, y = response, fill = group)) ]`;
         return (
           <div className="top-header" style={{ background: '#ffffff', borderBottom: '1px solid #d0ddef', padding: '0.5rem 3rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', transition: 'background 0.3s' }}>
             <div className="social-icons" style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-              <a href="https://youtube.com" target="_blank" style={{ color: '#0b3b5c', fontSize: '1.1rem' }}><i className="fab fa-youtube"></i></a>
-              <a href="https://facebook.com" target="_blank" style={{ color: '#0b3b5c', fontSize: '1.1rem' }}><i className="fab fa-facebook-f"></i></a>
-              <a href="https://twitter.com" target="_blank" style={{ color: '#0b3b5c', fontSize: '1.1rem' }}><i className="fab fa-x-twitter"></i></a>
-              <a href="https://instagram.com" target="_blank" style={{ color: '#0b3b5c', fontSize: '1.1rem' }}><i className="fab fa-instagram"></i></a>
+              <a href="https://www.youtube.com/@mudasirmohammedibrahim1026" target="_blank" style={{ color: '#0b3b5c', fontSize: '1.1rem' }}><i className="fab fa-youtube"></i></a>
+              <a href="https://www.facebook.com/mudassiribrahim81" target="_blank" style={{ color: '#0b3b5c', fontSize: '1.1rem' }}><i className="fab fa-facebook-f"></i></a>
+              <a href="https://x.com/WhizMuda" target="_blank" style={{ color: '#0b3b5c', fontSize: '1.1rem' }}><i className="fab fa-x-twitter"></i></a>
+              <a href="https://www.instagram.com/mudassiribrahim81" target="_blank" style={{ color: '#0b3b5c', fontSize: '1.1rem' }}><i className="fab fa-instagram"></i></a>
               <a href="https://github.com/mudassiribrahim30" target="_blank" style={{ color: '#0b3b5c', fontSize: '1.1rem' }}><i className="fab fa-github"></i></a>
             </div>
             <div className="social-search" style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
@@ -1323,19 +1429,31 @@ const Navbar = ({ activeTab, setActiveTab, setShowPrivacy, setModalContent, dark
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [hideTopHeader, setHideTopHeader] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [navbarFixed, setNavbarFixed] = useState(false);
   
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       setScrolled(currentScrollY > 10);
-      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+      
+      // Only hide top header when scrolling down past threshold
+      if (currentScrollY > lastScrollY && currentScrollY > 80) {
         setHideTopHeader(true);
-      } else {
+        setNavbarFixed(true);
+      } else if (currentScrollY < 80) {
         setHideTopHeader(false);
+        setNavbarFixed(false);
       }
+      
+      // When scrolling up but not to the top, keep navbar fixed
+      if (currentScrollY < lastScrollY && currentScrollY > 80) {
+        setNavbarFixed(true);
+      }
+      
       setLastScrollY(currentScrollY);
     };
-    window.addEventListener("scroll", handleScroll);
+    
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollY]);
 
@@ -1369,7 +1487,7 @@ const Navbar = ({ activeTab, setActiveTab, setShowPrivacy, setModalContent, dark
       title: '📬 Support & Appreciation',
       content: `
         If any of the apps have been helpful, consider supporting them: 
-        <a href="https://buymeacoffee.com/mudasiribrahim30" target="_blank" style="color:#0b3b5c;">Buy Me a Coffee</a>.<br><br>
+        <a href="https://buymeacoffee.com/mudasiribrahim30" target="_blank" style="color:#0b3b5c;">Donate</a>.<br><br>
         For technical assistance, contact 
         <a href="mailto:mudassiribrahim30@gmail.com" style="color:#0b3b5c;">mudassiribrahim30@gmail.com</a>. 
         Responses are typically provided within 24 hours on business days.
@@ -1378,9 +1496,12 @@ const Navbar = ({ activeTab, setActiveTab, setShowPrivacy, setModalContent, dark
     setMobileMenuOpen(false);
   };
 
+  // Determine navbar classes
+  const navbarClasses = `navbar ${scrolled ? 'navbar-scrolled' : ''} ${navbarFixed ? 'navbar-fixed' : 'navbar-sticky'}`;
+
   return (
     <>
-      <div className="top-header" style={{ 
+      <div className={`top-header ${hideTopHeader ? 'header-hidden' : ''}`} style={{ 
         background: '#ffffff', 
         borderBottom: '1px solid #d0ddef', 
         padding: '0.5rem 3rem', 
@@ -1388,18 +1509,15 @@ const Navbar = ({ activeTab, setActiveTab, setShowPrivacy, setModalContent, dark
         justifyContent: 'space-between', 
         alignItems: 'center', 
         flexWrap: 'wrap',
-        transition: 'transform 0.3s ease, opacity 0.3s ease',
-        transform: hideTopHeader ? 'translateY(-100%)' : 'translateY(0)',
-        opacity: hideTopHeader ? 0 : 1,
         position: 'sticky',
         top: 0,
         zIndex: 30
       }}>
         <div className="social-icons" style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-          <a href="https://youtube.com" target="_blank" style={{ color: '#0b3b5c', fontSize: '1.1rem' }}><i className="fab fa-youtube"></i></a>
-          <a href="https://facebook.com" target="_blank" style={{ color: '#0b3b5c', fontSize: '1.1rem' }}><i className="fab fa-facebook-f"></i></a>
-          <a href="https://twitter.com" target="_blank" style={{ color: '#0b3b5c', fontSize: '1.1rem' }}><i className="fab fa-x-twitter"></i></a>
-          <a href="https://instagram.com" target="_blank" style={{ color: '#0b3b5c', fontSize: '1.1rem' }}><i className="fab fa-instagram"></i></a>
+          <a href="https://www.youtube.com/@mudasirmohammedibrahim1026" target="_blank" style={{ color: '#0b3b5c', fontSize: '1.1rem' }}><i className="fab fa-youtube"></i></a>
+          <a href="https://www.facebook.com/mudassiribrahim81" target="_blank" style={{ color: '#0b3b5c', fontSize: '1.1rem' }}><i className="fab fa-facebook-f"></i></a>
+          <a href="https://x.com/WhizMuda" target="_blank" style={{ color: '#0b3b5c', fontSize: '1.1rem' }}><i className="fab fa-x-twitter"></i></a>
+          <a href="https://www.instagram.com/mudassiribrahim81" target="_blank" style={{ color: '#0b3b5c', fontSize: '1.1rem' }}><i className="fab fa-instagram"></i></a>
           <a href="https://github.com/mudassiribrahim30" target="_blank" style={{ color: '#0b3b5c', fontSize: '1.1rem' }}><i className="fab fa-github"></i></a>
         </div>
         <div className="social-search" style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
@@ -1428,13 +1546,15 @@ const Navbar = ({ activeTab, setActiveTab, setShowPrivacy, setModalContent, dark
         </div>
       </div>
 
-      <nav className={`navbar ${scrolled ? "navbar-blur" : ""}`} style={{ 
+      <nav className={navbarClasses} style={{ 
         background: '#000000', 
         borderBottom: '1px solid #333333',
-        position: 'sticky',
-        top: hideTopHeader ? 0 : '42px',
-        transition: 'top 0.3s ease, background 0.2s, box-shadow 0.2s',
-        zIndex: 29
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: '1rem 3rem',
+        zIndex: 29,
+        width: '100%'
       }}>
         <div className="nav-logo">
           <a href="#" onClick={handleLogoClick}>
@@ -1446,7 +1566,7 @@ const Navbar = ({ activeTab, setActiveTab, setShowPrivacy, setModalContent, dark
           <a href="#" onClick={(e) => { e.preventDefault(); handleNavClick('home'); }} style={{ color: '#ffffff' }}>Home</a>
           <a href="#" onClick={(e) => { e.preventDefault(); handleNavClick('apps'); }} style={{ color: '#ffffff' }}>Apps</a>
           <a href="#" onClick={(e) => { e.preventDefault(); handleNavClick('blog'); }} style={{ color: '#ffffff' }}>Blog</a>
-          <a href="#" onClick={handleAboutClick} style={{ color: '#ffffff' }}>About The Developer</a>
+          <a href="#" onClick={handleAboutClick} style={{ color: '#ffffff' }}>Meet the Developer</a>
           <a href="#" onClick={handleSupportClick} style={{ color: '#ffffff' }}>Support</a>
         </div>
 
@@ -1679,10 +1799,10 @@ const Navbar = ({ activeTab, setActiveTab, setShowPrivacy, setModalContent, dark
         }, []);
 
         const whyToolsData = [
-          { icon:"fas fa-flask", title:"Validated for research", desc:"All tools benchmarked against established software (R software - programming language). Suitable for grant applications and peer-reviewed publications." },
-          { icon:"fas fa-code-branch", title:"Fully open source", desc:"Source code available on GitHub. Built on R 4.3+, tidyverse, survival, psych, and other CRAN packages. Audit and extend." },
-          { icon:"fas fa-cloud-upload-alt", title:"Zero local installation", desc:"Deployed on shinyapps.io infrastructure. Accessible via any modern browser – secure and scalable." },
-          { icon:"fas fa-heart", title:"Commitment to accessibility", desc:"Free for academic, government, and non‑profit institutions. No license fees, no subscription traps." }
+          { icon:"fas fa-flask", title:"Validated for Research", desc:"All tools are benchmarked against established software (R) and are suitable for grant applications and peer-reviewed publications." },
+          { icon:"fas fa-code-branch", title:"Fully Open Source", desc:"The source code is publicly available on GitHub. Built on R 4.3+, tidyverse, survival, psych, and other CRAN packages, the tools can be audited and extended as needed." },
+          { icon:"fas fa-cloud-upload-alt", title:"Zero Local Installation", desc:"Deployed on shinyapps.io, the applications are accessible via any modern browser—secure, scalable, and maintenance-free." },
+          { icon:"fas fa-heart", title:"Commitment to Accessibility", desc:"Free for academic, government, and non-profit institutions. No license fees, no subscription traps." }
         ];
 
         return (
@@ -1690,16 +1810,16 @@ const Navbar = ({ activeTab, setActiveTab, setShowPrivacy, setModalContent, dark
             <section className="hero">
               <div className="hero-container">
                 <div className="hero-left">
-                  <div className="hero-badge">📈statistical tools • open source • R-powered backend</div>
+                  <div className="hero-badge">📈 Statistical Tools • Open Source • R-Powered Backend</div>
                   <h1 className="hero-title">
                     <span className="title-line">Empowering Health Research</span>
                     <span className="title-line"><span className="gradient-text">with Innovative Tools</span></span>
                   </h1>
                   <p className="hero-sub">
-Welcome to ShinyHealthTools, a platform dedicated to advancing public health research in Africa and beyond. Here, you will find a collection of R/Shiny applications tailored for healthcare institutions, academic researchers, and clinical studies. You can access the apps directly or use the source code in RStudio to reproduce analyses.
+Welcome to ShinyHealthTools, a platform dedicated to advancing public health research worldwide. This platform offers a comprehensive suite of R/Shiny applications designed for healthcare institutions, academic researchers, and clinical studies. Users can access the applications directly or leverage the source code in RStudio to reproduce and customize analyses.
                   </p>
                   <p className="hero-sub">
-The various apps cover a wide range of functions, including sample size calculations, survival analysis, mediation analysis (simple and serial), ROC analysis, exploratory and confirmatory factor analysis, data conversion, and trend analysis. These advanced statistical procedures are user-friendly and can be performed without prior programming experience.
+The applications support a wide range of functions, including robust regression analysis, participant randomization, data screening and cleaning, epidemiological analysis, generation of publication-ready graphics, APA-formatted tables, systematic random sampling, pharmaceutical calculations, sample size and power calculations, descriptive statistics, parallel analysis, survival analysis, simple and serial mediation analysis, moderation analysis, ROC analysis, exploratory and confirmatory factor analysis, SPSS data file conversion, Cochran-Mantel-Haenszel analysis, and Cochran-Armitage trend analysis. These advanced statistical procedures are fully integrated within intuitive applications and can be performed without any prior programming knowledge or advanced statistical expertise.
                   </p>
                   <div className="hero-metrics">
                     <div className="metric-item"><span className="metric-number">21</span><span className="metric-label">statistical tools</span></div>
@@ -1807,7 +1927,7 @@ The various apps cover a wide range of functions, including sample size calculat
         );
       };
 
-      // BlogTab - using exact same configuration as personal website
+      // BlogTab - with mobile fixes
       const BlogTab = () => {
         const [blogPosts, setBlogPosts] = useState([]);
         const [loadingBlog, setLoadingBlog] = useState(true);
@@ -2169,16 +2289,16 @@ The various apps cover a wide range of functions, including sample size calculat
               </div>
               <div className="footer-col">
                 <h4 style={{ color: '#ffffff' }}>Connect</h4>
-                <a href="https://youtube.com" target="_blank" style={{ color: '#ffffff' }}>Youtube</a>
-                <a href="https://facebook.com" target="_blank" style={{ color: '#ffffff' }}>Facebook</a>
-                <a href="https://instagram.com" target="_blank" style={{ color: '#ffffff' }}>Instagram</a>
+                <a href="https://www.youtube.com/@mudasirmohammedibrahim1026" target="_blank" style={{ color: '#ffffff' }}>Youtube</a>
+                <a href="https://www.facebook.com/mudassiribrahim81" target="_blank" style={{ color: '#ffffff' }}>Facebook</a>
+                <a href="https://www.instagram.com/mudassiribrahim81" target="_blank" style={{ color: '#ffffff' }}>Instagram</a>
                 <a href="https://github.com/mudassiribrahim30/R-Shiny-Apps" target="_blank" style={{ color: '#ffffff' }}>GitHub</a>
                 <a onClick={handleBlogClick} style={{ color: '#ffffff', cursor: 'pointer' }}>Blog</a>
               </div>
             </div>
             <div className="footer-copyright" style={{ color: '#ffffff', borderTop: '1px solid #333333', fontWeight: '500', fontSize: '0.85rem', paddingTop: '1.2rem', marginTop: '0.5rem' }}>
-              <span>Copyright © 2025–{currentYear} ShinyHealthTools. open source · free to use</span>
-              <span className="footer-extra">Interactive apps for health research</span>
+              <span>Copyright © 2025–{currentYear} ShinyHealthTools. All rights reserved worldwide.</span>
+              <span className="footer-extra">Intuitive R/Shiny applications for health research</span>
             </div>
           </footer>
         );
