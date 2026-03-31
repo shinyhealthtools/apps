@@ -47,2538 +47,883 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Fira Code for VS Code style animation -->
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-    
-    
-    <style>
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-      html {
-        scroll-behavior: smooth;
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
-        font-size: 17px; /* increased base font for better readability */
-      }
-      body {
-        background: #f2f5f9;
-        font-family: "IBM Plex Sans", system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 100vh;
-        margin: 0;
-        padding: 0;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        overflow-x: hidden;
-        color: #1e2a3a;
-        transition: background 0.3s, color 0.3s;
-      }
-      body.dark-theme {
-        background: #121a24;
-        color: #e3eaf2;
-      }
-      #root {
-        width: 100%;
-        max-width: 100%;
-        border-radius: 0;
-        background: #ffffff;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
-        overflow: hidden;
-        transition: background 0.3s;
-      }
-      body.dark-theme #root {
-        background: #1e2a3a;
-      }
-      /* modal styles */
-      .modal-overlay {
-        position: fixed;
-        top: 0; left: 0; right: 0; bottom: 0;
-        background: rgba(0,20,40,0.6);
-        backdrop-filter: blur(3px);
-        z-index: 1000;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      .modal-content {
-        background: #ffffff;
-        border: 1px solid #e1e6f0;
-        border-radius: 1rem;
-        padding: 2rem;
-        max-width: 600px;
-        width: 90%;
-        color: #1e2a3a;
-        box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
-        margin: auto;
-        max-height: 80vh;
-        overflow-y: auto;
-      }
-      body.dark-theme .modal-content {
-        background: #253544;
-        border-color: #3a4b5e;
-        color: #eef4fa;
-      }
-      .modal-content h3 {
-        font-size: 1.6rem;
-        margin-bottom: 0.8rem;
-        color: #0b1c2e;
-        font-weight: 700;
-        font-family: 'Montserrat', sans-serif;
-      }
-      body.dark-theme .modal-content h3 {
-        color: #cfdeff;
-      }
-      .modal-content p {
-        margin-bottom: 1.2rem;
-        line-height: 1.5;
-        color: #2d3a4f;
-        font-weight: 400;
-        font-size: 1rem;
-      }
-      body.dark-theme .modal-content p {
-        color: #cbd5e1;
-      }
-      .modal-close {
-        background: #0b3b5c;
-        border: none;
-        padding: 0.6rem 1.5rem;
-        border-radius: 4px;
-        color: white;
-        cursor: pointer;
-        font-weight: 600;
-        transition: background 0.2s;
-        font-size: 0.95rem;
-        margin-top: 0.5rem;
-      }
-      .modal-close:hover {
-        background: #0f4a73;
-      }
-      body.modal-open {
-        overflow: hidden;
-      }
-      
- 
-      /* mobile menu */
-      .mobile-menu-btn {
-        display: none;
-        background: none;
-        border: none;
-        color: #0b3b5c;
-        font-size: 1.6rem;
-        cursor: pointer;
-        z-index: 30;
-      }
-      body.dark-theme .mobile-menu-btn {
-        color: #9bb8e0;
-      }
-      .mobile-menu {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background: #ffffff;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.04);
-        padding: 0.8rem 1.5rem;
-        flex-direction: column;
-        gap: 0.3rem;
-        border-bottom: 1px solid #e6eefc;
-        z-index: 25;
-      }
-      body.dark-theme .mobile-menu {
-        background: #26333f;
-        border-bottom: 1px solid #3d5067;
-      }
-      .mobile-menu a {
-        color: #1e2a3a;
-        text-decoration: none;
-        font-size: 1rem;
-        padding: 0.6rem 1rem;
-        border-radius: 6px;
-        transition: background 0.2s;
-        font-weight: 500;
-      }
-      body.dark-theme .mobile-menu a {
-        color: #d1dceb;
-      }
-      .mobile-menu a:hover {
-        background: #f0f5ff;
-      }
-      body.dark-theme .mobile-menu a:hover {
-        background: #34495f;
-      }
-      .mobile-menu a i {
-        margin-right: 8px;
-      }
-      
-  .testimonial-carousel {
-  position: relative;
-  min-height: 300px;
-  height: auto;
-}
-
-.testimonial-slide {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  opacity: 0;
-  transition: opacity 0.8s ease-in-out;
-  pointer-events: none;
-  min-height: 250px;
-}
-
-.testimonial-slide.active {
-  opacity: 1;
-  position: relative;
-  pointer-events: auto;
-}
-
-.testimonial-inner {
-  background: #f8fbfe;
-  border-radius: 1.5rem;
-  padding: 2.5rem 3rem;
-  border: 2px solid #0b3b5c30;
-  max-width: 950px;
-  margin: 0 auto;
-  animation: appear 1s ease-out;
-  min-height: 350px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
   
-      /* chatbot */
-      .chatbot-button {
-        position: fixed;
-        bottom: 24px;
-        right: 24px;
-        background: #0b3b5c;
-        color: white;
-        width: 56px;
-        height: 56px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 24px;
-        cursor: pointer;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-        border: none;
-        z-index: 200;
-        transition: transform 0.2s;
-      }
-      .chatbot-button:hover {
-        transform: scale(1.1);
-      }
-      .chatbot-panel {
-        position: fixed;
-        bottom: 90px;
-        right: 24px;
-        width: 360px;
-        height: 500px;
-        background: white;
-        border-radius: 16px;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-        display: flex;
-        flex-direction: column;
-        overflow: hidden;
-        z-index: 199;
-        border: 1px solid #e0e8f2;
-      }
-      body.dark-theme .chatbot-panel {
-        background: #26333f;
-        border-color: #3d5067;
-      }
-      .chatbot-header {
-        background: #0b3b5c;
-        color: white;
-        padding: 1rem;
-        font-weight: 600;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-      .chatbot-header button {
-        background: none;
-        border: none;
-        color: white;
-        font-size: 1.2rem;
-        cursor: pointer;
-      }
-      .chatbot-messages {
-        flex: 1;
-        padding: 1rem;
-        overflow-y: auto;
-        display: flex;
-        flex-direction: column;
-        gap: 0.8rem;
-      }
-      .message {
-        max-width: 85%;
-        padding: 0.6rem 1rem;
-        border-radius: 18px;
-        font-size: 0.9rem;
-        line-height: 1.4;
-        word-break: break-word;
-      }
-      .user-message {
-        background: #0b3b5c;
-        color: white;
-        align-self: flex-end;
-        border-bottom-right-radius: 4px;
-      }
-      .bot-message {
-        background: #f0f5ff;
-        color: #1e2a3a;
-        align-self: flex-start;
-        border-bottom-left-radius: 4px;
-      }
-      body.dark-theme .bot-message {
-        background: #34495f;
-        color: #eef4fa;
-      }
-      .suggested-questions {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        padding: 0.5rem 1rem 1rem;
-        border-top: 1px solid #e0e8f2;
-      }
-      .suggested-question {
-        background: #eaf0fa;
-        border: 1px solid #b8cde0;
-        border-radius: 30px;
-        padding: 0.4rem 1rem;
-        font-size: 0.8rem;
-        cursor: pointer;
-        transition: background 0.2s;
-        color: #0b3b5c;
-        font-weight: 500;
-      }
-      body.dark-theme .suggested-question {
-        background: #2f4055;
-        border-color: #57708f;
-        color: #c6dcff;
-      }
-      .suggested-question:hover {
-        background: #d0e0f5;
-      }
-      .chatbot-input-area {
-        display: flex;
-        padding: 0.8rem;
-        border-top: 1px solid #e0e8f2;
-        background: white;
-      }
-      body.dark-theme .chatbot-input-area {
-        background: #26333f;
-        border-top-color: #3d5067;
-      }
-      .chatbot-input-area input {
-        flex: 1;
-        padding: 0.6rem 1rem;
-        border: 1px solid #ccc;
-        border-radius: 30px;
-        outline: none;
-        font-size: 0.9rem;
-      }
-      .chatbot-input-area button {
-        background: #0b3b5c;
-        border: none;
-        color: white;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        margin-left: 0.5rem;
-        cursor: pointer;
-      }
-      
-  
-        /* FORCE ALL TEXT IN DARKMODE TO BE WHITE - ADD THIS */
-      body.dark-theme,
-      body.dark-theme * {
-        color: #ffffff !important;
-      }
-      
-      /* EXEMPT FIRST WHITE HEADER (top-header) - KEEP ORIGINAL COLORS */
-      body.dark-theme .top-header,
-      body.dark-theme .top-header * {
-        color: inherit !important;
-      }
-      
-      body.dark-theme .top-header .social-icons a {
-        color: #0b3b5c !important;
-      }
-      
-      body.dark-theme .top-header input {
-        background: #ffffff !important;
-        color: #1e2a3a !important;
-        border-color: #b8cde0 !important;
-      }
-      
-      body.dark-theme .top-header input::placeholder {
-        color: #7f8fa4 !important;
-      }
-      
-      body.dark-theme .top-header .fa-search {
-        color: #7f8fa4 !important;
-      }
-      
-      /* EXEMPT APP CARDS - KEEP THEIR ORIGINAL STYLING */
-      body.dark-theme .card,
-      body.dark-theme .card * {
-        color: inherit !important;
-      }
-      
-      body.dark-theme .card h3 {
-        color: #0b1c2e !important;
-      }
-      
-      body.dark-theme .card p {
-        color: #2d3a4f !important;
-      }
-      
-      body.dark-theme .card .card-footer a {
-        color: #0b3b5c !important;
-      }
-      
-      /* FIX FOR "WHY RESEARCHERS RELY ON THESE TOOLS" CARDS - SHOW ICONS */
-      body.dark-theme .why-tools-grid .card i,
-      body.dark-theme .why-tools-grid i[class*="fa-"] {
-        color: #0b3b5c !important;
-        opacity: 1 !important;
-        display: inline-block !important;
-        visibility: visible !important;
-      }
-      
-      body.dark-theme .why-tools-grid .card {
-        background: #f8fafd !important;
-      }
-      
-      body.dark-theme .why-tools-grid .card h3 {
-        color: #0b1c2e !important;
-      }
-      
-      body.dark-theme .why-tools-grid .card p {
-        color: #2d3a4f !important;
-      }
-      
-      /* Make dark mode toggle button visible */
-      body.dark-theme .top-header button,
-      body.dark-theme .social-search button {
-        background: #2a3a4a !important;
-        color: white !important;
-        border: 1px solid #4a5a6a !important;
-        border-radius: 50% !important;
-        width: 36px !important;
-        height: 36px !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        transition: all 0.2s ease !important;
-      }
-      
-      body.dark-theme .top-header button:hover,
-      body.dark-theme .social-search button:hover {
-        background: #0b3b5c !important;
-        border-color: #ffffff !important;
-        transform: scale(1.1) !important;
-      }
-      
-      body.dark-theme .top-header button i,
-      body.dark-theme .social-search button i {
-        color: white !important;
-        font-size: 1rem !important;
-      }
-      
-      /* EXCEPTIONS - keep buttons, links interactive but readable */
-      body.dark-theme button:not(.modal-close):not(.chatbot-button):not(.suggested-question),
-      body.dark-theme .archive-button,
-      body.dark-theme .read-post-btn,
-      body.dark-theme .load-more-btn,
-      body.dark-theme .show-all-button {
-        color: #ffffff !important;
-      }
-      
-      body.dark-theme .archive-button.active {
-        background-color: #0b3b5c !important;
-        color: white !important;
-      }
-      
-      body.dark-theme .chatbot-messages .bot-message {
-        background: #2a3a4a !important;
-        color: white !important;
-      }
-      
-      body.dark-theme .chatbot-messages .user-message {
-        background: #0b3b5c !important;
-        color: white !important;
-      }
-      
-      body.dark-theme input,
-      body.dark-theme textarea {
-        background: #2a3a4a !important;
-        color: white !important;
-        border-color: #4a5a6a !important;
-      }
-      
-      body.dark-theme input::placeholder {
-        color: #cccccc !important;
-      }
-      
-      /* SEARCH DROPDOWN DARK MODE STYLES */
-      body.dark-theme .top-header div[style*="position: absolute"][style*="top: 100%"] {
-        background: #1e2a3a !important;
-        border-color: #4a5a6a !important;
-        box-shadow: 0 8px 16px rgba(0,0,0,0.3) !important;
-      }
-      
-      body.dark-theme .top-header div[style*="position: absolute"][style*="top: 100%"] div {
-        background: #1e2a3a !important;
-        color: white !important;
-        border-bottom-color: #4a5a6a !important;
-      }
-      
-      body.dark-theme .top-header div[style*="position: absolute"][style*="top: 100%"] div:hover {
-        background: #2a3a4a !important;
-      }
-      
-      body.dark-theme .top-header div[style*="position: absolute"][style*="top: 100%"] div span {
-        color: #cccccc !important;
-      }
-      
-      body.dark-theme .footer,
-      body.dark-theme .footer * {
-        color: white !important;
-      }
-      
-      body.dark-theme .footer a {
-        color: white !important;
-      }
-      
-      body.dark-theme .footer a:hover {
-        color: #cccccc !important;
-      }
-      
-      body.dark-theme .navbar,
-      body.dark-theme .navbar * {
-        color: white !important;
-      }
-      
-      body.dark-theme .nav-links a {
-        color: white !important;
-      }
-      
-      body.dark-theme .hero-title,
-      body.dark-theme .hero-sub,
-      body.dark-theme .metric-number,
-      body.dark-theme .metric-label,
-      body.dark-theme .showcase-title {
-        color: white !important;
-      }
-      
-      body.dark-theme .blog-post-title,
-      body.dark-theme .blog-post-excerpt,
-      body.dark-theme .blog-post-date,
-      body.dark-theme .archive-title,
-      body.dark-theme .archive-month,
-      body.dark-theme .archive-year,
-      body.dark-theme .archive-total,
-      body.dark-theme .selected-month-text {
-        color: white !important;
-      }
-      
-      body.dark-theme .quote-text,
-      body.dark-theme .quote-author {
-        color: white !important;
-      }
-      
-      body.dark-theme .hero-badge {
-        background: #2a3a4a !important;
-        color: white !important;
-        border-color: #4a5a6a !important;
-      }
-      
-      /* Ensure dark mode toggle icon is visible in both modes */
-      .top-header button,
-      .social-search button {
-        background: #f0f5ff !important;
-        border: 1px solid #b8cde0 !important;
-        border-radius: 50% !important;
-        width: 36px !important;
-        height: 36px !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        transition: all 0.2s ease !important;
-      }
-      
-      .top-header button:hover,
-      .social-search button:hover {
-        background: #0b3b5c !important;
-        color: white !important;
-      }
-      
-      .top-header button i,
-      .social-search button i {
-        font-size: 1rem !important;
-      }
-  
-      /* Footer vertical columns */
-      .footer-columns {
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        gap: 2rem;
-        margin-bottom: 2rem;
-      }
-      .footer-col {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-      }
-.footer-col h4 {
-  color: #ffffff;
-  font-size: 1.1rem;
-  margin-bottom: 0.5rem;
-  font-weight: 600;
-  font-family: 'Montserrat', sans-serif;
-}
+  <style>
+    /* ── LIGHT THEME ── */
+    :root {
+      --blue:#2c7be5; --blue-dark:#1a5fba; --blue-light:#e8f1fd;
+      --text:#1a202c; --text2:#4a5568; --text3:#718096;
+      --border:#c8d6e8; --bg:#f7f9fc; --white:#ffffff; --surface:#f0f4f8;
+      --green:#38a169; --radius:8px;
+      --shadow:0 1px 3px rgba(0,0,0,0.08),0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md:0 4px 12px rgba(0,0,0,0.08);
+      --card-bg:#ffffff; --card-border:#b8cde4;
+      --navbar-bg:#ffffff; --hero-bg:linear-gradient(160deg,#eef4ff 0%,#fff 55%);
+      --section-alt-bg:#f7f9fc; --input-bg:#f0f4f8;
+      --sidebar-bg:#ffffff; --blog-post-bg:#ffffff; --modal-bg:#ffffff;
+    }
+    /* ── DARK THEME ── */
+    html.dark {
+      --text:#e2e8f0; --text2:#a0aec0; --text3:#718096;
+      --border:#2d3748; --bg:#1a202c; --white:#141b27; --surface:#1e2a3a;
+      --blue-light:#1a2e4a;
+      --card-bg:#1e2a3a; --card-border:#2d4060;
+      --navbar-bg:#141b27; --hero-bg:linear-gradient(160deg,#141b27 0%,#1a202c 100%);
+      --section-alt-bg:#141b27; --input-bg:#1e2a3a;
+      --sidebar-bg:#1e2a3a; --blog-post-bg:#1e2a3a; --modal-bg:#1e2a3a;
+    }
 
-.footer-col a {
-  color: #ffffff;
-  text-decoration: none;
-  font-size: 0.95rem;
-  transition: color 0.2s;
-  cursor: pointer;
-}
-.footer-col a:hover {
-  color: #cccccc;
-  text-decoration: underline;
-}
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth;font-size:16px}
+    body{background:var(--white);color:var(--text);font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.6;transition:background 0.3s ease,color 0.3s ease}
+    body.modal-open{overflow:hidden}
+    a{color:var(--blue);text-decoration:none}
+    a:hover{text-decoration:underline}
+    button{font-family:inherit;cursor:pointer}
 
-       /* VS Code animation box */
-      .code-animation-box {
-        font-family: 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
-        background: #1e1e1e;
-        color: #d4d4d4;
-        border-radius: 12px;
-        padding: 1.5rem;
-        box-shadow: 0 20px 30px -10px rgba(0,0,0,0.5);
-        width: 100%;
-        max-width: 500px;
-        min-width: 500px;
-        height: 380px;
-        border-left: 6px solid #007acc;
-        font-size: 0.9rem;
-        line-height: 1.6;
-        overflow-y: auto;
-        position: relative;
-        border: 1px solid #3c3c3c;
-      }
+    /* TOP BAR */
+    .topbar{background:#1a202c;padding:0.45rem 0}
+    html.dark .topbar{background:#0d1117}
+    .topbar-inner{max-width:1160px;margin:0 auto;padding:0 2rem;display:flex;justify-content:space-between;align-items:center}
+    .topbar-socials{display:flex;gap:1rem}
+    .topbar-socials a{color:#a0aec0;font-size:0.85rem;transition:color 0.2s}
+    .topbar-socials a:hover{color:#fff;text-decoration:none}
+    .topbar-right{display:flex;align-items:center}
+    .search-wrap{position:relative}
+    .search-wrap input{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:#fff;padding:0.35rem 0.8rem 0.35rem 2rem;border-radius:5px;font-size:0.78rem;font-family:inherit;width:190px;outline:none;transition:all 0.2s}
+    .search-wrap input::placeholder{color:#a0aec0}
+    .search-wrap input:focus{background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.4)}
+    .search-wrap .si{position:absolute;left:0.65rem;top:50%;transform:translateY(-50%);color:#a0aec0;font-size:0.7rem;pointer-events:none}
+    .search-dropdown{position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--modal-bg);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;z-index:999;box-shadow:var(--shadow-md)}
+    .sditem{padding:0.55rem 0.9rem;font-size:0.82rem;cursor:pointer;color:var(--text);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;transition:background 0.15s}
+    .sditem:last-child{border-bottom:none}
+    .sditem:hover{background:var(--blue-light);color:var(--blue)}
 
-      .code-animation-box .keyword { 
-        color: #569cd6;
-        font-weight: 500;
-      }
-      .code-animation-box .function { 
-        color: #dcdcaa;
-      }
-      .code-animation-box .string { 
-        color: #ce9178;
-      }
-      .code-animation-box .comment { 
-        color: #6a9955;
-      }
-      .code-animation-box .number { 
-        color: #b5cea8;
-      }
-      .code-animation-box .operator { 
-        color: #d4d4d4;
-      }
-      .code-animation-box .variable { 
-        color: #9cdcfe;
-      }
-      .code-animation-box .bracket { 
-        color: #ffd700;
-      }
+    /* NAVBAR */
+    .navbar{background:var(--navbar-bg);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:90;box-shadow:var(--shadow);transition:background 0.3s}
+    .navbar-inner{max-width:1160px;margin:0 auto;padding:0 2rem;display:flex;justify-content:space-between;align-items:center;height:60px}
+    .nav-logo{display:flex;align-items:center;gap:0.6rem;cursor:pointer;text-decoration:none}
+    .nav-logo-icon{width:32px;height:32px;background:var(--blue);border-radius:7px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.9rem;flex-shrink:0}
+    .nav-logo-text{font-size:1.05rem;font-weight:700;color:var(--text);letter-spacing:-0.01em}
+    .nav-links{display:flex;align-items:center;gap:0.2rem}
+    .nav-link{background:none;border:none;color:var(--text2);font-size:0.875rem;font-weight:500;padding:0.45rem 0.85rem;border-radius:6px;transition:all 0.15s;cursor:pointer;text-decoration:none;display:inline-block}
+    .nav-link:hover{background:var(--surface);color:var(--text);text-decoration:none}
+    .nav-link.active{color:var(--blue);background:var(--blue-light)}
+    .nav-link-gh{background:#2d3748;color:#fff;border:none;font-size:0.875rem;font-weight:600;padding:0.45rem 1rem;border-radius:6px;cursor:pointer;transition:background 0.2s;margin-left:0.5rem;text-decoration:none;display:inline-flex;align-items:center;gap:0.4rem}
+    .nav-link-gh:hover{background:#4a5568;color:#fff;text-decoration:none}
+    .mobile-btn{display:none;background:none;border:none;color:var(--text2);font-size:1.2rem;cursor:pointer;padding:0.3rem}
+    .mobile-nav{display:none;background:var(--navbar-bg);border-bottom:1px solid var(--border);padding:0.75rem 1.5rem;flex-direction:column;gap:0.25rem;transition:background 0.3s}
+    .mobile-nav.open{display:flex}
+    .mobile-nav .nav-link{width:100%;text-align:left}
 
-      .code-animation-box .cursor {
-        display: inline-block;
-        width: 8px;
-        height: 1.2em;
-        background-color: #007acc;
-        vertical-align: middle;
-        animation: blink 1s infinite;
-        margin-left: 2px;
-      }
+    /* HERO */
+    .hero{background:var(--hero-bg);border-bottom:1px solid var(--border);padding:5rem 2rem 4.5rem;transition:background 0.3s}
+    .hero-inner{max-width:1160px;margin:0 auto;display:flex;gap:4rem;align-items:center}
+    .hero-left{flex:1.15}
+    .hero-right{flex:0.85}
+    .hero-badge{display:inline-flex;align-items:center;gap:0.4rem;background:var(--blue-light);color:var(--blue);font-size:0.78rem;font-weight:600;padding:0.3rem 0.85rem;border-radius:100px;margin-bottom:1.4rem;border:1px solid #c3d9f8}
+    html.dark .hero-badge{border-color:#1e3a5f}
+    .badge-dot{width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0}
+    .hero-title{font-size:clamp(1.9rem,4vw,2.85rem);font-weight:700;line-height:1.15;letter-spacing:-0.02em;color:var(--text);margin-bottom:1.2rem}
+    .hero-title span{color:var(--blue)}
+    .hero-desc{font-size:0.97rem;color:var(--text2);line-height:1.75;margin-bottom:0.85rem;max-width:560px}
+    .hero-actions{display:flex;gap:0.75rem;margin-top:2rem;flex-wrap:wrap}
+    .btn-primary{background:var(--blue);color:#fff;border:none;font-size:0.9rem;font-weight:600;padding:0.68rem 1.5rem;border-radius:var(--radius);cursor:pointer;transition:background 0.2s;text-decoration:none;display:inline-flex;align-items:center;gap:0.4rem}
+    .btn-primary:hover{background:var(--blue-dark);color:#fff;text-decoration:none}
+    .btn-secondary{background:var(--card-bg);color:var(--text);border:1.5px solid var(--border);font-size:0.9rem;font-weight:500;padding:0.68rem 1.4rem;border-radius:var(--radius);cursor:pointer;transition:all 0.2s;display:inline-flex;align-items:center;gap:0.4rem;text-decoration:none}
+    .btn-secondary:hover{border-color:#a0b4cc;background:var(--surface);text-decoration:none;color:var(--text)}
+    .hero-metrics{display:flex;gap:2.5rem;margin-top:2.5rem;padding-top:2rem;border-top:1px solid var(--border)}
+    .metric-n{font-size:1.9rem;font-weight:700;color:var(--blue);line-height:1;margin-bottom:0.2rem}
+    .metric-l{font-size:0.78rem;color:var(--text3);font-weight:500}
 
-      @keyframes blink {
-        0%, 50% { opacity: 1; }
-        51%, 100% { opacity: 0; }
-      }
+    /* CODE BOX */
+    .code-box{background:#1e2433;border-radius:10px;overflow:hidden;box-shadow:var(--shadow-md)}
+    .code-box-hdr{background:#272d3d;padding:0.65rem 1rem;display:flex;align-items:center;gap:0.4rem;border-bottom:1px solid rgba(255,255,255,0.07)}
+    .cdot{width:10px;height:10px;border-radius:50%}
+    .cdot-r{background:#ff5f57}.cdot-y{background:#febc2e}.cdot-g{background:#28c840}
+    .code-fname{font-size:0.7rem;color:#6b7891;margin-left:0.4rem;font-family:'SFMono-Regular',Consolas,monospace}
+    .code-body{padding:1.2rem 1.4rem;font-family:'SFMono-Regular',Consolas,'Liberation Mono',monospace;font-size:0.77rem;line-height:1.85;min-height:268px;color:#abb2bf}
+    .ck{color:#c678dd}.cf{color:#61afef}.cs{color:#98c379}.cc{color:#5c6370;font-style:italic}.cn{color:#d19a66}.cv{color:#e06c75}
+    .cursor{display:inline-block;width:2px;height:0.9em;background:#fff;vertical-align:middle;animation:blink 1s step-end infinite;margin-left:1px}
+    @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 
-      .code-animation-box pre {
-        margin: 0;
-        white-space: pre-wrap;
-        word-wrap: break-word;
-        height: 100%;
-        overflow-y: auto;
-        scrollbar-width: thin;
-        scrollbar-color: #007acc #2d2d2d;
-        font-family: inherit;
-      }
+    /* SECTIONS */
+    .section{padding:4.5rem 2rem;background:var(--white);transition:background 0.3s}
+    .section-inner{max-width:1160px;margin:0 auto}
+    .section-alt{background:var(--section-alt-bg)}
+    .section-hdr{margin-bottom:2.5rem}
+    .section-label{font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--blue);margin-bottom:0.45rem}
+    .section-title{font-size:clamp(1.45rem,3vw,1.95rem);font-weight:700;color:var(--text);letter-spacing:-0.015em;line-height:1.2;margin-bottom:0.55rem}
+    .section-sub{font-size:0.95rem;color:var(--text2);max-width:520px;line-height:1.7}
 
-      .code-animation-box pre::-webkit-scrollbar {
-        width: 10px;
-        height: 10px;
-      }
+    /* APP CARDS */
+    .card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+    .app-card{background:var(--card-bg);border:2px solid var(--card-border);border-radius:var(--radius);padding:1.4rem;transition:box-shadow 0.25s,border-color 0.25s,transform 0.25s,background 0.3s,opacity 0.6s ease,transform 0.6s ease}
+    .app-card:hover{box-shadow:0 6px 20px rgba(44,123,229,0.15);border-color:var(--blue)}
+    .app-card-top{display:flex;align-items:center;gap:0.75rem;margin-bottom:0.75rem}
+    .app-logo{width:38px;height:38px;border-radius:7px;object-fit:contain;background:var(--surface);flex-shrink:0}
+    .app-logo-fb{width:38px;height:38px;border-radius:7px;background:var(--blue-light);display:flex;align-items:center;justify-content:center;color:var(--blue);font-size:1rem;flex-shrink:0}
+    .app-name{font-size:0.95rem;font-weight:600;color:var(--text);line-height:1.3}
+    .app-desc{font-size:0.83rem;color:var(--text2);line-height:1.65;margin-bottom:1rem;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+    .app-footer{display:flex;gap:1rem;padding-top:0.85rem;border-top:1.5px solid var(--border)}
+    .app-link{font-size:0.8rem;font-weight:500;color:var(--blue);text-decoration:none;display:flex;align-items:center;gap:0.3rem;transition:color 0.2s}
+    .app-link:hover{color:var(--blue-dark);text-decoration:none}
+    .app-link-src{color:var(--text3)}
+    .app-link-src:hover{color:var(--text2)}
 
-      .code-animation-box pre::-webkit-scrollbar-track {
-        background: #2d2d2d;
-        border-radius: 4px;
-      }
+    /* WHY */
+    .why-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem}
+    .why-card{background:var(--card-bg);border:2px solid var(--card-border);border-radius:var(--radius);padding:1.6rem;transition:box-shadow 0.25s,border-color 0.25s,transform 0.25s,background 0.3s}
+    .why-card:hover{box-shadow:0 6px 20px rgba(44,123,229,0.13);border-color:var(--blue);transform:translateY(-2px)}
+    .why-icon{width:40px;height:40px;background:var(--blue-light);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--blue);font-size:1rem;margin-bottom:0.9rem}
+    .why-title{font-size:0.95rem;font-weight:600;color:var(--text);margin-bottom:0.4rem}
+    .why-desc{font-size:0.83rem;color:var(--text2);line-height:1.65}
 
-      .code-animation-box pre::-webkit-scrollbar-thumb {
-        background: #007acc;
-        border-radius: 4px;
-        border: 2px solid #2d2d2d;
-      }
+    /* TESTIMONIAL */
+    .testi-section{background:var(--blue);padding:4.5rem 2rem}
+    .testi-inner{max-width:760px;margin:0 auto;text-align:center}
+    .testi-quote{font-size:clamp(1rem,2vw,1.22rem);font-weight:400;color:rgba(255,255,255,0.95);line-height:1.7;margin-bottom:1.5rem;transition:opacity 0.4s;position:relative}
+    .testi-quote::before{content:'\201C';font-size:4rem;line-height:0;color:rgba(255,255,255,0.2);position:absolute;top:0.6rem;left:-2.2rem}
+    .testi-author{font-size:0.8rem;font-weight:600;color:rgba(255,255,255,0.65);text-transform:uppercase;letter-spacing:0.08em}
+    .testi-dots{display:flex;justify-content:center;gap:0.5rem;margin-top:1.75rem}
+    .tdot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.35);cursor:pointer;transition:all 0.3s}
+    .tdot.on{background:#fff;width:18px;border-radius:3px}
 
-      .code-animation-box pre::-webkit-scrollbar-thumb:hover {
-        background: #1a8cff;
-      }
+    /* BLOG */
+    .blog-layout{display:flex;gap:2.5rem;align-items:flex-start}
+    .blog-main{flex:1;min-width:0}
+    .blog-sidebar{width:220px;flex-shrink:0;position:sticky;top:80px}
+    .sidebar-panel{background:var(--sidebar-bg);border:2px solid var(--card-border);border-radius:var(--radius);overflow:hidden;transition:background 0.3s}
+    .sp-header{padding:0.85rem 1rem;border-bottom:1px solid var(--border);font-size:0.78rem;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:0.07em}
+    .archive-btn{width:100%;text-align:left;background:none;border:none;border-bottom:1px solid var(--border);padding:0.6rem 1rem;font-size:0.82rem;color:var(--text2);cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:background 0.15s;font-family:inherit}
+    .archive-btn:last-child{border-bottom:none}
+    .archive-btn:hover{background:var(--surface)}
+    .archive-btn.on{background:var(--blue-light);color:var(--blue);font-weight:600}
+    .abadge{font-size:0.72rem;background:var(--surface);color:var(--text3);padding:0.1rem 0.45rem;border-radius:100px}
+    .archive-btn.on .abadge{background:#c3d9f8;color:var(--blue)}
+    html.dark .archive-btn.on .abadge{background:#1a3a5f}
+    .blog-post{background:var(--blog-post-bg);border:2px solid var(--card-border);border-radius:var(--radius);padding:1.4rem;margin-bottom:1rem;transition:box-shadow 0.2s,border-color 0.2s,background 0.3s}
+    .blog-post:hover{box-shadow:var(--shadow-md);border-color:var(--blue)}
+    .post-date{font-size:0.75rem;color:var(--text3);margin-bottom:0.5rem;display:flex;align-items:center;gap:0.4rem}
+    .post-title{font-size:1rem;font-weight:600;color:var(--text);margin-bottom:0.5rem;line-height:1.4}
+    .post-excerpt{font-size:0.83rem;color:var(--text2);line-height:1.65;margin-bottom:0.9rem}
+    .post-read{font-size:0.82rem;font-weight:500;color:var(--blue);text-decoration:none;display:inline-flex;align-items:center;gap:0.3rem;transition:gap 0.2s}
+    .post-read:hover{gap:0.5rem;text-decoration:none;color:var(--blue-dark)}
+    .load-more{width:100%;background:var(--card-bg);border:1.5px solid var(--border);border-radius:var(--radius);padding:0.7rem;font-size:0.85rem;font-weight:500;color:var(--text2);cursor:pointer;transition:all 0.2s;margin-top:0.75rem;font-family:inherit}
+    .load-more:hover{border-color:var(--blue);color:var(--blue)}
+    .blog-loading{text-align:center;padding:3rem;color:var(--text3);font-size:0.9rem}
+    .show-all-wrap{text-align:center;margin-top:2rem}
 
-      .code-animation-box pre::-webkit-scrollbar-corner {
-        background: #1e1e1e;
-      }
+    /* FOOTER */
+    footer{background:#1a202c;padding:3.5rem 2rem 1.75rem;color:#a0aec0;transition:background 0.3s}
+    html.dark footer{background:#0d1117}
+    .footer-inner{max-width:1160px;margin:0 auto}
+    .footer-grid{display:grid;grid-template-columns:1.6fr repeat(3,1fr);gap:3rem;margin-bottom:3rem}
+    .fbrand-name{font-size:1rem;font-weight:700;color:#fff;margin-bottom:0.65rem}
+    .fbrand-desc{font-size:0.82rem;line-height:1.65;margin-bottom:1.2rem}
+    .fsocials{display:flex;gap:0.55rem}
+    .fsoc{width:30px;height:30px;border:1px solid #2d3748;border-radius:5px;display:flex;align-items:center;justify-content:center;color:#718096;font-size:0.78rem;text-decoration:none;transition:all 0.2s}
+    .fsoc:hover{border-color:var(--blue);color:var(--blue);text-decoration:none}
+    .fcol-title{font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#e2e8f0;margin-bottom:0.85rem}
+    .flink{display:block;font-size:0.82rem;color:#718096;text-decoration:none;padding:0.25rem 0;transition:color 0.2s;cursor:pointer}
+    .flink:hover{color:#e2e8f0;text-decoration:none}
+    .footer-bottom{border-top:1px solid #2d3748;padding-top:1.4rem;display:flex;justify-content:space-between;align-items:center;font-size:0.78rem;flex-wrap:wrap;gap:0.75rem}
 
-      .code-animation-box .status-bar {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background: #007acc;
-        color: white;
-        padding: 2px 10px;
-        font-size: 0.7rem;
-        display: flex;
-        justify-content: space-between;
-        opacity: 0.8;
-        border-bottom-left-radius: 12px;
-        border-bottom-right-radius: 12px;
-        z-index: 10;
-      }
+    /* ── DARK MODE TOGGLE ── */
+    .theme-toggle{display:flex;align-items:center;gap:0.45rem;color:#718096;font-size:0.75rem;font-weight:500;user-select:none}
+    .toggle-track{position:relative;width:40px;height:22px;background:#2d3748;border-radius:100px;border:1px solid #4a5568;cursor:pointer;transition:background 0.25s,border-color 0.25s;flex-shrink:0}
+    .toggle-track.on{background:var(--blue);border-color:var(--blue)}
+    .toggle-thumb{position:absolute;top:3px;left:3px;width:14px;height:14px;background:#718096;border-radius:50%;transition:transform 0.25s cubic-bezier(.34,1.56,.64,1),background 0.25s}
+    .toggle-track.on .toggle-thumb{transform:translateX(18px);background:#fff}
+    .toggle-sun{color:#f6ad55;font-size:0.75rem;transition:color 0.25s}
+    .toggle-moon{color:#718096;font-size:0.75rem;transition:color 0.25s}
+    .toggle-track.on ~ .toggle-moon{color:#a0aec0}
 
-      .code-animation-box .breadcrumb {
-        color: #8dc3f0;
-        font-size: 0.7rem;
-        padding-bottom: 8px;
-        border-bottom: 1px solid #3c3c3c;
-        margin-bottom: 8px;
-      }
+    /* MODAL */
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:1000;display:flex;align-items:center;justify-content:center;padding:2rem}
+    .modal-box{background:var(--modal-bg);border-radius:10px;padding:2rem;max-width:540px;width:100%;max-height:80vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.28);border:1px solid var(--border);transition:background 0.3s}
+    .modal-title{font-size:1.2rem;font-weight:700;color:var(--text);margin-bottom:1rem}
+    .modal-body{font-size:0.87rem;color:var(--text2);line-height:1.7;margin-bottom:1.4rem}
+    .modal-body a{color:var(--blue)}
+    .modal-body strong{color:var(--text)}
+    .modal-close-btn{background:var(--surface);border:1px solid var(--border);color:var(--text);padding:0.55rem 1.4rem;border-radius:6px;cursor:pointer;font-size:0.85rem;font-family:inherit;font-weight:500;transition:background 0.15s}
+    .modal-close-btn:hover{background:var(--border)}
 
-      .code-animation-box .language-badge {
-        position: absolute;
-        top: 10px;
-        right: 15px;
-        color: #6a9955;
-        font-size: 0.7rem;
-        font-family: 'Fira Code';
-        background: #2d2d2d;
-        padding: 2px 8px;
-        border-radius: 12px;
-        border: 1px solid #3c3c3c;
-        z-index: 10;
-      }
+    /* CHATBOT */
+    .chat-fab{position:fixed;bottom:1.5rem;right:1.5rem;width:50px;height:50px;background:var(--blue);border:none;border-radius:50%;color:#fff;font-size:1.15rem;cursor:pointer;box-shadow:0 4px 14px rgba(44,123,229,0.4);z-index:200;transition:all 0.2s;display:flex;align-items:center;justify-content:center}
+    .chat-fab:hover{background:var(--blue-dark);transform:scale(1.05)}
+    .chat-panel{position:fixed;bottom:4.8rem;right:1.5rem;width:330px;height:460px;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;display:flex;flex-direction:column;overflow:hidden;z-index:199;box-shadow:0 8px 30px rgba(0,0,0,0.2);transition:background 0.3s}
+    .chat-hdr{background:var(--blue);padding:0.85rem 1rem;display:flex;justify-content:space-between;align-items:center}
+    .chat-hdr-name{font-size:0.88rem;font-weight:600;color:#fff;display:flex;align-items:center;gap:0.5rem}
+    .chat-online{width:7px;height:7px;border-radius:50%;background:#68d391}
+    .chat-x{background:none;border:none;color:rgba(255,255,255,0.7);cursor:pointer;font-size:0.95rem;transition:color 0.2s}
+    .chat-x:hover{color:#fff}
+    .chat-msgs{flex:1;padding:0.9rem;overflow-y:auto;display:flex;flex-direction:column;gap:0.65rem}
+    .msg{max-width:85%;padding:0.55rem 0.85rem;border-radius:10px;font-size:0.82rem;line-height:1.5}
+    .msg-bot{background:var(--surface);color:var(--text);align-self:flex-start;border-bottom-left-radius:3px}
+    .msg-user{background:var(--blue);color:#fff;align-self:flex-end;border-bottom-right-radius:3px}
+    .chat-sugg{padding:0.5rem 0.8rem;border-top:1px solid var(--border);display:flex;flex-wrap:wrap;gap:0.35rem}
+    .csugg{font-size:0.72rem;padding:0.3rem 0.65rem;background:var(--surface);border:1px solid var(--border);border-radius:20px;cursor:pointer;color:var(--text2);font-family:inherit;transition:all 0.15s}
+    .csugg:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-light)}
+    .chat-input-row{display:flex;gap:0.4rem;padding:0.65rem;border-top:1px solid var(--border)}
+    .chat-input{flex:1;background:var(--input-bg);border:1px solid var(--border);border-radius:6px;padding:0.45rem 0.8rem;font-size:0.82rem;font-family:inherit;color:var(--text);outline:none;transition:border-color 0.2s}
+    .chat-input:focus{border-color:var(--blue)}
+    .chat-send{background:var(--blue);border:none;color:#fff;width:32px;height:32px;border-radius:6px;cursor:pointer;font-size:0.78rem;transition:background 0.2s;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .chat-send:hover{background:var(--blue-dark)}
 
-      .code-animation-box .minimap {
-        position: absolute;
-        right: 0;
-        top: 0;
-        width: 60px;
-        height: 100%;
-        background: #252525;
-        opacity: 0.3;
-        pointer-events: none;
-        z-index: 5;
-      }
+    /* ── SCROLL FADE-IN ── */
+    .fade-up{opacity:0;transform:translateY(28px);transition:opacity 0.6s ease,transform 0.6s ease}
+    .fade-up.visible{opacity:1;transform:translateY(0)}
+    /* CSS stagger for home featured grid (small group, grouped observer) */
+    .stagger-children .fade-up:nth-child(1){transition-delay:0.04s}
+    .stagger-children .fade-up:nth-child(2){transition-delay:0.10s}
+    .stagger-children .fade-up:nth-child(3){transition-delay:0.16s}
+    .stagger-children .fade-up:nth-child(4){transition-delay:0.22s}
+    .stagger-children .fade-up:nth-child(5){transition-delay:0.28s}
+    .stagger-children .fade-up:nth-child(6){transition-delay:0.34s}
+    .stagger-children .fade-up:nth-child(7){transition-delay:0.40s}
+    .stagger-children .fade-up:nth-child(8){transition-delay:0.46s}
+    .stagger-children .fade-up:nth-child(9){transition-delay:0.52s}
+    .stagger-children .fade-up:nth-child(10){transition-delay:0.58s}
+    .stagger-children .fade-up:nth-child(11){transition-delay:0.64s}
+    .stagger-children .fade-up:nth-child(12){transition-delay:0.70s}
 
-      .code-animation-box .typing {
-        animation: typePulse 0.1s ease-in-out;
-      }
-
-      @keyframes typePulse {
-        0% { opacity: 0.7; }
-        50% { opacity: 1; transform: scale(1.02); }
-        100% { opacity: 0.7; }
-      }
-
-      .hero-right {
-        flex: 1;
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-      }
-      
-      .hero-left {
-        flex: 1;
-      }
-      
-      .hero-container {
-        display: flex;
-        align-items: center;
-        gap: 3rem;
-      }
-
-      @media (max-width: 900px) {
-        .hero-container {
-          flex-direction: column;
-        }
-        .hero-right {
-          justify-content: center;
-          width: 100%;
-        }
-        .code-animation-box {
-          max-width: 100%;
-          min-width: 100%;
-          height: 350px;
-        }
-      }
-      
-      @media (max-width: 700px) {
-        html { font-size: 16px; }
-        .chatbot-panel { width: 300px; right: 16px; bottom: 80px; }
-        .footer-columns { flex-direction: column; gap: 1.5rem; }
-      }
-
-      /* Blog Styles - copied exactly from personal website */
-      .blog-container {
-        display: flex;
-        gap: 40px;
-        margin: 2em 0;
-      }
-      .blog-content {
-        flex: 3;
-      }
-      .blog-sidebar {
-        flex: 1;
-        min-width: 220px;
-        max-width: 280px;
-      }
-      .archive-section {
-        background-color: #ffffff;
-        border: 1px solid #e0e8f2;
-        border-radius: 8px;
-        padding: 20px;
-        position: sticky;
-        top: 90px;
-      }
-      body.dark-theme .archive-section {
-        background-color: #1e2a3a;
-        border-color: #3a4b5e;
-      }
-      .archive-title {
-        font-size: 1.2rem;
-        font-weight: 600;
-        color: #0b1c2e;
-        margin-bottom: 20px;
-        padding-bottom: 10px;
-        border-bottom: 2px solid #e0e8f2;
-        font-family: 'Montserrat', sans-serif;
-      }
-      body.dark-theme .archive-title {
-        color: #eef4fa;
-        border-bottom-color: #3a4b5e;
-      }
-      .archive-list {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-      }
-      .archive-item {
-        margin-bottom: 10px;
-      }
-      .archive-button {
-        display: block;
-        width: 100%;
-        text-align: left;
-        background: none;
-        border: 1px solid #e0e8f2;
-        color: #1e2a3a;
-        text-decoration: none;
-        font-size: 0.9rem;
-        padding: 10px 15px;
-        border-radius: 6px;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        font-family: 'IBM Plex Sans', sans-serif;
-      }
-      body.dark-theme .archive-button {
-        color: #d1dceb;
-        border-color: #3a4b5e;
-      }
-      .archive-button:hover {
-        background-color: #f0f5ff;
-        border-color: #0b3b5c;
-      }
-      .archive-button.active {
-        background-color: #0b3b5c;
-        color: white;
-        border-color: #0b3b5c;
-      }
-      .archive-month {
-        font-weight: 500;
-      }
-      .archive-year {
-        font-weight: 400;
-        opacity: 0.8;
-      }
-      .post-count-badge {
-        background-color: #0b3b5c;
-        color: white;
-        font-size: 0.75rem;
-        padding: 2px 8px;
-        border-radius: 10px;
-        float: right;
-      }
-      .archive-button.active .post-count-badge {
-        background-color: white;
-        color: #0b3b5c;
-      }
-      .archive-total {
-        margin-top: 20px;
-        padding-top: 15px;
-        border-top: 1px solid #e0e8f2;
-        font-size: 0.85rem;
-        color: #5f7d9c;
-        text-align: center;
-      }
-      .selected-month-info {
-        background-color: #f0f5ff;
-        padding: 15px;
-        border-radius: 8px;
-        margin-bottom: 20px;
-        border-left: 4px solid #0b3b5c;
-      }
-      body.dark-theme .selected-month-info {
-        background-color: #2f4055;
-      }
-      .selected-month-text {
-        font-weight: 600;
-        color: #0b1c2e;
-        margin-bottom: 5px;
-      }
-      body.dark-theme .selected-month-text {
-        color: #eef4fa;
-      }
-      .show-all-button {
-        display: inline-block;
-        background: none;
-        border: 1px solid #e0e8f2;
-        color: #1e2a3a;
-        padding: 5px 15px;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 0.85rem;
-        margin-top: 5px;
-        transition: all 0.2s ease;
-      }
-      .show-all-button:hover {
-        background-color: white;
-        border-color: #0b3b5c;
-      }
-      .blog-posts-list {
-        display: flex;
-        flex-direction: column;
-        gap: 25px;
-        margin: 2em 0;
-      }
-      .blog-post-item {
-        padding: 20px;
-        background-color: #ffffff;
-        border: 1px solid #e0e8f2;
-        border-radius: 8px;
-        transition: all 0.2s ease;
-      }
-      body.dark-theme .blog-post-item {
-        background-color: #1e2a3a;
-        border-color: #3a4b5e;
-      }
-      .blog-post-item:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      }
-      .blog-post-header {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin-bottom: 15px;
-        flex-wrap: wrap;
-      }
-      .blog-post-icon {
-        color: #5f7d9c;
-        font-size: 1.3rem;
-        flex-shrink: 0;
-      }
-      .blog-post-title {
-        font-size: 1.3rem;
-        font-weight: 600;
-        color: #0b1c2e;
-        margin: 0;
-        flex: 1;
-        font-family: 'Montserrat', sans-serif;
-        min-width: 200px;
-      }
-      body.dark-theme .blog-post-title {
-        color: #eef4fa;
-      }
-      .blog-post-date {
-        color: #5f7d9c;
-        font-size: 0.85rem;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        font-weight: 500;
-        white-space: nowrap;
-        margin-left: auto;
-      }
-      @media (max-width: 768px) {
-        .blog-post-header {
-          flex-direction: column;
-          align-items: flex-start;
-          gap: 8px;
-        }
-        .blog-post-title {
-          min-width: 100%;
-          font-size: 1.2rem;
-        }
-        .blog-post-date {
-          margin-left: 0;
-          white-space: normal;
-          font-size: 0.8rem;
-          width: 100%;
-        }
-        .blog-post-date i {
-          flex-shrink: 0;
-        }
-      }
-      .blog-post-excerpt {
-        color: #1e2a3a;
-        line-height: 1.6;
-        margin-bottom: 15px;
-        font-size: 0.95rem;
-        font-weight: 400;
-      }
-      body.dark-theme .blog-post-excerpt {
-        color: #d1dceb;
-      }
-      .blog-post-actions {
-        text-align: right;
-      }
-      .read-post-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        background-color: #0b3b5c;
-        color: white;
-        padding: 8px 20px;
-        border-radius: 4px;
-        text-decoration: none;
-        font-weight: 600;
-        font-size: 0.9rem;
-        transition: all 0.2s;
-      }
-      .read-post-btn:hover {
-        background-color: #0f4a73;
-      }
-      .blog-loading {
-        text-align: center;
-        padding: 60px 20px;
-        color: #5f7d9c;
-      }
-      .blog-error {
-        text-align: center;
-        padding: 60px 20px;
-        color: #c44536;
-        background-color: #ffffff;
-        border: 1px solid #e0e8f2;
-        border-radius: 8px;
-      }
-      body.dark-theme .blog-error {
-        background-color: #1e2a3a;
-      }
-      .blog-load-more {
-        text-align: center;
-        margin: 30px 0;
-      }
-      .load-more-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        background-color: #ffffff;
-        color: #1e2a3a;
-        padding: 10px 24px;
-        border-radius: 4px;
-        text-decoration: none;
-        font-weight: 600;
-        font-size: 0.95rem;
-        transition: all 0.2s;
-        border: 1px solid #e0e8f2;
-        cursor: pointer;
-      }
-      body.dark-theme .load-more-btn {
-        background-color: #1e2a3a;
-        color: #d1dceb;
-        border-color: #3a4b5e;
-      }
-      .load-more-btn:hover {
-        background-color: #f0f5ff;
-      }
-      .blog-introduction {
-        background-color: #ffffff;
-        border: 1px solid #e0e8f2;
-        border-radius: 8px;
-        padding: 25px;
-        margin-bottom: 30px;
-        position: relative;
-        overflow: hidden;
-      }
-      body.dark-theme .blog-introduction {
-        background-color: #1e2a3a;
-        border-color: #3a4b5e;
-      }
-      @media (max-width: 768px) {
-        .blog-container {
-          flex-direction: column;
-        }
-        .blog-sidebar {
-          max-width: 100%;
-          order: -1;
-          margin-bottom: 30px;
-        }
-        .archive-section {
-          position: static;
-        }
-      }
-
-      /* Header animation styles */
-      .top-header {
-        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, box-shadow 0.3s ease;
-        will-change: transform, opacity;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.03);
-      }
-      
-      .top-header.header-hidden {
-        transform: translateY(-100%);
-        opacity: 0;
-        box-shadow: none;
-      }
-      
-      .navbar {
-        transition: top 0.3s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
-        will-change: top, background, box-shadow;
-      }
-      
-      .navbar.navbar-fixed {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        animation: slideDown 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-      }
-      
-      .navbar.navbar-sticky {
-        position: sticky;
-        top: 42px;
-      }
-      
-      .navbar.navbar-scrolled {
-        background: #000000;
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border-bottom-color: #444444;
-      }
-      
-      body.dark-theme .navbar.navbar-scrolled {
-        background: #000000;
-      }
-      
-      @keyframes slideDown {
-        from {
-          transform: translateY(-100%);
-          opacity: 0;
-        }
-        to {
-          transform: translateY(0);
-          opacity: 1;
-        }
-      }
-      
-      /* Ensure no gap at top */
-      body {
-        margin: 0;
-        padding: 0;
-      }
-      
-      #root {
-        margin-top: 0;
-        padding-top: 0;
-      }
-    </style>
+    /* RESPONSIVE */
+    @media(max-width:1024px){
+      .card-grid{grid-template-columns:repeat(2,1fr)}
+      .footer-grid{grid-template-columns:1fr 1fr;gap:2rem}
+      .hero-inner{flex-direction:column;gap:2.5rem}
+      .hero-right{width:100%}
+    }
+    @media(max-width:768px){
+      .topbar-inner,.navbar-inner{padding:0 1rem}
+      .hero{padding:3rem 1rem 2.5rem}
+      .section{padding:3rem 1rem}
+      .testi-section{padding:3rem 1rem}
+      footer{padding:2.5rem 1rem 1.5rem}
+      .footer-grid{grid-template-columns:1fr;gap:1.75rem}
+      .nav-links{display:none}
+      .mobile-btn{display:block}
+      .card-grid{grid-template-columns:1fr}
+      .why-grid{grid-template-columns:1fr}
+      .blog-layout{flex-direction:column}
+      .blog-sidebar{width:100%;position:static}
+      .footer-bottom{flex-direction:column;gap:0.6rem;text-align:center;align-items:center}
+      .hero-metrics{gap:1.5rem;flex-wrap:wrap}
+      .testi-quote::before{display:none}
+    }
+    @media(max-width:480px){
+      .hero-title{font-size:1.75rem}
+      .chat-panel{width:calc(100vw - 2rem);right:1rem}
+    }
+  </style>
 </head>
 <body>
-    <div id="root"></div>
+<div id="root"></div>
+<script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+const { useState, useEffect, useRef } = React;
 
-    <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.production.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+const shinyApps = [
+  {id:1,  name:"FactorGuard",          desc:"Parallel analysis and scree plot tool for factor retention in exploratory factor analysis (EFA), helping researchers identify the optimal number of factors.",                                  logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/FactorGuard.png",    run:"https://mudassiribrahim2026.shinyapps.io/FactorGuard/",        code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/FactorGuard.R"},
+  {id:2,  name:"CalcuStats",           desc:"Comprehensive tool for sample size calculation, power analysis, and descriptive statistics — suitable for clinical trials and observational studies.",                                          logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/CalcuStats.png",           run:"https://mudassiribrahim2025.shinyapps.io/CalcuStats/",          code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/CalcuStats.R"},
+  {id:3,  name:"CATrend Analyzer",     desc:"Performs Cochran-Armitage trend tests for dose-response analysis and regulatory submissions.",                                                                                                  logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/CAtrend.png",              run:"https://newappstesting.shinyapps.io/CATrendAnalyzer/",          code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/CATrendAnalyzer.R"},
+  {id:4,  name:"ROC Curve Builder",    desc:"Generates ROC curves and evaluates diagnostic test performance with AUC, confidence intervals, and optimal threshold identification for clinical research.",                                    logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/ROC.png",                  run:"https://mudassiribrahim30.shinyapps.io/ROC_CURVE/",             code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/ROC%20Curve%20Builder.R"},
+  {id:5,  name:"Data2SPSS",            desc:"Effortlessly converts datasets from RData, Stata, SAS, Excel, or CSV formats into SPSS (.sav) files with full metadata preservation.",                                                        logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/Data2SPSS.png",             run:"https://newappstesting.shinyapps.io/Data2SPSS/",                code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/Data2SPSS"},
+  {id:6,  name:"MedModr",              desc:"Tool for conducting mediation and moderation analyses, supporting both simple and serial models with interactive and syntax modes.",                                                             logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/MedModr.png",              run:"https://mudassiribrahim30.shinyapps.io/MedModr/",               code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/MedModr.R"},
+  {id:7,  name:"EpiDem Suite",         desc:"A suite for epidemiological data analysis, enabling public health researchers to perform a range of statistical assessments.",                                                                   logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/EpiDem.png",              run:"https://mudassiribrahim2025.shinyapps.io/EpiDemSuite/",         code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/EpiDem%20Suite.R"},
+  {id:8,  name:"ggPubPlot",            desc:"Generates publication-ready graphics using ggplot2 with journal-style formatting for research papers and academic publications.",                                                               logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/ggLogo.png",              run:"https://mudassiribrahim2025.shinyapps.io/ggPubPlot/",           code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/ggPubPlot.R"},
+  {id:9,  name:"APA Table Generator",  desc:"Creates APA-formatted tables for publications, making manuscript preparation faster and more accurate for researchers and students.",                                                           logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/APA%20logo.png",          run:"https://newappstesting.shinyapps.io/APATableGenerator/",        code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/APA%20Table%20Generator%20Pro.R"},
+  {id:10, name:"SysSampler",           desc:"Systematic sampling tool for survey design and methodology, facilitating structured participant selection.",                                                                                     logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/Sys%20Sampler.png",       run:"https://mudassiribrahim2025b.shinyapps.io/SysSampler/",         code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/SysSampler"},
+  {id:11, name:"CMH Analyzer",         desc:"Performs Cochran-Mantel-Haenszel analysis for stratified categorical data in epidemiological and clinical research.",                                                                           logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/CMH.png",                run:"https://newappstesting.shinyapps.io/CMHAnalyzer/",              code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/CMHAnalyzer.R"},
+  {id:12, name:"R DataLab",            desc:"A versatile statistical analysis platform for exploring clinical and research datasets with interactive visualisations.",                                                                        logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/RdataLab.png",            run:"https://newappstesting.shinyapps.io/RDataLab/",                 code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/RDataLab.R"},
+  {id:13, name:"PharmaCalc Pro",       desc:"Performs pharmaceutical calculations, including dosage and formulation computations for clinical and research use.",                                                                             logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/Pharma.png",             run:"https://mudassiribrahim2025b.shinyapps.io/PharmaCalcPro/",      code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/PharmaCalcPro.R"},
+  {id:14, name:"RegEffect Xplorer",    desc:"Interactive tool to visualise regression effects and explore relationships between variables in statistical models.",                                                                            logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/RegEf.png",              run:"https://mudassiribrahim2025b.shinyapps.io/RegEffectXplorer/",   code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/RegEffectXplorer.R"},
+  {id:15, name:"Data TransformR",      desc:"Tool for data transformation and preprocessing, preparing datasets for downstream statistical analysis and modelling.",                                                                          logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/DataTrans.png",           run:"https://mudassiribrahim2025b.shinyapps.io/DataTransformR/",     code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/DataTransformR.R"},
+  {id:16, name:"CleanMyData",          desc:"Data screening and cleaning tool with visualisations to detect missing values, outliers, and inconsistencies in research datasets.",                                                            logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/CleanMyData.png",         run:"https://mudassiribrahim2025b.shinyapps.io/CleanMyData/",        code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/CleanMyData.R"},
+  {id:17, name:"KMPlot Genie",         desc:"Generates Kaplan-Meier survival curves with log-rank tests for time-to-event analyses in clinical and epidemiological studies.",                                                               logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/KMPlot.png",             run:"https://mudassiribrahim30.shinyapps.io/KMPlotGenie/",           code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/KMPlotGenie.R"},
+  {id:18, name:"QuickStatsGen",        desc:"Simulates datasets for educational purposes, protocol development, and preliminary statistical testing in research.",                                                                            logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/QuickStats.png",          run:"https://mudassiribrahim2025.shinyapps.io/QuickStatsGen/",       code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/QuickStatsGen.R"},
+  {id:19, name:"Robust Regressor",     desc:"Performs robust regression using the robustbase package for outlier-resistant modelling and reliable parameter estimation.",                                                                    logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/Robust.png",             run:"https://mudassiribrahim2025.shinyapps.io/Robustregression/",    code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/Robust%20%20Regressor.R"},
+  {id:20, name:"TagSelect",            desc:"Facilitates participant selection and randomisation for research studies and clinical trials with structured methodology.",                                                                      logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/TagSelect.png",          run:"https://mudassiribrahim30.shinyapps.io/Tagselect/",             code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/TagSelect.R"},
+  {id:21, name:"FAnalyzr",             desc:"Supports exploratory and confirmatory factor analysis and dimensionality reduction, enabling researchers to simplify complex datasets.",                                                        logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/FA.png",                 run:"https://mudassiribrahim30.shinyapps.io/fanalyzr/",              code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/FAnalyzr.R"}
+];
 
-    <script type="text/babel">
-      const { useState, useEffect, useRef } = React;
+const testimonials = [
+  {text:"My experience using CalcuStats has been really good. The app is easy to use and very straightforward, even if you're not strong in statistics. It quickly gives accurate results once you enter your values. It has saved me a lot of time. One more special feature I am very passionate about is the non-response rate. A helpful and reliable tool for sample size calculation.", role:"Health Researcher"},
+  {text:"This app (CalcuStats) made the work very simple for me. It even helped me generate a flowchart with just a click.", role:"Health Researcher"},
+  {text:"Data2SPSS saves my time each week. Seamless conversion with no errors.", role:"Data Analyst"},
+  {text:"We compared MedModr with the PROCESS macro and obtained identical results, but MedModr offers a far more interactive experience. Users can choose between an intuitive interactive interface or a syntax mode to write code directly. Highly recommended for researchers seeking both transparency and flexibility.", role:"Health Researcher & Data Analyst"}
+];
 
-      // ---------- ALL APP DATA ----------
-      const shinyApps = [
-        { id:1, name:"FactorGuard", desc:"A combined parallel analysis and scree plot tool for factor retention in exploratory factor analysis (EFA), enabling researchers to accurately identify the optimal number of factors in their datasets.", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/FactorGuard.png", run:"https://mudassiribrahim2026.shinyapps.io/FactorGuard/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/FactorGuard.R" },
-        { id:2, name:"CalcuStats", desc:"Comprehensive tool for sample size calculation, power analysis, and descriptive statistics, suitable for clinical trials and observational studies.", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/CalcuStats.png", run:"https://mudassiribrahim2025.shinyapps.io/CalcuStats/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/CalcuStats.R" },
-        { id:3, name:"CATrend Analyzer", desc:"Performs Cochran-Armitage trend tests for dose-response analysis and regulatory submissions.", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/CAtrend.png", run:"https://newappstesting.shinyapps.io/CATrendAnalyzer/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/CATrendAnalyzer.R" },
-        { id:4, name:"ROC Curve Builder", desc:"Generates ROC curves and evaluates diagnostic test performance for clinical research.", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/ROC.png", run:"https://mudassiribrahim30.shinyapps.io/ROC_CURVE/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/ROC%20Curve%20Builder.R" },
-        { id:5, name:"Data2SPSS", desc:"Effortlessly converts datasets from RData, Stata, SAS, Excel, or CSV formats into SPSS (.sav) files.", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/Data2SPSS.png", run:"https://newappstesting.shinyapps.io/Data2SPSS/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/Data2SPSS" },
-        { id:6, name:"MedModr", desc:"Tool for conducting mediation and moderation analyses in research studies, supporting both simple and serial models.", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/MedModr.png", run:"https://mudassiribrahim30.shinyapps.io/MedModr/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/MedModr.R" },
-        { id:7, name:"EpiDem Suite", desc:"A suite for epidemiological data analysis, enabling public health researchers to perform a range of statistical assessments.", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/EpiDem.png", run:"https://mudassiribrahim2025.shinyapps.io/EpiDemSuite/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/EpiDem%20Suite.R" },
-        { id:8, name:"ggPubPlot", desc:"Generates publication-ready graphics using ggplot2 with journal-style formatting for research papers.", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/ggLogo.png", run:"https://mudassiribrahim2025.shinyapps.io/ggPubPlot/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/ggPubPlot.R" },
-        { id:9, name:"APA Table Generator", desc:"Creates APA-formatted tables for publications, making manuscript preparation faster and more accurate.", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/APA%20logo.png", run:"https://newappstesting.shinyapps.io/APATableGenerator/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/APA%20Table%20Generator%20Pro.R" },
-        { id:10, name:"SysSampler", desc:"Systematic sampling tool for survey design and methodology, facilitating structured participant selection.", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/Sys%20Sampler.png", run:"https://mudassiribrahim2025b.shinyapps.io/SysSampler/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/SysSampler" },
-        { id:11, name:"CMH Analyzer", desc:"Performs Cochran-Mantel-Haenszel analysis for stratified categorical data.", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/CMH.png", run:"https://newappstesting.shinyapps.io/CMHAnalyzer/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/CMHAnalyzer.R" },
-        { id:12, name:"R DataLab", desc:"A versatile statistical analysis platform for exploring clinical and research datasets.", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/RdataLab.png", run:"https://newappstesting.shinyapps.io/RDataLab/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/RDataLab.R" },
-        { id:13, name:"PharmaCalc Pro", desc:"Performs pharmaceutical calculations, including dosage and formulation computations.", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/Pharma.png", run:"https://mudassiribrahim2025b.shinyapps.io/PharmaCalcPro/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/PharmaCalcPro.R" },
-        { id:14, name:"RegEffect Xplorer", desc:"Interactive tool to visualize regression effects and explore relationships between variables.", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/RegEf.png", run:"https://mudassiribrahim2025b.shinyapps.io/RegEffectXplorer/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/RegEffectXplorer.R" },
-        { id:15, name:"Data TransformR", desc:"Tool for data transformation and preprocessing, preparing datasets for analysis.", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/DataTrans.png", run:"https://mudassiribrahim2025b.shinyapps.io/DataTransformR/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/DataTransformR.R" },
-        { id:16, name:"CleanMyData", desc:"Data screening and cleaning tool with visualizations to detect missing values and inconsistencies.", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/CleanMyData.png", run:"https://mudassiribrahim2025b.shinyapps.io/CleanMyData/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/CleanMyData.R" },
-        { id:17, name:"KMPlot Genie", desc:"Generates Kaplan–Meier survival curves with log-rank tests for time-to-event analyses.", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/KMPlot.png", run:"https://mudassiribrahim30.shinyapps.io/KMPlotGenie/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/KMPlotGenie.R" },
-        { id:18, name:"QuickStatsGen", desc:"Simulates datasets for educational purposes, protocol development, and statistical testing.", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/QuickStats.png", run:"https://mudassiribrahim2025.shinyapps.io/QuickStatsGen/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/QuickStatsGen.R" },
-        { id:19, name:"Robust Regressor", desc:"Performs robust regression using robustbase package for outlier-resistant modeling and reliable parameter estimation.", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/Robust.png", run:"https://mudassiribrahim2025.shinyapps.io/Robustregression/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/Robust%20%20Regressor.R" },
-        { id:20, name:"TagSelect", desc:"Facilitates participant selection and randomization for research studies and clinical trials.", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/TagSelect.png", run:"https://mudassiribrahim30.shinyapps.io/Tagselect/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/TagSelect.R" },
-        { id:21, name:"FAnalyzr", desc:"Supports exploratory and confirmatory factor analysis as well as dimensionality reduction, enabling researchers to simplify and interpret complex datasets effectively.", logo:"https://raw.githubusercontent.com/mudassiribrahim12/me/main/FA.png", run:"https://mudassiribrahim30.shinyapps.io/fanalyzr/", code:"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/FAnalyzr.R" }
-      ];
+const whyData = [
+  {icon:"fas fa-flask",            title:"Validated for Research",      desc:"All tools are benchmarked against established software and are suitable for grant applications and peer-reviewed publications."},
+  {icon:"fas fa-code-branch",      title:"Fully Open Source",           desc:"Source code is publicly available on GitHub. Built on R 4.3+, tidyverse, survival, psych, and other CRAN packages."},
+  {icon:"fas fa-cloud-upload-alt", title:"Zero Local Installation",     desc:"Deployed on shinyapps.io and accessible via any modern browser. Secure, scalable, and maintenance-free."},
+  {icon:"fas fa-heart",            title:"Commitment to Accessibility", desc:"Free for academic, government, and non-profit institutions. No license fees, no subscription traps."}
+];
 
-      const featuredApps = shinyApps.slice(0, 6);
+const codeLines = [
+  {h:'<span class="cc"># Load required packages</span>'},
+  {h:'<span class="ck">library</span>(<span class="cv">ggplot2</span>)'},
+  {h:'<span class="ck">library</span>(<span class="cv">survival</span>)'},
+  {h:''},
+  {h:'<span class="cc"># Generate sample data</span>'},
+  {h:'<span class="cf">set.seed</span>(<span class="cn">123</span>)'},
+  {h:'<span class="cv">data</span> <- <span class="cf">data.frame</span>('},
+  {h:'  group = <span class="cf">rep</span>(<span class="cf">c</span>(<span class="cs">"Control"</span>, <span class="cs">"Treatment"</span>), <span class="ck">each</span> = <span class="cn">30</span>),'},
+  {h:'  response = <span class="cf">c</span>(<span class="cf">rnorm</span>(<span class="cn">30</span>, <span class="cn">10</span>, <span class="cn">2</span>), <span class="cf">rnorm</span>(<span class="cn">30</span>, <span class="cn">12</span>, <span class="cn">2.5</span>))'},
+  {h:')'},
+  {h:''},
+  {h:'<span class="cc"># Run statistical test</span>'},
+  {h:'<span class="cv">result</span> <- <span class="cf">t.test</span>(response ~ group, data = <span class="cv">data</span>)'},
+  {h:''},
+  {h:'<span class="cc"># Create publication-ready plot</span>'},
+  {h:'<span class="cf">ggplot</span>(<span class="cv">data</span>, <span class="cf">aes</span>(x = group, y = response, fill = group)) +'},
+  {h:'  <span class="cf">geom_boxplot</span>(alpha = <span class="cn">0.7</span>) +'},
+  {h:'  <span class="cf">theme_minimal</span>()'},
+];
 
-      const testimonials = [
-        { id:1, text:"My experience using CalcuStats has been really good. The app is easy to use and very straightforward, even if you're not strong in statistics. It quickly gives accurate results (a breakdown of the results) once you enter your values. It has saved me a lot of time. One more special feature I am very passionate about is the non-response rate. It's a helpful and reliable tool for sample size calculation, to say the least.", role:"Health researcher" },
-        { id:2, text:"This app (CalcuStats) made the work very simple for me. It even helped me generate a flowchart with just a click.", role:"Health researcher" },
-        { id:3, text:"Data2SPSS saves my time each week. Seamless conversion with no errors.", role:"Data Analyst" },
-        { id:4, text:"We compared MedModr with the PROCESS macro and obtained identical results, but MedModr offers a far more interactive experience. Users can choose between an intuitive interactive interface or a syntax mode to write code directly. What is particularly impressive is that when an analysis is run through the interactive interface, switching to the syntax mode reveals the exact R code that was executed. Highly recommended for researchers seeking both transparency and flexibility.", role:"Health Researcher, Data Analyst" }
-      ];
+/* ── HOOKS ── */
 
-      // ---------- COMPONENTS ----------
-      const FloatingParticles = () => {
-        const containerRef = useRef(null);
-        useEffect(() => {
-          if (!containerRef.current) return;
-          const container = containerRef.current;
-          container.innerHTML = '';
-          const particleCount = 30;
-          for (let i = 0; i < particleCount; i++) {
-            const particle = document.createElement("span");
-            particle.className = "particle";
-            const size = Math.random() * 4 + 1;
-            particle.style.width = size + "px";
-            particle.style.height = size + "px";
-            particle.style.left = Math.random() * 100 + "%";
-            particle.style.top = Math.random() * 100 + "%";
-            particle.style.animationDelay = Math.random() * 8 + "s";
-            particle.style.animationDuration = Math.random() * 10 + 12 + "s";
-            particle.style.background = `rgba(11, 59, 92, ${Math.random() * 0.15 + 0.05})`;
-            particle.style.boxShadow = `0 0 4px #0b3b5c20`;
-            container.appendChild(particle);
-          }
-        }, []);
-        return <div ref={containerRef} className="particle-field" />;
-      };
-
-      const CodeAnimation = () => {
-        const [displayedCode, setDisplayedCode] = useState('');
-        const [isTyping, setIsTyping] = useState(true);
-        const [cursorVisible, setCursorVisible] = useState(true);
-        
-        const fullCode = `# # Load the ggplot2 package 
-library(ggplot2)
-
-# Generate sample data
-set.seed(123)
-data <- data.frame(
-  group = rep(c("Control", "Treatment"), each = 30),
-  response = c(rnorm(30, 10, 2), rnorm(30, 12, 2.5))
-)
-# Run statistical test
-t_test <- t.test(response ~ group, data = data)
-
-# Create publication plot
-ggplot(data, aes(x = group, y = response, fill = group)) ]`;
-
-        useEffect(() => {
-          let i = 0;
-          const typingSpeed = 30;
-          let timeoutId;
-          
-          const typeNextChar = () => {
-            if (i < fullCode.length) {
-              setDisplayedCode(fullCode.substring(0, i + 1));
-              i++;
-              timeoutId = setTimeout(typeNextChar, typingSpeed);
-            } else {
-              setIsTyping(false);
-              setTimeout(() => {
-                setDisplayedCode('');
-                i = 0;
-                setIsTyping(true);
-                timeoutId = setTimeout(typeNextChar, typingSpeed);
-              }, 3000);
-            }
-          };
-          
-          timeoutId = setTimeout(typeNextChar, 500);
-          
-          const cursorInterval = setInterval(() => {
-            setCursorVisible(prev => !prev);
-          }, 500);
-          
-          return () => {
-            clearTimeout(timeoutId);
-            clearInterval(cursorInterval);
-          };
-        }, []);
-
-        return (
-          <div className="code-animation-box">
-            <pre>
-              {displayedCode}
-              <span style={{ 
-                opacity: cursorVisible ? 1 : 0,
-                backgroundColor: '#007acc',
-                width: '8px',
-                height: '1.2em',
-                display: 'inline-block',
-                marginLeft: '2px',
-                verticalAlign: 'middle'
-              }}></span>
-            </pre>
-            {!isTyping && (
-              <div style={{ 
-                position: 'absolute', 
-                bottom: '10px', 
-                right: '15px',
-                color: '#6a9955',
-                fontSize: '0.7rem',
-                fontFamily: 'Fira Code',
-                background: '#2d2d2d',
-                padding: '2px 8px',
-                borderRadius: '12px',
-                border: '1px solid #3c3c3c'
-              }}>
-                <i className="fas fa-redo-alt" style={{ marginRight: '4px' }}></i> replaying in 3s
-              </div>
-            )}
-          </div>
-        );
-      };
-
-      const TopHeader = ({ darkTheme, toggleTheme, searchQuery, setSearchQuery, performSearch, searchResults, setActiveTab }) => {
-        const handleSearchInput = (e) => {
-          setSearchQuery(e.target.value);
-          performSearch(e.target.value);
-        };
-        return (
-          <div className="top-header" style={{ background: '#ffffff', borderBottom: '1px solid #d0ddef', padding: '0.5rem 3rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', transition: 'background 0.3s' }}>
-            <div className="social-icons" style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-              <a href="https://www.youtube.com/@mudasirmohammedibrahim1026" target="_blank" style={{ color: '#0b3b5c', fontSize: '1rem' }}><i className="fab fa-youtube"></i></a>
-              <a href="https://www.facebook.com/mudassiribrahim81" target="_blank" style={{ color: '#0b3b5c', fontSize: '1rem' }}><i className="fab fa-facebook-f"></i></a>
-              <a href="https://x.com/WhizMuda" target="_blank" style={{ color: '#0b3b5c', fontSize: '1rem' }}><i className="fab fa-x-twitter"></i></a>
-              <a href="https://www.instagram.com/mudassiribrahim81" target="_blank" style={{ color: '#0b3b5c', fontSize: '1rem' }}><i className="fab fa-instagram"></i></a>
-              <a href="https://github.com/mudassiribrahim30" target="_blank" style={{ color: '#0b3b5c', fontSize: '1rem' }}><i className="fab fa-github"></i></a>
-            </div>
-            <div className="social-search" style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-              <div style={{ position: 'relative' }}>
-                <input
-                  type="text"
-                  placeholder="Search apps........."
-                  value={searchQuery}
-                  onChange={handleSearchInput}
-                  style={{ padding: '0.4rem 1rem 0.4rem 2rem', borderRadius: '30px', border: '1px solid #b8cde0', fontSize: '0.85rem', width: '200px', background: '#fff', color: '#1e2a3a' }}
-                />
-                <i className="fas fa-search" style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)', color: '#7f8fa4', fontSize: '0.8rem' }}></i>
-                {searchQuery && searchResults.length > 0 && (
-                  <div style={{ position: 'absolute', top: '100%', left: 0, right: 0, background: '#fff', border: '1px solid #ccc', borderRadius: '10px', marginTop: '4px', maxHeight: '200px', overflowY: 'auto', zIndex: 999, boxShadow: '0 8px 16px rgba(0,0,0,0.1)' }}>
-                    {searchResults.map(item => (
-                      <div key={item.id} onClick={() => { window.open(item.run, '_blank'); setSearchQuery(''); }} style={{ padding: '0.5rem 1rem', cursor: 'pointer', borderBottom: '1px solid #eee', fontWeight: 500, color: '#0b3b5c', fontSize: '0.85rem' }}>
-                        {item.name} <span style={{ fontSize: '0.7rem', color: '#6b7c93' }}>↗</span>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-              <button onClick={toggleTheme} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.1rem', color: '#0b3b5c' }}>
-                <i className={`fas fa-${darkTheme ? 'sun' : 'moon'}`}></i>
-              </button>
-            </div>
-          </div>
-        );
-      };
-
-const Navbar = ({ activeTab, setActiveTab, setShowPrivacy, setModalContent, darkTheme, toggleTheme, searchQuery, setSearchQuery, performSearch, searchResults }) => {
-  const [scrolled, setScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [hideTopHeader, setHideTopHeader] = useState(false);
-  const [lastScrollY, setLastScrollY] = useState(0);
-  const [navbarFixed, setNavbarFixed] = useState(false);
-  
+// Fade single element when it enters viewport
+const useFadeIn = (threshold=0.12) => {
+  const ref = useRef(null);
   useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      setScrolled(currentScrollY > 10);
-      
-      // Only hide top header when scrolling down past threshold
-      if (currentScrollY > lastScrollY && currentScrollY > 80) {
-        setHideTopHeader(true);
-        setNavbarFixed(true);
-      } else if (currentScrollY < 80) {
-        setHideTopHeader(false);
-        setNavbarFixed(false);
+    const el = ref.current; if (!el) return;
+    const obs = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) { el.classList.add('visible'); obs.disconnect(); }
+    }, {threshold});
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [threshold]);
+  return ref;
+};
+
+// Observe parent; when visible, add .visible to all .fade-up children at once (CSS stagger delay)
+const useStaggerFadeIn = (threshold=0.08) => {
+  const ref = useRef(null);
+  useEffect(() => {
+    const el = ref.current; if (!el) return;
+    const obs = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) { el.querySelectorAll('.fade-up').forEach(c => c.classList.add('visible')); obs.disconnect(); }
+    }, {threshold});
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [threshold]);
+  return ref;
+};
+
+// Observe EACH card individually — reveals as it scrolls into viewport (used in AppsTab)
+const usePerCardFadeIn = () => {
+  const ref = useRef(null);
+  useEffect(() => {
+    const grid = ref.current; if (!grid) return;
+    const cards = Array.from(grid.querySelectorAll('.fade-up'));
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, {threshold: 0.1, rootMargin:'0px 0px -20px 0px'});
+    cards.forEach(c => obs.observe(c));
+    return () => obs.disconnect();
+  }, []);
+  return ref;
+};
+
+// Counter 0 → target with ease-out
+const useCounter = (target, duration=1600) => {
+  const [count, setCount] = useState(0);
+  const ref = useRef(null);
+  const started = useRef(false);
+  useEffect(() => {
+    const el = ref.current; if (!el) return;
+    const obs = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting && !started.current) {
+        started.current = true;
+        let t0 = null;
+        const step = ts => {
+          if (!t0) t0 = ts;
+          const p = Math.min((ts - t0) / duration, 1);
+          setCount(Math.round((1 - Math.pow(1 - p, 3)) * target));
+          if (p < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+        obs.disconnect();
       }
-      
-      // When scrolling up but not to the top, keep navbar fixed
-      if (currentScrollY < lastScrollY && currentScrollY > 80) {
-        setNavbarFixed(true);
-      }
-      
-      setLastScrollY(currentScrollY);
-    };
-    
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY]);
+    }, {threshold:0.5});
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [target, duration]);
+  return [count, ref];
+};
 
-  const handleSearchInput = (e) => {
-    setSearchQuery(e.target.value);
-    performSearch(e.target.value);
-  };
-  
-  const handleLogoClick = (e) => {
-    e.preventDefault();
-    setActiveTab('home');
-    setMobileMenuOpen(false);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+// Dark mode — persists via localStorage, applies html.dark class
+const useDarkMode = () => {
+  const [dark, setDark] = useState(() => { try { return localStorage.getItem('sht-theme')==='dark'; } catch { return false; } });
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', dark);
+    try { localStorage.setItem('sht-theme', dark ? 'dark' : 'light'); } catch {}
+  }, [dark]);
+  return [dark, setDark];
+};
 
-  const handleNavClick = (tab) => {
-    setActiveTab(tab);
-    setMobileMenuOpen(false);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+/* ── COMPONENTS ── */
 
-  const handleAboutClick = (e) => {
-    e.preventDefault();
-    window.location.href = 'https://www.mudasiribrahim.com';
-    setMobileMenuOpen(false);
-  };
+const CodeBox = () => {
+  const [n, setN] = useState(0);
+  const [cur, setCur] = useState(true);
+  useEffect(() => {
+    let i = 0;
+    const iv = setInterval(() => { if (i < codeLines.length) setN(++i); else { clearInterval(iv); setTimeout(() => setN(0), 3500); } }, 185);
+    const ci = setInterval(() => setCur(p => !p), 520);
+    return () => { clearInterval(iv); clearInterval(ci); };
+  }, []);
+  return (
+    <div className="code-box">
+      <div className="code-box-hdr">
+        <div className="cdot cdot-r"></div><div className="cdot cdot-y"></div><div className="cdot cdot-g"></div>
+        <span className="code-fname">analysis.R — ShinyHealthTools</span>
+      </div>
+      <div className="code-body">
+        {codeLines.slice(0,n).map((l,i) => <div key={i} dangerouslySetInnerHTML={{__html:l.h||'&nbsp;'}}/>)}
+        <span className="cursor" style={{opacity:cur?1:0}}></span>
+      </div>
+    </div>
+  );
+};
 
-  const handleSupportClick = (e) => {
-    e.preventDefault();
-    setModalContent({
-      title: '📬 Support & Appreciation',
-      content: `
-        If any of the apps have been helpful, consider supporting them: 
-        <a href="https://buymeacoffee.com/mudasiribrahim30" target="_blank" style="color:#0b3b5c;">Donate</a>.<br><br>
-        For technical assistance, contact 
-        <a href="mailto:mudassiribrahim30@gmail.com" style="color:#0b3b5c;">mudassiribrahim30@gmail.com</a>. 
-        Responses are typically provided within 24 hours on business days.
-      `
-    });
-    setMobileMenuOpen(false);
-  };
+const AnimatedMetric = ({target, prefix='', suffix='', label, duration=1800}) => {
+  const [count, ref] = useCounter(target, duration);
+  return (
+    <div ref={ref}>
+      <div className="metric-n">{prefix}{count}{suffix}</div>
+      <div className="metric-l">{label}</div>
+    </div>
+  );
+};
 
-  // Determine navbar classes
-  const navbarClasses = `navbar ${scrolled ? 'navbar-scrolled' : ''} ${navbarFixed ? 'navbar-fixed' : 'navbar-sticky'}`;
+const AppCard = ({app, className=''}) => {
+  const [err, setErr] = useState(false);
+  return (
+    <div className={`app-card ${className}`}>
+      <div className="app-card-top">
+        {app.logo && !err
+          ? <img src={app.logo} alt={app.name} className="app-logo" onError={() => setErr(true)}/>
+          : <div className="app-logo-fb"><i className="fas fa-chart-bar"></i></div>}
+        <span className="app-name">{app.name}</span>
+      </div>
+      <p className="app-desc">{app.desc}</p>
+      <div className="app-footer">
+        <a href={app.run} target="_blank" className="app-link"><i className="fas fa-play" style={{fontSize:'0.7rem'}}></i> Launch app</a>
+        <a href={app.code} target="_blank" className="app-link app-link-src"><i className="fab fa-github" style={{fontSize:'0.78rem'}}></i> Source</a>
+      </div>
+    </div>
+  );
+};
 
+const Testimonials = () => {
+  const [idx, setIdx] = useState(0);
+  const [fade, setFade] = useState(true);
+  const go = i => { setFade(false); setTimeout(() => { setIdx(i); setFade(true); }, 350); };
+  useEffect(() => { const t = setInterval(() => go((idx+1)%testimonials.length), 12000); return () => clearInterval(t); }, [idx]);
+  return (
+    <div className="testi-section">
+      <div className="testi-inner">
+        <div className="testi-quote" style={{opacity:fade?1:0}}>{testimonials[idx].text}</div>
+        <div className="testi-author">— {testimonials[idx].role}</div>
+        <div className="testi-dots">{testimonials.map((_,i) => <div key={i} className={`tdot${i===idx?' on':''}`} onClick={() => go(i)}></div>)}</div>
+      </div>
+    </div>
+  );
+};
+
+const ThemeToggle = ({dark, setDark}) => (
+  <div className="theme-toggle">
+    <i className="fas fa-sun toggle-sun" style={{color: dark ? '#4a5568' : '#f6ad55'}}></i>
+    <div className={`toggle-track${dark?' on':''}`} onClick={() => setDark(d => !d)} role="switch" aria-checked={dark} aria-label="Toggle dark mode">
+      <div className="toggle-thumb"></div>
+    </div>
+    <i className="fas fa-moon toggle-moon" style={{color: dark ? '#a0aec0' : '#4a5568'}}></i>
+    <span style={{marginLeft:'0.1rem',fontSize:'0.74rem'}}>{dark ? 'Dark' : 'Light'}</span>
+  </div>
+);
+
+const HomeTab = ({setTab}) => {
+  const featuredHdrRef = useFadeIn();
+  const featuredGridRef = useStaggerFadeIn();
+  const whyHdrRef = useFadeIn();
+  const whyGridRef = useStaggerFadeIn();
   return (
     <>
-      <div className={`top-header ${hideTopHeader ? 'header-hidden' : ''}`} style={{ 
-        background: '#ffffff', 
-        borderBottom: '1px solid #d0ddef', 
-        padding: '0.5rem 3rem', 
-        display: 'flex', 
-        justifyContent: 'space-between', 
-        alignItems: 'center', 
-        flexWrap: 'wrap',
-        position: 'sticky',
-        top: 0,
-        zIndex: 30
-      }}>
-        <div className="social-icons" style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-          <a href="https://www.youtube.com/@mudasirmohammedibrahim1026" target="_blank" style={{ color: '#0b3b5c', fontSize: '1rem' }}><i className="fab fa-youtube"></i></a>
-          <a href="https://www.facebook.com/mudassiribrahim81" target="_blank" style={{ color: '#0b3b5c', fontSize: '1rem' }}><i className="fab fa-facebook-f"></i></a>
-          <a href="https://x.com/WhizMuda" target="_blank" style={{ color: '#0b3b5c', fontSize: '1rem' }}><i className="fab fa-x-twitter"></i></a>
-          <a href="https://www.instagram.com/mudassiribrahim81" target="_blank" style={{ color: '#0b3b5c', fontSize: '1rem' }}><i className="fab fa-instagram"></i></a>
-          <a href="https://github.com/mudassiribrahim30" target="_blank" style={{ color: '#0b3b5c', fontSize: '1rem' }}><i className="fab fa-github"></i></a>
-        </div>
-        <div className="social-search" style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-          <div style={{ position: 'relative' }}>
-            <input
-              type="text"
-              placeholder="Search apps........."
-              value={searchQuery}
-              onChange={handleSearchInput}
-              style={{ padding: '0.4rem 1rem 0.4rem 2rem', borderRadius: '30px', border: '1px solid #b8cde0', fontSize: '0.85rem', width: '200px', background: '#fff', color: '#1e2a3a' }}
-            />
-            <i className="fas fa-search" style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)', color: '#7f8fa4', fontSize: '0.8rem' }}></i>
-            {searchQuery && searchResults.length > 0 && (
-              <div style={{ position: 'absolute', top: '100%', left: 0, right: 0, background: '#fff', border: '1px solid #ccc', borderRadius: '10px', marginTop: '4px', maxHeight: '200px', overflowY: 'auto', zIndex: 999, boxShadow: '0 8px 16px rgba(0,0,0,0.1)' }}>
-                {searchResults.map(item => (
-                  <div key={item.id} onClick={() => { window.open(item.run, '_blank'); setSearchQuery(''); }} style={{ padding: '0.5rem 1rem', cursor: 'pointer', borderBottom: '1px solid #eee', fontWeight: 500, color: '#0b3b5c', fontSize: '0.85rem' }}>
-                    {item.name} <span style={{ fontSize: '0.7rem', color: '#6b7c93' }}>↗</span>
-                  </div>
-                ))}
-              </div>
-            )}
+      <div className="hero">
+        <div className="hero-inner">
+          <div className="hero-left">
+            <div className="hero-badge"><div className="badge-dot"></div>Open Source · No Installation · Free Forever</div>
+            <h1 className="hero-title">Empowering Health Research<br/><span>with Innovative Tools</span></h1>
+            <p className="hero-desc">ShinyHealthTools is a platform dedicated to advancing public health research worldwide. This suite of R/Shiny applications serves healthcare institutions, academic researchers, and clinical studies — all without any programming knowledge required.</p>
+            <p className="hero-desc">Covering robust regression, randomisation, data screening, epidemiological analysis, publication graphics, APA tables, survival analysis, mediation, moderation, ROC analysis, factor analysis, SPSS conversion, and more — all running directly in your browser.</p>
+            <div className="hero-actions">
+              <button className="btn-primary" onClick={() => {setTab('apps');window.scrollTo({top:0,behavior:'smooth'});}}><i className="fas fa-th-large"></i> Browse all apps</button>
+              <a href="https://github.com/mudassiribrahim30/R-Shiny-Apps" target="_blank" className="btn-secondary"><i className="fab fa-github"></i> View on GitHub</a>
+            </div>
+            <div className="hero-metrics">
+              <AnimatedMetric target={21}  suffix=""  label="Statistical tools" duration={1600}/>
+              <AnimatedMetric target={100} suffix="%" label="Open source"       duration={1800}/>
+              <AnimatedMetric target={0}   prefix="$" label="License cost"      duration={900}/>
+            </div>
           </div>
-          <button onClick={toggleTheme} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.1rem', color: '#0b3b5c' }}>
-            <i className={`fas fa-${darkTheme ? 'sun' : 'moon'}`}></i>
-          </button>
+          <div className="hero-right"><CodeBox/></div>
         </div>
       </div>
 
-      <nav className={navbarClasses} style={{ 
-        background: '#000000', 
-        borderBottom: '1px solid #333333',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        padding: '1rem 3rem',
-        zIndex: 29,
-        width: '100%'
-      }}>
-        <div className="nav-logo">
-          <a href="#" onClick={handleLogoClick}>
-            <span className="logo-glow" style={{ color: '#ffffff', fontFamily: 'Montserrat, sans-serif', fontWeight: 700, fontSize: '1.4rem' }}><i className="fas fa-chart-pie" style={{ marginRight: '6px', color: '#ffffff' }}></i>ShinyHealthTools</span>
-          </a>
+      <div className="section">
+        <div className="section-inner">
+          <div className="section-hdr fade-up" ref={featuredHdrRef}>
+            <div className="section-label">Featured Applications</div>
+            <h2 className="section-title">Six Essential Tools</h2>
+            <p className="section-sub">A selection of our most-used applications across clinical research, epidemiology, and biostatistics.</p>
+          </div>
+          <div className="card-grid stagger-children" ref={featuredGridRef}>
+            {shinyApps.slice(0,6).map(a => <AppCard key={a.id} app={a} className="fade-up"/>)}
+          </div>
+          <div className="show-all-wrap">
+            <button className="btn-secondary" onClick={() => {setTab('apps');window.scrollTo({top:0,behavior:'smooth'});}}>
+              View all 21 applications <i className="fas fa-arrow-right" style={{fontSize:'0.78rem'}}></i>
+            </button>
+          </div>
         </div>
-        
-        {/* TABS MOVED TO LEFT SIDE - font size reduced to a balanced, professional size */}
-        <div className="nav-links" style={{ display: 'flex', gap: '2rem', alignItems: 'center', marginLeft: '2rem' }}>
-          <a href="#" onClick={(e) => { e.preventDefault(); handleNavClick('home'); }} style={{ color: '#ffffff', fontSize: '0.95rem', fontWeight: '600', letterSpacing: '0.3px' }}>Home</a>
-          <a href="#" onClick={(e) => { e.preventDefault(); handleNavClick('apps'); }} style={{ color: '#ffffff', fontSize: '0.95rem', fontWeight: '600', letterSpacing: '0.3px' }}>Apps</a>
-          <a href="#" onClick={(e) => { e.preventDefault(); handleNavClick('blog'); }} style={{ color: '#ffffff', fontSize: '0.95rem', fontWeight: '600', letterSpacing: '0.3px' }}>Blog</a>
-          <a href="#" onClick={handleAboutClick} style={{ color: '#ffffff', fontSize: '0.95rem', fontWeight: '600', letterSpacing: '0.3px' }}>Meet the Developer</a>
-          <a href="#" onClick={handleSupportClick} style={{ color: '#ffffff', fontSize: '0.95rem', fontWeight: '600', letterSpacing: '0.3px' }}>Support</a>
+      </div>
+
+      <div className="section section-alt">
+        <div className="section-inner">
+          <div className="section-hdr fade-up" ref={whyHdrRef}>
+            <div className="section-label">Why ShinyHealthTools</div>
+            <h2 className="section-title">Built for Real Research</h2>
+            <p className="section-sub">Validated, open, and designed for the constraints of academic and clinical environments.</p>
+          </div>
+          <div className="why-grid stagger-children" ref={whyGridRef}>
+            {whyData.map((w,i) => (
+              <div className="why-card fade-up" key={i}>
+                <div className="why-icon"><i className={w.icon}></i></div>
+                <div className="why-title">{w.title}</div>
+                <div className="why-desc">{w.desc}</div>
+              </div>
+            ))}
+          </div>
         </div>
-
-        <button className="mobile-menu-btn" onClick={() => setMobileMenuOpen(!mobileMenuOpen)} style={{ color: '#ffffff', display: 'none', background: 'none', border: 'none', fontSize: '1.6rem', cursor: 'pointer', zIndex: 30 }}>
-          <i className={`fas fa-${mobileMenuOpen ? 'times' : 'bars'}`}></i>
-        </button>
-
-        <div className={`mobile-menu ${mobileMenuOpen ? 'open' : ''}`} style={{ 
-          background: '#000000', 
-          borderBottom: '1px solid #333333',
-          display: mobileMenuOpen ? 'flex' : 'none',
-          position: 'absolute',
-          top: '100%',
-          left: 0,
-          right: 0,
-          padding: '0.8rem 1.5rem',
-          flexDirection: 'column',
-          gap: '0.3rem',
-          zIndex: 25
-        }}>
-          <a href="#" onClick={(e) => { e.preventDefault(); handleNavClick('home'); }} style={{ color: '#ffffff', fontSize: '1rem' }}><i className="fas fa-home"></i> Home</a>
-          <a href="#" onClick={(e) => { e.preventDefault(); handleNavClick('apps'); }} style={{ color: '#ffffff', fontSize: '1rem' }}><i className="fas fa-th"></i> Apps</a>
-          <a href="#" onClick={(e) => { e.preventDefault(); handleNavClick('blog'); }} style={{ color: '#ffffff', fontSize: '1rem' }}><i className="fas fa-blog"></i> Blog</a>
-          <a href="#" onClick={handleAboutClick} style={{ color: '#ffffff', fontSize: '1rem' }}><i className="fas fa-user"></i> Meet the Developer</a>
-          <a href="#" onClick={handleSupportClick} style={{ color: '#ffffff', fontSize: '1rem' }}><i className="fas fa-envelope"></i> Support</a>
-        </div>
-      </nav>
-
-      <style>{`
-  @media (max-width: 768px) {
-    .nav-links {
-      display: none !important;
-    }
-    .mobile-menu-btn {
-      display: block !important;
-    }
-    .navbar {
-      padding: 1rem 1.5rem !important;
-    }
-  }
-  
-  /* Card grid layout - desktop first */
-  .card-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-  }
-  
-  /* Tablet - 2 columns */
-  @media (max-width: 1024px) {
-    .card-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-  
-  /* Mobile - 1 column (vertical stacking) */
-  @media (max-width: 600px) {
-    .card-grid {
-      grid-template-columns: 1fr;
-    }
-    
-    /* Ensure cards take full width and stack vertically */
-    .card-grid > div {
-      width: 100%;
-      max-width: 100%;
-    }
-    
-    /* Adjust container padding for mobile */
-    .showcase {
-      padding: 1.5rem 1rem;
-    }
-    
-    .hero {
-      padding: 1.5rem 1rem;
-    }
-    
-    .testimonial {
-      padding: 1.5rem 1rem;
-    }
-    
-    .testimonial-inner {
-      padding: 1.5rem;
-    }
-  }
-  
-  /* Small mobile devices */
-  @media (max-width: 400px) {
-    .hero-title {
-      font-size: 2rem;
-    }
-    
-    .hero-sub {
-      font-size: 0.95rem;
-    }
-    
-    .hero-metrics {
-      gap: 1.5rem;
-      flex-wrap: wrap;
-    }
-  }
-  
-  .why-tools-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.8rem;
-  margin-top: 1rem;
-}
-
-@media (max-width: 600px) {
-  .why-tools-grid {
-    grid-template-columns: 1fr;
-  }
-}
-        
-        .hero-container {
-          display: flex;
-          align-items: center;
-          gap: 3rem;
-        }
-        @media (max-width: 900px) {
-          .hero-container {
-            flex-direction: column;
-          }
-          .hero-right {
-            width: 100%;
-          }
-          .code-animation-box {
-            max-width: 100%;
-            min-width: 100%;
-          }
-        }
-        .top-header {
-          padding-left: 1rem !important;
-          padding-right: 1rem !important;
-        }
-        .social-search input {
-          width: 160px !important;
-        }
-        @media (max-width: 480px) {
-          .social-search input {
-            width: 140px !important;
-          }
-          .social-icons {
-            gap: 0.6rem !important;
-          }
-        }
-        /* Refined font sizing for professional, readable appearance */
-        body, p, .hero-sub, .card p, .testimonial-text, .footer, .modal-content, .blog-post-excerpt {
-          font-size: 1rem;
-          line-height: 1.6;
-          font-weight: 400;
-        }
-        h1, h2, h3, .hero-title, .showcase-title, .card h3, .blog-post-title, .archive-title, .footer-col h4 {
-          font-family: 'Montserrat', sans-serif;
-          font-weight: 600;
-        }
-        .hero-title {
-          font-size: 3rem;
-          font-weight: 700;
-        }
-        .showcase-title {
-          font-size: 1.1rem;
-          letter-spacing: 1.5px;
-        }
-        .card h3 {
-          font-size: 1.35rem;
-        }
-        .hero-sub {
-          font-size: 1rem;
-        }
-        .metric-number {
-          font-size: 1.8rem;
-        }
-        .quote-text {
-          font-size: 1.25rem;
-        }
-        .card p {
-          font-size: 0.95rem;
-        }
-      `}</style>
+      </div>
+      <Testimonials/>
     </>
   );
 };
-      const PrivacyModal = ({ onClose, title, content }) => {
-        const modalRef = useRef(null);
-        useEffect(() => {
-          document.body.classList.add('modal-open');
-          if (modalRef.current) {
-            setTimeout(() => {
-              modalRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }, 100);
-          }
-          return () => document.body.classList.remove('modal-open');
-        }, []);
 
-        return (
-          <div className="modal-overlay" onClick={onClose}>
-            <div className="modal-content" ref={modalRef} onClick={e => e.stopPropagation()}>
-              <h3>{title}</h3>
-              <div dangerouslySetInnerHTML={{ __html: content }} />
-              <button className="modal-close" onClick={onClose}>close</button>
+// Each card has its own IntersectionObserver — reveals individually as you scroll
+const AppsTab = () => {
+  const hdrRef  = useFadeIn();
+  const gridRef = usePerCardFadeIn();
+  return (
+    <div className="section">
+      <div className="section-inner">
+        <div className="section-hdr fade-up" ref={hdrRef}>
+          <div className="section-label">All Applications</div>
+          <h2 className="section-title">21 Web Tools</h2>
+          <p className="section-sub">Every application is open source, browser-based, and free to use for academic and research purposes.</p>
+        </div>
+        <div className="card-grid" ref={gridRef}>
+          {shinyApps.map(a => <AppCard key={a.id} app={a} className="fade-up"/>)}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const BlogTab = () => {
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const [visible, setVisible] = useState(10);
+  const [selMonth, setSelMonth] = useState(null);
+  const [filtered, setFiltered] = useState([]);
+  const hdrRef = useFadeIn();
+  const layoutRef = useFadeIn(0.05);
+
+  const excerpt = (html, max=200) => {
+    if (!html) return '';
+    const t = document.createElement('textarea');
+    t.innerHTML = html.replace(/<[^>]*>/g,'');
+    const s = t.value.replace(/\s+/g,' ').trim();
+    return s.length > max ? s.slice(0,max)+'...' : s;
+  };
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const url = encodeURIComponent('https://mudasir-ibrahim.blogspot.com/feeds/posts/default?alt=json&max-results=100');
+        const r = await fetch(`https://api.allorigins.win/get?url=${url}&t=${Date.now()}`);
+        if (r.ok) {
+          const j = await r.json();
+          const d = JSON.parse(j.contents);
+          if (d?.feed?.entry?.length) { const s = d.feed.entry.sort((a,b) => new Date(b.published?.$t)-new Date(a.published?.$t)); setPosts(s); setFiltered(s); }
+          else setError(true);
+        } else setError(true);
+      } catch { setError(true); }
+      finally { setLoading(false); }
+    })();
+  }, []);
+
+  const grouped = {};
+  posts.forEach(p => {
+    const d = new Date(p.published?.$t || Date.now());
+    const k = d.toLocaleDateString('en-US',{month:'long',year:'numeric'});
+    if (!grouped[k]) grouped[k] = {d, posts:[]};
+    grouped[k].posts.push(p);
+  });
+  const months = Object.entries(grouped).sort(([,a],[,b]) => b.d-a.d);
+  const display = filtered.length ? filtered : posts;
+  const selectMonth = k => { if (selMonth===k) { setSelMonth(null); setFiltered(posts); } else { setSelMonth(k); setFiltered(grouped[k]?.posts||[]); } setVisible(10); };
+
+  return (
+    <div className="section">
+      <div className="section-inner">
+        <div className="section-hdr fade-up" ref={hdrRef}>
+          <div className="section-label">Blog</div>
+          <h2 className="section-title">Insights & Updates</h2>
+          <p className="section-sub">Perspectives on ShinyHealthTools, statistical methods, and health data science.</p>
+        </div>
+        {loading ? (
+          <div className="blog-loading"><i className="fas fa-spinner fa-spin" style={{fontSize:'1.3rem',marginBottom:'0.75rem',display:'block'}}></i>Loading posts…</div>
+        ) : error ? (
+          <div className="blog-loading"><p style={{marginBottom:'0.75rem'}}>Unable to load posts.</p><a href="https://mudasir-ibrahim.blogspot.com" target="_blank" className="btn-primary" style={{display:'inline-flex'}}><i className="fas fa-external-link-alt"></i> Open Blog</a></div>
+        ) : (
+          <div className="blog-layout fade-up" ref={layoutRef}>
+            <div className="blog-sidebar">
+              <div className="sidebar-panel">
+                <div className="sp-header">Filter by month</div>
+                <button className={`archive-btn${!selMonth?' on':''}`} onClick={() => {setSelMonth(null);setFiltered(posts);setVisible(10);}}>All posts <span className="abadge">{posts.length}</span></button>
+                {months.map(([k,v]) => <button key={k} className={`archive-btn${selMonth===k?' on':''}`} onClick={() => selectMonth(k)}>{k} <span className="abadge">{v.posts.length}</span></button>)}
+              </div>
+            </div>
+            <div className="blog-main">
+              {display.slice(0,visible).map((post,i) => {
+                const title = post.title?.$t || 'Untitled';
+                const date = new Date(post.published?.$t).toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+                const link = post.link?.find(l=>l.rel==='alternate')?.href||'#';
+                return (
+                  <div key={i} className="blog-post">
+                    <div className="post-date"><i className="far fa-calendar-alt"></i>{date}</div>
+                    <div className="post-title">{title}</div>
+                    <div className="post-excerpt">{excerpt(post.content?.$t)}</div>
+                    <a href={link} target="_blank" className="post-read">Read full post <i className="fas fa-arrow-right" style={{fontSize:'0.72rem'}}></i></a>
+                  </div>
+                );
+              })}
+              {visible < display.length && <button className="load-more" onClick={() => setVisible(v=>v+10)}><i className="fas fa-chevron-down" style={{marginRight:'0.4rem'}}></i>Load more ({display.length-visible} remaining)</button>}
+              {visible >= display.length && display.length > 0 && <p style={{textAlign:'center',fontSize:'0.82rem',color:'var(--text3)',marginTop:'1rem'}}><i className="fas fa-check-circle" style={{color:'var(--green)',marginRight:'0.4rem'}}></i>All {display.length} posts shown</p>}
             </div>
           </div>
-        );
-      };
+        )}
+      </div>
+    </div>
+  );
+};
 
-      const TestimonialCarousel = () => {
-        const [activeIndex, setActiveIndex] = useState(0);
-        useEffect(() => {
-          const interval = setInterval(() => {
-            setActiveIndex((current) => (current + 1) % testimonials.length);
-          }, 15000);
-          return () => clearInterval(interval);
-        }, []);
-        return (
-          <section className="testimonial">
-            <div className="testimonial-inner">
-              <span className="quote-mark">“</span>
-              <div className="testimonial-carousel">
-                {testimonials.map((testimonial, index) => (
-                  <div key={testimonial.id} className={`testimonial-slide ${index === activeIndex ? 'active' : ''}`}>
-                    <p className="quote-text">{testimonial.text}</p>
-                    <div className="quote-author">
-                      <div className="author-avatar" />
-                      <div><span>{testimonial.role}</span></div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
-        );
-      };
+const Modal = ({title, content, onClose}) => {
+  useEffect(() => { document.body.classList.add('modal-open'); return () => document.body.classList.remove('modal-open'); }, []);
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-box" onClick={e => e.stopPropagation()}>
+        <div className="modal-title">{title}</div>
+        <div className="modal-body" dangerouslySetInnerHTML={{__html:content}}/>
+        <button className="modal-close-btn" onClick={onClose}>Close</button>
+      </div>
+    </div>
+  );
+};
 
-      const Home = ({ setActiveTab }) => {
-        const featuredRefs = useRef([]);
-        const whyToolsRefs = useRef([]);
-        
-        if (featuredRefs.current.length !== featuredApps.length) {
-          featuredRefs.current = Array(featuredApps.length).fill().map((_, i) => featuredRefs.current[i] || React.createRef());
-        }
-        if (whyToolsRefs.current.length !== 4) {
-          whyToolsRefs.current = Array(4).fill().map((_, i) => whyToolsRefs.current[i] || React.createRef());
-        }
-
-        useEffect(() => {
-          const observer = new IntersectionObserver(
-            (entries) => {
-              entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                  entry.target.style.opacity = '1';
-                  entry.target.style.transform = 'translateY(0)';
-                }
-              });
-            },
-            { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
-          );
-          
-          featuredRefs.current.forEach(ref => { if (ref.current) observer.observe(ref.current); });
-          whyToolsRefs.current.forEach(ref => { if (ref.current) observer.observe(ref.current); });
-          
-          return () => observer.disconnect();
-        }, []);
-
-        const whyToolsData = [
-          { icon:"fas fa-flask", title:"Validated for Research", desc:"All tools are benchmarked against established software (R) and are suitable for grant applications and peer-reviewed publications." },
-          { icon:"fas fa-code-branch", title:"Fully Open Source", desc:"The source code is publicly available on GitHub. Built on R 4.3+, tidyverse, survival, psych, and other CRAN packages, the tools can be audited and extended as needed." },
-          { icon:"fas fa-cloud-upload-alt", title:"Zero Local Installation", desc:"Deployed on shinyapps.io, the applications are accessible via any modern browser—secure, scalable, and maintenance-free." },
-          { icon:"fas fa-heart", title:"Commitment to Accessibility", desc:"Free for academic, government, and non-profit institutions. No license fees, no subscription traps." }
-        ];
-
-        return (
-          <>
-            <section className="hero">
-              <div className="hero-container">
-                <div className="hero-left">
-                  <div className="hero-badge">📈 Statistical Tools • Open Source • R-Powered Backend</div>
-                  <h1 className="hero-title">
-                    <span className="title-line">Empowering Health Research</span>
-                    <span className="title-line"><span className="gradient-text">with Innovative Tools</span></span>
-                  </h1>
-                  <p className="hero-sub">
-Welcome to ShinyHealthTools, a platform dedicated to advancing public health research worldwide. This platform offers a comprehensive suite of R/Shiny applications designed for healthcare institutions, academic researchers, and clinical studies. Users can access the applications directly or leverage the source code in RStudio to reproduce and customize analyses.
-                  </p>
-                  <p className="hero-sub">
-The applications support a wide range of functions, including robust regression analysis, participant randomization, data screening and cleaning, epidemiological analysis, generation of publication-ready graphics, APA-formatted tables, systematic random sampling, pharmaceutical calculations, sample size and power calculations, descriptive statistics, parallel analysis, survival analysis, simple and serial mediation analysis, moderation analysis, ROC analysis, exploratory and confirmatory factor analysis, SPSS data file conversion, Cochran-Mantel-Haenszel analysis, and Cochran-Armitage trend analysis. These advanced statistical procedures are fully integrated within intuitive applications and can be performed without any prior programming knowledge or advanced statistical expertise.
-                  </p>
-                  <div className="hero-metrics">
-                    <div className="metric-item"><span className="metric-number">21</span><span className="metric-label">statistical tools</span></div>
-                    <div className="metric-item"><span className="metric-number">100%</span><span className="metric-label">open source</span></div>
-                    <div className="metric-item"><span className="metric-number">0</span><span className="metric-label">license cost</span></div>
-                  </div>
-                </div>
-                <div className="hero-right">
-                  <CodeAnimation />
-                </div>
-              </div>
-            </section>
-
-            <section className="showcase" style={{ paddingTop: '1rem' }}>
-              <h2 className="showcase-title"><span>// </span> featured applications</h2>
-<div className="card-grid">
-                {featuredApps.map((app, index) => (
-                  <div key={app.id} ref={featuredRefs.current[index]} style={{ opacity:0, transform:'translateY(30px)', transition:'opacity 0.8s cubic-bezier(0.2, 0.9, 0.3, 1), transform 0.8s cubic-bezier(0.2, 0.9, 0.3, 1)', transitionDelay:`${index * 0.15}s` }}>
-                    <AppCard app={app} />
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            <section className="showcase" style={{ paddingTop: 0 }}>
-              <h2 className="showcase-title"><span>// </span> why researchers / data analysts rely on these tools</h2>
-<div className="why-tools-grid" style={{ gap: '1.8rem', marginTop: '1rem' }}>
-                {whyToolsData.map((tool, index) => (
-                  <div key={index} ref={whyToolsRefs.current[index]} style={{ opacity:0, transform:'translateY(30px)', transition:'opacity 0.8s cubic-bezier(0.2, 0.9, 0.3, 1), transform 0.8s cubic-bezier(0.2, 0.9, 0.3, 1)', transitionDelay:`${index * 0.15}s` }}>
-                    <div className="card" style={{ background: '#f8fafd', padding: '1.8rem', height: '100%', border: '1px solid #e0e8f2' }}>
-                      <i className={tool.icon} style={{ fontSize: '2.2rem', color: '#0b3b5c', marginBottom: '0.8rem' }}></i>
-                      <h3 style={{ fontSize: '1.35rem', marginBottom: '0.8rem', color: '#0b1c2e', fontWeight: '700' }}>{tool.title}</h3>
-                      <p style={{ color: '#2d3a4f', fontWeight: '400', fontSize: '0.95rem', lineHeight: '1.5' }}>{tool.desc}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </section>
-            <TestimonialCarousel />
-          </>
-        );
-      };
-
-      const AppCard = ({ app }) => {
-        const [imgLoaded, setImgLoaded] = useState(false);
-        
-        return (
-          <div className="card" style={{ animationDelay: '0s', height: '100%', background: '#ffffff', border: '2px solid #0b3b5c30', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}>
-            <div className="card-glow" style={{ background: 'radial-gradient(circle at 50% 0%, #0b3b5c20, transparent 70%)' }} />
-            <div className="card-content">
-              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
-                {app.logo ? (
-                  <img src={app.logo} alt={app.name} style={{ width: '44px', height: '44px', borderRadius: '6px', objectFit: 'contain', background: '#fff', opacity: imgLoaded ? 1 : 0.6 }} onLoad={() => setImgLoaded(true)} onError={(e) => { e.target.style.display='none'; }} />
-                ) : (
-                  <div style={{ width: '44px', height: '44px', borderRadius: '6px', background: '#eaf0fa', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <i className="fas fa-chart-bar" style={{ fontSize: '1.3rem', color: '#0b3b5c' }}></i>
-                  </div>
-                )}
-                <h3 style={{ fontSize: '1.35rem', margin: 0, color: '#0b1c2e', fontWeight: '700' }}>{app.name}</h3>
-              </div>
-              <p style={{ color: '#2d3a4f', fontSize: '0.95rem', marginBottom: '1.2rem', minHeight: '50px', fontWeight: '400', lineHeight: '1.5' }}>{app.desc}</p>
-              <div className="card-footer" style={{ borderTop: '2px solid #0b3b5c20', paddingTop: '0.8rem', display: 'flex', justifyContent: 'space-between' }}>
-                <a href={app.run} target="_blank" style={{ color: '#0b3b5c', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.3rem', fontWeight:'600', fontSize:'0.9rem' }}><i className="fas fa-play"></i> launch</a>
-                <a href={app.code} target="_blank" style={{ color: '#0b3b5c', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.3rem', fontWeight:'600', fontSize:'0.9rem' }}><i className="fab fa-github"></i> source</a>
-              </div>
-            </div>
+const ChatBot = () => {
+  const [open, setOpen] = useState(false);
+  const [msgs, setMsgs] = useState([{s:'bot',t:"Hi! I'm the ShinyHealthTools assistant. Ask me anything about our tools or how to get started."}]);
+  const [input, setInput] = useState('');
+  const [showSug, setShowSug] = useState(true);
+  const endRef = useRef(null);
+  const sugs = ["What tools are available?","Are these tools free?","Tell me about CalcuStats","How do I cite ShinyHealthTools?","Is source code available?"];
+  useEffect(() => { endRef.current?.scrollIntoView({behavior:'smooth'}); }, [msgs]);
+  const respond = q => {
+    const lq = q.toLowerCase();
+    if (lq.includes('free')||lq.includes('cost')) return "All 21 tools are completely free for academic, government, and non-profit use. No license fees or subscriptions.";
+    if (lq.includes('calcustats')||lq.includes('sample size')) return "CalcuStats handles sample size calculation, power analysis, and descriptive statistics — ideal for clinical trial planning.";
+    if (lq.includes('cite')) return "Cite as: 'Shiny Health Tools (2025). ShinyHealthTools: Statistical applications for health research. Retrieved from the website URL.'";
+    if (lq.includes('source')||lq.includes('github')) return "All source code is at github.com/mudassiribrahim30 under MIT license. Fully open and auditable.";
+    if (lq.includes('how many')||lq.includes('available')) return "There are 21 validated applications covering survival, ROC, factor analysis, regression, mediation, data conversion, and more.";
+    if (lq.includes('roc')) return "ROC Curve Builder generates ROC curves and evaluates diagnostic test performance with AUC and confidence intervals.";
+    if (lq.includes('hello')||lq.includes('hi')) return "Hello! How can I help you with ShinyHealthTools today?";
+    return "Try asking about a specific app (e.g. 'Tell me about MedModr'), or visit the Apps tab to browse all 21 tools.";
+  };
+  const send = text => {
+    if (!text.trim()) return;
+    setMsgs(p => [...p,{s:'user',t:text}]);
+    setShowSug(false);
+    setTimeout(() => setMsgs(p => [...p,{s:'bot',t:respond(text)}]), 320);
+    setInput('');
+  };
+  return (
+    <>
+      <button className="chat-fab" onClick={() => setOpen(!open)}><i className={`fas fa-${open?'times':'comment-dots'}`}></i></button>
+      {open && (
+        <div className="chat-panel">
+          <div className="chat-hdr">
+            <div className="chat-hdr-name"><div className="chat-online"></div>ShinyHealthTools Assistant</div>
+            <button className="chat-x" onClick={() => setOpen(false)}><i className="fas fa-times"></i></button>
           </div>
-        );
-      };
+          <div className="chat-msgs">
+            {msgs.map((m,i) => <div key={i} className={`msg msg-${m.s}`}>{m.t}</div>)}
+            <div ref={endRef}/>
+          </div>
+          {showSug && <div className="chat-sugg">{sugs.map((s,i) => <button key={i} className="csugg" onClick={() => send(s)}>{s}</button>)}</div>}
+          <div className="chat-input-row">
+            <input className="chat-input" placeholder="Ask a question…" value={input} onChange={e => setInput(e.target.value)} onKeyPress={e => e.key==='Enter' && send(input)} onFocus={() => setShowSug(true)}/>
+            <button className="chat-send" onClick={() => send(input)}><i className="fas fa-paper-plane"></i></button>
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
 
-      const AppsTab = () => {
-        const appRefs = useRef([]);
-        if (appRefs.current.length !== shinyApps.length) {
-          appRefs.current = Array(shinyApps.length).fill().map((_, i) => appRefs.current[i] || React.createRef());
-        }
+const App = () => {
+  const [tab, setTab] = useState('home');
+  const [modal, setModal] = useState(null);
+  const [search, setSearch] = useState('');
+  const [searchRes, setSearchRes] = useState([]);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [dark, setDark] = useDarkMode();
 
-        useEffect(() => {
-          const observer = new IntersectionObserver(
-            (entries) => {
-              entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                  entry.target.style.opacity = '1';
-                  entry.target.style.transform = 'translateY(0)';
-                }
-              });
-            },
-            { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
-          );
-          
-          appRefs.current.forEach(ref => { if (ref.current) observer.observe(ref.current); });
-          return () => observer.disconnect();
-        }, []);
+  useEffect(() => { window.scrollTo({top:0,behavior:'smooth'}); setMobileOpen(false); }, [tab]);
 
-        return (
-          <section className="showcase">
-            <h2 className="showcase-title"><span>// </span> all applications (21 web tools)</h2>
-<div className="card-grid">
-              {shinyApps.map((app, index) => (
-                <div key={app.id} ref={appRefs.current[index]} style={{ opacity:0, transform:'translateY(30px)', transition:'opacity 0.8s cubic-bezier(0.2, 0.9, 0.3, 1), transform 0.8s cubic-bezier(0.2, 0.9, 0.3, 1)', transitionDelay:`${index * 0.05}s` }}>
-                  <AppCard app={app} />
-                </div>
-              ))}
-            </div>
-          </section>
-        );
-      };
+  const doSearch = q => {
+    if (!q.trim()) { setSearchRes([]); return; }
+    const lq = q.toLowerCase();
+    setSearchRes(shinyApps.filter(a => a.name.toLowerCase().includes(lq)||a.desc.toLowerCase().includes(lq)));
+  };
 
-      // BlogTab - with mobile fixes
-      const BlogTab = () => {
-        const [blogPosts, setBlogPosts] = useState([]);
-        const [loadingBlog, setLoadingBlog] = useState(true);
-        const [blogError, setBlogError] = useState(false);
-        const [visiblePosts, setVisiblePosts] = useState(10);
-        const [selectedMonth, setSelectedMonth] = useState(null);
-        const [filteredPosts, setFilteredPosts] = useState([]);
+  const openModal = (title, content) => setModal({title, content});
+  const navTo = t => { setTab(t); setMobileOpen(false); };
+  const privacy = `<strong>Data Privacy & Security</strong><br/><br/>ShinyHealthTools applications run entirely in your browser. <strong>No personal data is recorded or stored on our servers.</strong> All processing is ephemeral and session-based.<br/><br/><strong>Local Processing:</strong> Data you upload stays in your browser's memory and is not transmitted to any server.<br/><br/><strong>No Tracking:</strong> We do not use cookies, analytics, or tracking scripts. Your usage is anonymous.<br/><br/><strong>Institutional Compliance:</strong> Our architecture supports HIPAA, GDPR, and similar frameworks because data never leaves your machine.`;
 
-        const extractExcerpt = (content, maxLength = 250) => {
-          if (!content) return 'No content available';
-          let text = content.replace(/<[^>]*>/g, '');
-          const textarea = document.createElement('textarea');
-          textarea.innerHTML = text;
-          let decoded = textarea.value;
-          if (decoded === text) {
-            decoded = text
-              .replace(/&nbsp;/g, ' ')
-              .replace(/&amp;/g, '&')
-              .replace(/&lt;/g, '<')
-              .replace(/&gt;/g, '>')
-              .replace(/&quot;/g, '"')
-              .replace(/&#39;/g, "'")
-              .replace(/&ldquo;/g, '"')
-              .replace(/&rdquo;/g, '"')
-              .replace(/&lsquo;/g, "'")
-              .replace(/&rsquo;/g, "'")
-              .replace(/&mdash;/g, '—')
-              .replace(/&ndash;/g, '–')
-              .replace(/&hellip;/g, '…');
-          }
-          decoded = decoded.replace(/\s+/g, ' ').trim();
-          return decoded.length > maxLength ? decoded.substring(0, maxLength).trim() + '...' : decoded;
-        };
-
-        const loadBlogPosts = async () => {
-          setLoadingBlog(true);
-          setBlogError(false);
-          
-          try {
-            const timestamp = new Date().getTime();
-            const rssFeedUrl = 'https://mudasir-ibrahim.blogspot.com/feeds/posts/default?alt=json&max-results=100';
-            const encodedUrl = encodeURIComponent(rssFeedUrl);
-            
-            const proxyUrls = [
-              `https://api.allorigins.win/get?url=${encodedUrl}&timestamp=${timestamp}`,
-              `https://corsproxy.io/?${encodedUrl}&_=${timestamp}`,
-              `https://api.codetabs.com/v1/proxy?quest=${encodedUrl}&t=${timestamp}`,
-              `https://thingproxy.freeboard.io/fetch/${rssFeedUrl}?t=${timestamp}`
-            ];
-            
-            let success = false;
-            let data = null;
-            
-            for (let i = 0; i < proxyUrls.length; i++) {
-              try {
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 5000);
-                const response = await fetch(proxyUrls[i], { signal: controller.signal });
-                clearTimeout(timeoutId);
-                if (response.ok) {
-                  const result = await response.json();
-                  if (proxyUrls[i].includes('allorigins.win')) {
-                    data = JSON.parse(result.contents);
-                  } else {
-                    data = result;
-                  }
-                  if (data && data.feed && data.feed.entry) {
-                    success = true;
-                    break;
-                  }
-                }
-              } catch (proxyError) {
-                continue;
-              }
-            }
-            
-            if (!success || !data) {
-              await new Promise((resolve) => {
-                const callbackName = `bloggerCallback_${Date.now()}`;
-                const jsonpUrl = `https://mudasir-ibrahim.blogspot.com/feeds/posts/default?alt=json-in-script&callback=${callbackName}&max-results=50`;
-                window[callbackName] = (jsonpData) => {
-                  data = jsonpData;
-                  delete window[callbackName];
-                  resolve();
-                };
-                const script = document.createElement('script');
-                script.src = jsonpUrl;
-                script.onerror = () => {
-                  delete window[callbackName];
-                  resolve();
-                };
-                document.head.appendChild(script);
-                setTimeout(() => {
-                  if (script.parentNode) document.head.removeChild(script);
-                  resolve();
-                }, 8000);
-              });
-            }
-            
-            if (data && data.feed && data.feed.entry) {
-              const posts = data.feed.entry;
-              if (posts.length > 0) {
-                const sortedPosts = posts.sort((a, b) => {
-                  const dateA = new Date(a.published?.$t || a.updated?.$t || 0);
-                  const dateB = new Date(b.published?.$t || b.updated?.$t || 0);
-                  return dateB - dateA;
-                });
-                setBlogPosts(sortedPosts);
-                setFilteredPosts(sortedPosts);
-                setBlogError(false);
-                try {
-                  localStorage.setItem('bloggerCache', JSON.stringify({
-                    posts: sortedPosts,
-                    timestamp: Date.now()
-                  }));
-                } catch (e) {}
-              } else {
-                setBlogError(true);
-              }
-            } else {
-              try {
-                const cached = localStorage.getItem('bloggerCache');
-                if (cached) {
-                  const cacheData = JSON.parse(cached);
-                  if (Date.now() - cacheData.timestamp < 3600000) {
-                    setBlogPosts(cacheData.posts);
-                    setFilteredPosts(cacheData.posts);
-                    setBlogError(false);
-                  } else {
-                    setBlogError(true);
-                  }
-                } else {
-                  setBlogError(true);
-                }
-              } catch (e) {
-                setBlogError(true);
-              }
-            }
-          } catch (error) {
-            setBlogError(true);
-            try {
-              const cached = localStorage.getItem('bloggerCache');
-              if (cached) {
-                const cacheData = JSON.parse(cached);
-                setBlogPosts(cacheData.posts);
-                setFilteredPosts(cacheData.posts);
-                setBlogError(false);
-              }
-            } catch (e) {}
-          } finally {
-            setLoadingBlog(false);
-          }
-        };
-
-        useEffect(() => {
-          loadBlogPosts();
-        }, []);
-
-        const loadMorePosts = () => setVisiblePosts(prev => prev + 10);
-
-        const groupedPosts = {};
-        blogPosts.forEach(post => {
-          const published = post.published?.$t || new Date().toISOString();
-          const date = new Date(published);
-          const year = date.getFullYear();
-          const month = date.toLocaleDateString('en-US', { month: 'long' });
-          const monthYearKey = `${month} ${year}`;
-          if (!groupedPosts[monthYearKey]) {
-            groupedPosts[monthYearKey] = { month, year, dateObj: date, posts: [] };
-          }
-          groupedPosts[monthYearKey].posts.push(post);
-        });
-
-        const sortedMonths = Object.values(groupedPosts).sort((a, b) => b.dateObj - a.dateObj);
-
-        const handleMonthSelect = (monthYear) => {
-          if (selectedMonth === monthYear) {
-            setSelectedMonth(null);
-            setFilteredPosts(blogPosts);
-          } else {
-            setSelectedMonth(monthYear);
-            setFilteredPosts(groupedPosts[monthYear]?.posts || []);
-          }
-          setVisiblePosts(10);
-        };
-
-        const handleShowAll = () => {
-          setSelectedMonth(null);
-          setFilteredPosts(blogPosts);
-          setVisiblePosts(10);
-        };
-
-        const postsToDisplay = filteredPosts.length > 0 ? filteredPosts : blogPosts;
-        const hasMorePosts = visiblePosts < postsToDisplay.length;
-
-        return (
-          <section className="showcase">
-            <h2 className="showcase-title"><span>// </span>blog</h2>
-            
-            <div className="blog-introduction">
-              <div style={{ position: 'absolute', top: '10px', right: '10px', fontSize: '2.5rem', color: '#0b3b5c', opacity: 0.1 }}>
-                <i className="fas fa-blog"></i>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '15px' }}>
-                <div style={{ backgroundColor: '#0b3b5c', color: 'white', width: '50px', height: '50px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem' }}>
-                  <i className="fas fa-pen-nib"></i>
-                </div>
-                <h3 style={{ margin: 0, color: '#0b1c2e', fontSize: '1.4rem' }}>Welcome to the ShinyHealthTools Blog</h3>
-              </div>
-              <p style={{ fontSize: '1rem', lineHeight: '1.6', color: '#1e2a3a', marginBottom: '15px' }}>
-                <i className="fas fa-quote-left" style={{ color: '#0b3b5c', marginRight: '10px', opacity: 0.7 }}></i>
-                Insights and updates on the ShinyHealthTools.
-                <i className="fas fa-quote-right" style={{ color: '#0b3b5c', marginLeft: '10px', opacity: 0.7 }}></i>
-              </p>
-            </div>
-
-            {loadingBlog ? (
-              <div className="blog-loading">
-                <i className="fas fa-spinner fa-spin" style={{ fontSize: '2rem', marginBottom: '20px' }}></i>
-                <p>Loading blog posts...</p>
-              </div>
-            ) : blogError ? (
-              <div className="blog-error">
-                <i className="fas fa-exclamation-triangle"></i>
-                <p>Unable to load blog posts. Please visit the blog directly.</p>
-                <a href="https://mudasir-ibrahim.blogspot.com" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', marginTop: '1rem', padding: '0.6rem 1.5rem', background: '#0b3b5c', color: 'white', textDecoration: 'none', borderRadius: '4px' }}>Go to Blog <i className="fas fa-external-link-alt" style={{ marginLeft: '0.5rem' }}></i></a>
-              </div>
-            ) : blogPosts.length > 0 ? (
-              <div className="blog-container">
-                <div className="blog-sidebar">
-                  <div className="archive-section">
-                    <h3 className="archive-title"><i className="fas fa-filter" style={{ marginRight: '10px' }}></i>Filter by Month</h3>
-                    <ul className="archive-list">
-                      <li className="archive-item">
-                        <button className={`archive-button ${!selectedMonth ? 'active' : ''}`} onClick={handleShowAll}>
-                          <span className="archive-month">All Posts</span>
-                          <span className="post-count-badge">{blogPosts.length}</span>
-                        </button>
-                      </li>
-                      {sortedMonths.map((monthData) => {
-                        const monthYearKey = `${monthData.month} ${monthData.year}`;
-                        const isActive = selectedMonth === monthYearKey;
-                        return (
-                          <li key={monthYearKey} className="archive-item">
-                            <button className={`archive-button ${isActive ? 'active' : ''}`} onClick={() => handleMonthSelect(monthYearKey)}>
-                              <span className="archive-month">{monthData.month}</span> <span className="archive-year">{monthData.year}</span>
-                              <span className="post-count-badge">{monthData.posts.length}</span>
-                            </button>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                    <div className="archive-total">{blogPosts.length} posts across {sortedMonths.length} months</div>
-                  </div>
-                </div>
-
-                <div className="blog-content">
-                  {selectedMonth ? (
-                    <div className="selected-month-info">
-                      <div className="selected-month-text">Showing posts from: <strong>{selectedMonth}</strong> <span style={{ marginLeft: '10px', fontSize: '0.9rem', color: '#5f7d9c' }}>({postsToDisplay.length} posts)</span></div>
-                      <button className="show-all-button" onClick={handleShowAll}><i className="fas fa-list" style={{ marginRight: '5px' }}></i>Show All Posts</button>
-                    </div>
-                  ) : (
-                    <div className="selected-month-info" style={{ borderLeftColor: '#2ecc71' }}>
-                      <div className="selected-month-text">Showing: <strong>All Posts</strong> <span style={{ marginLeft: '10px', fontSize: '0.9rem', color: '#5f7d9c' }}>({postsToDisplay.length} total posts)</span></div>
-                      {sortedMonths.length > 0 && <div style={{ fontSize: '0.9rem', marginTop: '5px', color: '#5f7d9c' }}>Latest: {sortedMonths[0].month} {sortedMonths[0].year}</div>}
-                    </div>
-                  )}
-
-                  <div className="blog-posts-list">
-                    {postsToDisplay.slice(0, visiblePosts).map((post, index) => {
-                      const title = post.title?.$t || 'Untitled Post';
-                      const content = post.content?.$t || '';
-                      const published = post.published?.$t || new Date().toISOString();
-                      const link = post.link?.find(l => l.rel === 'alternate')?.href || '#';
-                      const excerpt = extractExcerpt(content, 200);
-                      const date = new Date(published).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-                      return (
-                        <div key={index} className="blog-post-item">
-                          <div className="blog-post-header">
-                            <i className="fas fa-blog blog-post-icon"></i>
-                            <h3 className="blog-post-title">{title}</h3>
-                            <div className="blog-post-date"><i className="far fa-calendar"></i><span>{date}</span></div>
-                          </div>
-                          <p className="blog-post-excerpt">{excerpt}</p>
-                          <div className="blog-post-actions">
-                            <a href={link} target="_blank" rel="noopener noreferrer" className="read-post-btn"><i className="fas fa-external-link-alt"></i> Read Full Post</a>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-
-                  {hasMorePosts && (
-                    <div className="blog-load-more">
-                      <button className="load-more-btn" onClick={loadMorePosts}><i className="fas fa-chevron-down"></i> Load More Posts ({postsToDisplay.length - visiblePosts} remaining)</button>
-                    </div>
-                  )}
-                  {!hasMorePosts && postsToDisplay.length > 0 && (
-                    <div style={{ textAlign: 'center', padding: '20px', color: '#5f7d9c', fontSize: '0.9rem' }}>
-                      <i className="fas fa-check-circle" style={{ marginRight: '8px', color: '#2ecc71' }}></i> Showing all {postsToDisplay.length} posts
-                    </div>
-                  )}
-                </div>
-              </div>
-            ) : (
-              <div className="blog-error"><i className="fas fa-exclamation-triangle"></i><p>No blog posts found</p></div>
-            )}
-          </section>
-        );
-      };
-
-      const Footer = ({ setShowPrivacy, setModalContent, setActiveTab }) => {
-        const currentYear = new Date().getFullYear();
-
-        const handleResourceClick = (title, content) => {
-          setModalContent({ title, content });
-        };
-
-        const handleAppClick = (appName) => {
-          const app = shinyApps.find(a => a.name === appName);
-          if (app) window.open(app.run, '_blank');
-        };
-
-        const handleAllAppsClick = () => {
-          setActiveTab('apps');
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        };
-
-        const handleBlogClick = () => {
-          setActiveTab('blog');
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        };
-
-        return (
-          <footer className="footer" style={{ background: '#000000', borderTop: '1px solid #333333', color: '#ffffff' }}>
-            <div className="footer-columns">
-              <div className="footer-col">
-                <h4 style={{ color: '#ffffff' }}>Apps</h4>
-                <a onClick={() => handleAppClick('FactorGuard')} style={{ color: '#ffffff' }}>FactorGuard</a>
-                <a onClick={() => handleAppClick('CalcuStats')} style={{ color: '#ffffff' }}>CalcuStats</a>
-                <a onClick={() => handleAppClick('ROC Curve Builder')} style={{ color: '#ffffff' }}>ROC Curve Builder</a>
-                <a onClick={() => handleAppClick('Data2SPSS')} style={{ color: '#ffffff' }}>Data2SPSS</a>
-                <a onClick={() => handleAppClick('KMPlot Genie')} style={{ color: '#ffffff' }}>KMPlot Genie</a>
-                <a onClick={handleAllAppsClick} style={{ color: '#ffffff' }}>All Apps→</a>
-              </div>
-              <div className="footer-col">
-                <h4 style={{ color: '#ffffff' }}>Resources</h4>
-                <a onClick={() => handleResourceClick('📚 Documentation', 'Comprehensive documentation for all ShinyHealthTools applications is available at <a href=\"https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/README.md\" target=\"_blank\">github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/README.md</a>')} style={{ color: '#ffffff' }}>Documentation</a>
-                <a onClick={() => handleResourceClick('🐙 GitHub Repository', 'All source code is open source and available at <a href=\"https://github.com/mudassiribrahim30\" target=\"_blank\">github.com/mudassiribrahim30</a>. Licensed under MIT. Contributions welcome.')} style={{ color: '#ffffff' }}>GitHub Repository</a>
-                <a onClick={() => handleResourceClick('📖 Citation Guide', 'To cite ShinyHealthTools in publications:<br/><br/>Shiny Health Tools (2025). ShinyHealthTools: Statistical applications for health research. Retrieved from [website URL] For specific apps, include the app name and version.')} style={{ color: '#ffffff' }}>Citation Guide</a>
-                <a onClick={() => handleResourceClick('📌 Release Notes', '**v2.1.0** (March 2026): Major redesign, improved UI responsiveness, dark theme integration, chatbot integration, and 21 total apps.<br/>')} style={{ color: '#ffffff' }}>Release Notes</a>
-              </div>
-              <div className="footer-col">
-                <h4 style={{ color: '#ffffff' }}>Support</h4>
-                <a onClick={() => handleResourceClick('📧 Email Support', 'For technical assistance, email me at <a href=\"mailto:mudassiribrahim30@gmail.com\">mudassiribrahim30@gmail.com</a>. Response within 24 hours.')} style={{ color: '#ffffff' }}>Email Support</a>
-                <a onClick={() => handleResourceClick('❓ Frequently Asked Questions', '<strong>Q: Are the tools really free?</strong><br/>A: Yes, completely free for academic, government, and non-profit use.<br/><br/><strong>Q: Do I need to install R?</strong><br/>A: No, everything runs in your browser.<br/><br/><strong>Q: How do I cite these tools?</strong><br/>A: See Citation Guide in Resources.<br/><br/><strong>Q: Is my data secure?</strong><br/>A: All processing is local; no data leaves your machine (see Privacy).')} style={{ color: '#ffffff' }}>FAQ</a>
-                <a onClick={() => setShowPrivacy(true)} style={{ color: '#ffffff' }}>Privacy</a>
-              </div>
-              <div className="footer-col">
-                <h4 style={{ color: '#ffffff' }}>Connect</h4>
-                <a href="https://www.youtube.com/@mudasirmohammedibrahim1026" target="_blank" style={{ color: '#ffffff' }}>Youtube</a>
-                <a href="https://www.facebook.com/mudassiribrahim81" target="_blank" style={{ color: '#ffffff' }}>Facebook</a>
-                <a href="https://www.instagram.com/mudassiribrahim81" target="_blank" style={{ color: '#ffffff' }}>Instagram</a>
-                <a href="https://github.com/mudassiribrahim30/R-Shiny-Apps" target="_blank" style={{ color: '#ffffff' }}>GitHub</a>
-                <a onClick={handleBlogClick} style={{ color: '#ffffff', cursor: 'pointer' }}>Blog</a>
-              </div>
-            </div>
-            <div className="footer-copyright" style={{ color: '#ffffff', borderTop: '1px solid #333333', fontWeight: '500', fontSize: '0.85rem', paddingTop: '1.2rem', marginTop: '0.5rem' }}>
-              <span>Copyright © 2025–{currentYear} ShinyHealthTools. All rights reserved worldwide.</span>
-              <span className="footer-extra">Intuitive R/Shiny applications for health research</span>
-            </div>
-          </footer>
-        );
-      };
-
-      // ChatBot Component
-      const ChatBot = ({ appsData }) => {
-        const [isOpen, setIsOpen] = useState(false);
-        const [messages, setMessages] = useState([{ sender: 'bot', text: 'Hi! I\'m the ShinyHealthTools assistant. Ask me anything about our tools, features, or how to get started.' }]);
-        const [input, setInput] = useState('');
-        const [showSuggestions, setShowSuggestions] = useState(true);
-        const messagesEndRef = useRef(null);
-
-        const suggestedQuestions = [
-          "What tools are available?",
-          "How many applications?",
-          "Tell me about ROC Curve Builder",
-          "Are these tools free?",
-          "How do I cite ShinyHealthTools?",
-          "What is Data2SPSS?",
-          "Is source code available?",
-          "Tell me about FactorGuard"
-        ];
-
-        const scrollToBottom = () => messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-
-        useEffect(scrollToBottom, [messages]);
-        useEffect(() => { if (input.length > 0) setShowSuggestions(true); }, [input]);
-
-        const generateResponse = (question) => {
-          const q = question.toLowerCase();
-          if (q.includes('roc') || q.includes('curve builder')) {
-            const app = appsData.find(a => a.name.includes('ROC'));
-            return app ? `**${app.name}**: ${app.desc}. It provides diagnostic accuracy analysis with AUC, confidence intervals, and comparisons. [Launch here](${app.run})` : "ROC Curve Builder is a tool for diagnostic accuracy analysis with AUC and confidence intervals.";
-          }
-          if (q.includes('dataspss') || q.includes('data2spss')) {
-            const app = appsData.find(a => a.name.includes('Data2SPSS'));
-            return app ? `**${app.name}**: ${app.desc}. Seamlessly convert data to SPSS format. [Launch](${app.run})` : "Data2SPSS converts data to SPSS (.sav) with metadata preservation.";
-          }
-          if (q.includes('factorguard') || q.includes('factor analysis')) {
-            const app = appsData.find(a => a.name.includes('FactorGuard'));
-            return app ? `**${app.name}**: ${app.desc}. Enterprise-grade exploratory factor analysis. [Launch](${app.run})` : "FactorGuard is our tool for exploratory factor analysis and dimension validation.";
-          }
-          if (q.includes('calcustats') || q.includes('sample size') || q.includes('power calculator')) {
-            const app = appsData.find(a => a.name.includes('CalcuStats'));
-            return app ? `**${app.name}**: ${app.desc}. Essential for clinical trial planning. [Launch](${app.run})` : "CalcuStats provides sample size and power calculations for clinical trials.";
-          }
-          if (q.includes('survival') || q.includes('kmplot') || q.includes('kaplan')) {
-            const app = appsData.find(a => a.name.includes('KMPlot'));
-            return app ? `**${app.name}**: ${app.desc}. Kaplan-Meier curves with log-rank tests. [Launch](${app.run})` : "KMPlot Genie creates Kaplan-Meier survival curves with log-rank tests.";
-          }
-          if (q.includes('how many') || q.includes('number of apps') || q.includes('tools available')) {
-            return `We currently offer **${appsData.length} validated applications** covering sample size, ROC, survival, factor analysis, data conversion, and more.`;
-          }
-          if (q.includes('free') || q.includes('cost') || q.includes('license')) {
-            return "All tools are **completely free** for academic, government, and non-profit institutions. No license fees, no subscriptions.";
-          }
-          if (q.includes('cite') || q.includes('citation')) {
-            return "You can cite ShinyHealthTools as: 'Shiny Health Tools (2025). Statistical applications for health research. Retrieved from https://ShinyHealthTools.org'";
-          }
-          if (q.includes('source code') || q.includes('github') || q.includes('open source')) {
-            return "All source code is available on GitHub at https://github.com/mudassiribrahim30. Fully open source under MIT license.";
-          }
-          if (q.includes('featured') || q.includes('popular')) {
-            const featured = appsData.slice(0, 6).map(a => a.name).join(', ');
-            return `Our featured applications include: ${featured}. All are highlighted on the homepage.`;
-          }
-          if (q.includes('hello') || q.includes('hi ') || q.includes('hey')) {
-            return "Hello! How can I help you with ShinyHealthTools today?";
-          }
-          return "I'm not sure about that. You can try asking about specific apps (e.g., 'ROC Curve Builder'), general features, or visit our Applications page.";
-        };
-
-        const handleSend = (text) => {
-          if (!text.trim()) return;
-          setMessages(prev => [...prev, { sender: 'user', text }]);
-          setShowSuggestions(false);
-          setTimeout(() => {
-            const response = generateResponse(text);
-            setMessages(prev => [...prev, { sender: 'bot', text: response }]);
-          }, 300);
-          setInput('');
-        };
-
-        const handleSuggestionClick = (q) => handleSend(q);
-
-        return (
-          <>
-            <button className="chatbot-button" onClick={() => setIsOpen(!isOpen)}><i className="fas fa-comment"></i></button>
-            {isOpen && (
-              <div className="chatbot-panel">
-                <div className="chatbot-header"><span><i className="fas fa-robot"></i> ShinyHealthTools AI</span><button onClick={() => setIsOpen(false)}><i className="fas fa-times"></i></button></div>
-                <div className="chatbot-messages">
-                  {messages.map((msg, idx) => (
-                    <div key={idx} className={`message ${msg.sender === 'user' ? 'user-message' : 'bot-message'}`}>
-                      {msg.text.split('**').map((part, i) => i % 2 ? <strong key={i}>{part}</strong> : part)}
+  return (
+    <>
+      <div className="topbar">
+        <div className="topbar-inner">
+          <div className="topbar-socials">
+            <a href="https://www.youtube.com/@mudasirmohammedibrahim1026" target="_blank"><i className="fab fa-youtube"></i></a>
+            <a href="https://www.facebook.com/mudassiribrahim81" target="_blank"><i className="fab fa-facebook-f"></i></a>
+            <a href="https://x.com/WhizMuda" target="_blank"><i className="fab fa-x-twitter"></i></a>
+            <a href="https://www.instagram.com/mudassiribrahim81" target="_blank"><i className="fab fa-instagram"></i></a>
+            <a href="https://github.com/mudassiribrahim30" target="_blank"><i className="fab fa-github"></i></a>
+          </div>
+          <div className="topbar-right">
+            <div className="search-wrap">
+              <i className="fas fa-search si"></i>
+              <input placeholder="Search apps…" value={search} onChange={e => {setSearch(e.target.value);doSearch(e.target.value);}}/>
+              {search && searchRes.length > 0 && (
+                <div className="search-dropdown">
+                  {searchRes.map(r => (
+                    <div key={r.id} className="sditem" onClick={() => {window.open(r.run,'_blank');setSearch('');setSearchRes([]);}}>
+                      <span>{r.name}</span><i className="fas fa-external-link-alt" style={{fontSize:'0.65rem',color:'var(--text3)'}}></i>
                     </div>
                   ))}
-                  <div ref={messagesEndRef} />
                 </div>
-                {showSuggestions && (
-                  <div className="suggested-questions">
-                    {suggestedQuestions.map((q, idx) => <span key={idx} className="suggested-question" onClick={() => handleSuggestionClick(q)}>{q}</span>)}
-                  </div>
-                )}
-                <div className="chatbot-input-area">
-                  <input type="text" placeholder="Type your question..." value={input} onChange={(e) => setInput(e.target.value)} onKeyPress={(e) => e.key === 'Enter' && handleSend(input)} onFocus={() => setShowSuggestions(true)} />
-                  <button onClick={() => handleSend(input)}><i className="fas fa-paper-plane"></i></button>
-                </div>
-              </div>
-            )}
-          </>
-        );
-      };
-
-      // Main App
-      const App = () => {
-        const [activeTab, setActiveTab] = useState('home');
-        const [showPrivacy, setShowPrivacy] = useState(false);
-        const [modalContent, setModalContent] = useState(null);
-        const [darkTheme, setDarkTheme] = useState(false);
-        const [searchQuery, setSearchQuery] = useState('');
-        const [searchResults, setSearchResults] = useState([]);
-
-        const toggleTheme = () => {
-          setDarkTheme(prev => !prev);
-          document.body.classList.toggle('dark-theme');
-        };
-
-        const performSearch = (keyword) => {
-          if (!keyword.trim()) { setSearchResults([]); return; }
-          const lower = keyword.toLowerCase();
-          const results = shinyApps.filter(app => app.name.toLowerCase().includes(lower) || app.desc.toLowerCase().includes(lower) || (app.name + ' ' + app.desc).toLowerCase().includes(lower)).map(app => ({ id: app.id, name: app.name, run: app.run }));
-          setSearchResults(results);
-        };
-
-        useEffect(() => window.scrollTo({ top: 0, behavior: 'smooth' }), [activeTab]);
-
-        const privacyContent = `
-          <p><strong>🔒 Data Privacy & Security</strong></p>
-          <p>ShinyHealthTools applications run entirely in your browser and the shinyapps.io secure cloud. <strong>No personal data is recorded or stored on our servers.</strong> All processing is ephemeral.</p>
-          <p><strong>Local Processing:</strong> When you run any of our tools, all data you upload or generate stays in your browser's memory and is not transmitted to any server. You remain in full control.</p>
-          <p><strong>No Tracking:</strong> We do not use cookies, analytics, or tracking scripts. Your usage is anonymous.</p>
-          <p><strong>Institutional Compliance:</strong> Our architecture is compliant with institutional data protection requirements (HIPAA, GDPR, etc.) because data never leaves your machine unless you explicitly download results.</p>
-        `;
-
-        return (
-          <div className="app-container">
-            <FloatingParticles />
-            <Navbar 
-              activeTab={activeTab} 
-              setActiveTab={setActiveTab} 
-              setShowPrivacy={setShowPrivacy} 
-              setModalContent={setModalContent}
-              darkTheme={darkTheme}
-              toggleTheme={toggleTheme}
-              searchQuery={searchQuery}
-              setSearchQuery={setSearchQuery}
-              performSearch={performSearch}
-              searchResults={searchResults}
-            />
-            <main style={{ position: 'relative', zIndex: 5 }}>
-              {activeTab === 'home' && <Home setActiveTab={setActiveTab} />}
-              {activeTab === 'apps' && <AppsTab />}
-              {activeTab === 'blog' && <BlogTab />}
-            </main>
-            <Footer setShowPrivacy={() => { setModalContent({ title: '🔒 Privacy & Data Handling', content: privacyContent }); }} setModalContent={setModalContent} setActiveTab={setActiveTab} />
-            {modalContent && <PrivacyModal title={modalContent.title} content={modalContent.content} onClose={() => setModalContent(null)} />}
-            <ChatBot appsData={shinyApps} />
-
-            <style>{`
-              .app-container { position: relative; background: #ffffff; color: #1e2a3a; overflow: hidden; isolation: isolate; }
-              body.dark-theme .app-container { background: #1e2a3a; color: #dce5f0; }
-              .particle-field { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
-              .particle { position: absolute; border-radius: 50%; background: rgba(11, 59, 92, 0.1); filter: blur(0.5px); animation: floatParticle 20s infinite alternate ease-in-out; opacity: 0.3; will-change: transform; }
-              @keyframes floatParticle { 0% { transform: translate(0, 0) scale(1); opacity: 0.1; } 50% { transform: translate(15px, -20px) scale(1.2); opacity: 0.2; } 100% { transform: translate(-10px, 20px) scale(0.9); opacity: 0.1; } }
-              .navbar { position: sticky; top: 0; display: flex; justify-content: space-between; align-items: center; padding: 1rem 3rem; z-index: 20; transition: top 0.3s ease, background 0.2s, box-shadow 0.2s; background: #000000; border-bottom: 1px solid #333333; }
-              body.dark-theme .navbar { background: #000000; border-bottom: 1px solid #333333; }
-              .navbar-blur { box-shadow: 0 2px 10px rgba(0,0,0,0.3); background: #000000; backdrop-filter: blur(8px); }
-              body.dark-theme .navbar-blur { background: #000000; }
-              .nav-logo { font-weight: 700; font-size: 1.4rem; letter-spacing: -0.01em; }
-              .nav-logo a { color: inherit; text-decoration: none; }
-              .logo-glow { color: #0b3b5c; }
-              body.dark-theme .logo-glow { color: #9bbfe0; }
-              .nav-links { display: flex; gap: 2rem; align-items: center; }
-              .nav-links a { text-decoration: none; color: #1e2a3a; font-weight: 600; font-size: 0.9rem; letter-spacing: 0.3px; transition: color 0.2s; }
-              body.dark-theme .nav-links a { color: #d1dceb; }
-              .nav-links a:hover { color: #0b3b5c; }
-              .hero { padding: 2.5rem 4rem 3rem 4rem; position: relative; z-index: 5; max-width: 1400px; margin: 0 auto; }
-              .hero-container { display: flex; align-items: center; gap: 3rem; }
-              .hero-left { flex: 1; }
-              .hero-right { flex: 1; display: flex; justify-content: flex-end; align-items: center; }
-              .hero-badge { display: inline-block; background: #eaf0fa; border-radius: 4px; padding: 0.35rem 1rem; margin-bottom: 1.5rem; font-size: 0.8rem; border: 1px solid #bccfe5; color: #0b3b5c; font-weight: 600; animation: fadeSlideUp 0.8s ease-out; }
-              body.dark-theme .hero-badge { background: #2e4057; border-color: #57708f; color: #b6d6ff; }
-              .hero-title { font-size: clamp(2.8rem, 7vw, 3.8rem); font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 1.2rem; color: #0b1c2e; }
-              body.dark-theme .hero-title { color: #eaf0fa; }
-              .title-line { display: block; animation: slideUp 0.7s ease-out; animation-fill-mode: both; }
-              .title-line:nth-child(1) { animation-delay: 0.1s; }
-              .title-line:nth-child(2) { animation-delay: 0.2s; }
-              .gradient-text { color: #0b3b5c; background: none; -webkit-background-clip: unset; background-clip: unset; text-shadow: none; }
-              body.dark-theme .gradient-text { color: #9bc0f0; }
-              .hero-sub { font-size: 1rem; max-width: 650px; color: #2d3a4f; margin-bottom: 2rem; animation: fadeSlideUp 0.9s 0.2s ease-out both; line-height: 1.5; font-weight: 400; }
-              body.dark-theme .hero-sub { color: #b7c9e0; }
-              .hero-metrics { display: flex; gap: 2.5rem; animation: fadeSlideUp 1s 0.4s both; }
-              .metric-item { display: flex; flex-direction: column; }
-              .metric-number { font-size: 1.8rem; font-weight: 700; color: #0b3b5c; }
-              body.dark-theme .metric-number { color: #9bc0f0; }
-              .metric-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: #4f658d; font-weight: 600; }
-              body.dark-theme .metric-label { color: #9db4d4; }
-              .showcase { padding: 2.5rem 4rem; z-index: 5; position: relative; }
-              .showcase-title { font-size: 1rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; color: #4f658d; margin-bottom: 2rem; }
-              body.dark-theme .showcase-title { color: #9db4d4; }
-              .card-grid { display: grid; gap: 1.5rem; }
-              .card { background: #ffffff; border-radius: 0.9rem; border: 2px solid #0b3b5c30; padding: 1.5rem; transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s; position: relative; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-              body.dark-theme .card { background: #2f3f50; border-color: #57708f; color: #dde5f0; }
-              .card:hover { border-color: #0b3b5c; transform: translateY(-4px); box-shadow: 0 12px 24px -12px rgba(11,59,92,0.3); }
-              body.dark-theme .card:hover { border-color: #9bbfe0; box-shadow: 0 12px 24px -12px #90b0d0; }
-              .card-glow { position: absolute; inset: 0; background: radial-gradient(circle at 50% 0%, #0b3b5c10, transparent 70%); opacity: 0; transition: opacity 0.4s; pointer-events: none; }
-              .card:hover .card-glow { opacity: 1; }
-              .card-content { position: relative; z-index: 2; }
-              .card-footer a:hover { color: #0b3b5c; text-decoration: underline; }
-              .testimonial { padding: 3rem 4rem 4rem; position: relative; }
-              .testimonial-inner { background: #f8fbfe; border-radius: 1.5rem; padding: 2.5rem 3rem; border: 2px solid #0b3b5c30; max-width: 950px; margin: 0 auto; animation: appear 1s ease-out; }
-              body.dark-theme .testimonial-inner { background: #2a3847; border-color: #57708f; }
-              .quote-mark { font-size: 4rem; line-height: 0.7; color: #0b3b5c30; font-family: serif; }
-              body.dark-theme .quote-mark { color: #6883a3; }
-              .quote-text { font-size: 1.2rem; font-weight: 500; margin-bottom: 1.5rem; color: #0b1c2e; line-height: 1.4; }
-              body.dark-theme .quote-text { color: #d1def0; }
-              .quote-author { display: flex; align-items: center; gap: 1rem; font-weight: 600; color: #1e2a3a; font-size: 0.85rem; }
-              body.dark-theme .quote-author { color: #bccfe0; }
-              .author-avatar { width: 42px; height: 42px; background: linear-gradient(145deg, #b0c8e0, #819ab8); border-radius: 50%; box-shadow: 0 0 0 2px #ffffff; }
-              body.dark-theme .author-avatar { background: #57708f; }
-              .footer { padding: 2rem 4rem 1.2rem; background: #000000; border-top: 1px solid #333333; position: relative; z-index: 5; }
-              .footer-copyright { display: flex; justify-content: space-between; color: #9bb1cc; font-size: 0.85rem; border-top: 1px solid #263f59; padding-top: 1.2rem; }
-              @keyframes fadeSlideUp { 0% { opacity: 0; transform: translateY(20px); } 100% { opacity: 1; transform: translateY(0); } }
-              @keyframes slideUp { 0% { opacity: 0; transform: translateY(60px); } 100% { opacity: 1; transform: translateY(0); } }
-              @keyframes appear { 0% { opacity: 0; } 100% { opacity: 1; } }
-            `}</style>
+              )}
+            </div>
           </div>
-        );
-      };
+        </div>
+      </div>
 
-      const root = ReactDOM.createRoot(document.getElementById("root"));
-      root.render(<App />);
-    </script>
+      <nav className="navbar">
+        <div className="navbar-inner">
+          <div className="nav-logo" onClick={() => navTo('home')}>
+            <div className="nav-logo-icon"><i className="fas fa-chart-pie"></i></div>
+            <span className="nav-logo-text">ShinyHealthTools</span>
+          </div>
+          <div className="nav-links">
+            <button className={`nav-link${tab==='home'?' active':''}`} onClick={() => navTo('home')}>Home</button>
+            <button className={`nav-link${tab==='apps'?' active':''}`} onClick={() => navTo('apps')}>Apps</button>
+            <button className={`nav-link${tab==='blog'?' active':''}`} onClick={() => navTo('blog')}>Blog</button>
+            <a href="https://www.mudasiribrahim.com" target="_blank" className="nav-link">Meet the Developer</a>
+            <button className="nav-link" onClick={() => openModal('Support & Appreciation','If any of the apps have been helpful, consider <a href="https://buymeacoffee.com/mudasiribrahim30" target="_blank">supporting the project</a>.<br/><br/>For technical assistance, contact <a href="mailto:mudassiribrahim30@gmail.com">mudassiribrahim30@gmail.com</a>. Responses are typically provided within 24 hours on business days.')}>Support</button>
+            <a href="https://github.com/mudassiribrahim30/R-Shiny-Apps" target="_blank" className="nav-link-gh"><i className="fab fa-github"></i> GitHub</a>
+          </div>
+          <button className="mobile-btn" onClick={() => setMobileOpen(!mobileOpen)}><i className={`fas fa-${mobileOpen?'times':'bars'}`}></i></button>
+        </div>
+      </nav>
+      <div className={`mobile-nav${mobileOpen?' open':''}`}>
+        <button className="nav-link" onClick={() => navTo('home')}><i className="fas fa-home" style={{marginRight:'0.5rem'}}></i>Home</button>
+        <button className="nav-link" onClick={() => navTo('apps')}><i className="fas fa-th-large" style={{marginRight:'0.5rem'}}></i>Apps</button>
+        <button className="nav-link" onClick={() => navTo('blog')}><i className="fas fa-blog" style={{marginRight:'0.5rem'}}></i>Blog</button>
+        <a href="https://www.mudasiribrahim.com" target="_blank" className="nav-link"><i className="fas fa-user" style={{marginRight:'0.5rem'}}></i>Meet the Developer</a>
+        <button className="nav-link" onClick={() => {openModal('Support','Email: <a href="mailto:mudassiribrahim30@gmail.com">mudassiribrahim30@gmail.com</a>');setMobileOpen(false);}}><i className="fas fa-envelope" style={{marginRight:'0.5rem'}}></i>Support</button>
+      </div>
+
+      <main>
+        {tab==='home' && <HomeTab setTab={setTab}/>}
+        {tab==='apps' && <AppsTab/>}
+        {tab==='blog' && <BlogTab/>}
+      </main>
+
+      <footer>
+        <div className="footer-inner">
+          <div className="footer-grid">
+            <div>
+              <div className="fbrand-name">ShinyHealthTools</div>
+              <div className="fbrand-desc">21 validated R/Shiny applications for health research. Open source, browser-based, and free to use for academic and clinical purposes.</div>
+              <div className="fsocials">
+                <a href="https://www.youtube.com/@mudasirmohammedibrahim1026" target="_blank" className="fsoc"><i className="fab fa-youtube"></i></a>
+                <a href="https://www.facebook.com/mudassiribrahim81" target="_blank" className="fsoc"><i className="fab fa-facebook-f"></i></a>
+                <a href="https://x.com/WhizMuda" target="_blank" className="fsoc"><i className="fab fa-x-twitter"></i></a>
+                <a href="https://www.instagram.com/mudassiribrahim81" target="_blank" className="fsoc"><i className="fab fa-instagram"></i></a>
+                <a href="https://github.com/mudassiribrahim30" target="_blank" className="fsoc"><i className="fab fa-github"></i></a>
+              </div>
+            </div>
+            <div>
+              <div className="fcol-title">Apps</div>
+              {['FactorGuard','CalcuStats','ROC Curve Builder','Data2SPSS','KMPlot Genie','MedModr'].map(n => {
+                const a = shinyApps.find(x => x.name===n);
+                return <a key={n} href={a?.run} target="_blank" className="flink">{n}</a>;
+              })}
+              <span className="flink" onClick={() => navTo('apps')}>All 21 apps →</span>
+            </div>
+            <div>
+              <div className="fcol-title">Resources</div>
+              <a href="https://shinyopensource.github.io/documentation/" target="_blank" className="flink">Documentation</a>
+              <a href="https://github.com/mudassiribrahim30" target="_blank" className="flink">GitHub Repository</a>
+              <span className="flink" onClick={() => openModal('Citation Guide','To cite ShinyHealthTools in publications:<br/><br/>Shiny Health Tools (2025). ShinyHealthTools: Statistical applications for health research. Retrieved from [website URL].<br/><br/>For specific apps, include the app name and version.')}>Citation Guide</span>
+              <span className="flink" onClick={() => openModal('Release Notes','<strong>v2.1.0</strong> (March 2026): Major redesign, improved UI responsiveness, chatbot integration, and 21 total apps.')}>Release Notes</span>
+              <span className="flink" onClick={() => navTo('blog')}>Blog</span>
+            </div>
+            <div>
+              <div className="fcol-title">Legal & Support</div>
+              <span className="flink" onClick={() => openModal('Privacy Policy', privacy)}>Privacy</span>
+              <span className="flink" onClick={() => openModal('Frequently Asked Questions','<strong>Q: Are the tools really free?</strong><br/>A: Yes, completely free for academic, government, and non-profit use.<br/><br/><strong>Q: Do I need to install R?</strong><br/>A: No, everything runs in your browser.<br/><br/><strong>Q: How do I cite these tools?</strong><br/>A: See the Citation Guide in Resources.<br/><br/><strong>Q: Is my data secure?</strong><br/>A: All processing is local — no data leaves your machine.')}>FAQ</span>
+              <span className="flink" onClick={() => openModal('Contact','For technical assistance, email <a href="mailto:mudassiribrahim30@gmail.com">mudassiribrahim30@gmail.com</a>. Responses within 24 hours on business days.')}>Contact</span>
+              <a href="https://buymeacoffee.com/mudasiribrahim30" target="_blank" className="flink">Donate ☕</a>
+            </div>
+          </div>
+
+          <div className="footer-bottom">
+            <span>© 2025–{new Date().getFullYear()} ShinyHealthTools. All rights reserved.</span>
+            <span>Intuitive R/Shiny applications for health research</span>
+            <ThemeToggle dark={dark} setDark={setDark}/>
+          </div>
+        </div>
+      </footer>
+
+      {modal && <Modal title={modal.title} content={modal.content} onClose={() => setModal(null)}/>}
+      <ChatBot/>
+    </>
+  );
+};
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
 </body>
 </html>
