@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
     <title>ShinyHealthTools | The Platform for Open Source R/Shiny & HTML Statistical Applications</title>
     <meta name="title" content="ShinyHealthTools | The #1 Platform for Intuitive Statistical Applications">
-    <meta name="description" content="ShinyHealthTools delivers 21 validated R/Shiny applications plus 4 HTML-native tools built by Mudasir Mohammed Ibrahim for sample size calculations, survival analysis, mediation analysis, ROC analysis, factor analysis, data conversion, and more. Trusted by health researchers and data analysts. No coding, open-source, ISO 27001 aligned processes.">
+    <meta name="description" content="ShinyHealthTools delivers 21 validated R/Shiny applications plus 6 HTML-native tools built by Mudasir Mohammed Ibrahim for sample size calculations, survival analysis, mediation analysis, ROC analysis, factor analysis, data conversion, and more. Trusted by health researchers and data analysts. No coding, open-source, ISO 27001 aligned processes.">
     <meta name="keywords" content="statistical software, data analysis, web applications, research, R Shiny, SPSS alternative, sample size calculator, survival analysis, factor analysis, health research tools, ROC curve, open source statistics">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="apple-touch-icon" sizes="180x180" href="https://raw.githubusercontent.com/mudassiribrahim12/ShinyHealthTools/main/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="https://raw.githubusercontent.com/mudassiribrahim12/ShinyHealthTools/main/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="https://raw.githubusercontent.com/mudassiribrahim12/ShinyHealthTools/main/favicon-16x16.png">
     <meta property="og:title" content="ShinyHealthTools | The #1 Platform for Intuitive Statistical Applications">
-    <meta property="og:description" content="21 validated R/shiny tools plus 4 HTML-native tools. Free forever.">
+    <meta property="og:description" content="21 validated R/shiny tools plus 6 HTML-native tools. Free forever.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://shinyhealthtools.github.io/apps/">
     <meta property="og:image" content="https://raw.githubusercontent.com/mudassiribrahim12/ShinyHealthTools/main/og-preview.jpg">
@@ -199,7 +199,13 @@
       -webkit-backdrop-filter: blur(20px);
     }
     .mobile-nav.open { display: flex; }
-    .mobile-nav .nav-link { color: var(--text); padding: 0.65rem 0.8rem; font-size: 0.8rem; }
+    .mobile-nav .nav-link {
+      color: var(--text);
+      padding: 0.65rem 0.8rem;
+      font-size: 0.8rem;
+      text-align: left;
+      width: 100%;
+    }
     .mobile-nav .nav-link:hover { color: var(--accent); }
 
     /* ── HERO ── */
@@ -464,6 +470,7 @@
     .html-banner-text span { font-size: 0.84rem; color: var(--muted); line-height: 1.55; }
 
     .card-grid-2 { display: grid; grid-template-columns: repeat(2,1fr); gap: 1.35rem; }
+    .card-grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.35rem; }
 
     /* ── WHY SECTION ── */
     .why-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1.35rem; }
@@ -671,16 +678,7 @@
     .skel-line.skel-short { width: 40%; }
     .skel-line.skel-med { width: 90%; }
 
-    /* ══════════════════════════════════════════════════════
-       ── NEW: COMMUNITY TESTIMONIALS SECTION ──
-       ══════════════════════════════════════════════════════ */
-
-    /* Wall of Love header area */
-    .twall-hero {
-      text-align: center;
-      margin-bottom: 3.5rem;
-      position: relative;
-    }
+    /* ── COMMUNITY TESTIMONIALS ── */
     .twall-badge {
       display: inline-flex; align-items: center; gap: 0.55rem;
       background: rgba(0,168,85,0.08);
@@ -693,34 +691,7 @@
     }
     html.dark .twall-badge { background: rgba(0,232,122,0.07); border-color: rgba(0,232,122,0.18); }
     .twall-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
-    .twall-title {
-      font-size: clamp(2rem, 4vw, 3rem); font-weight: 900;
-      letter-spacing: -0.03em; color: var(--text); margin-bottom: 0.8rem; line-height: 1.1;
-    }
-    .twall-sub { font-size: 1rem; color: var(--muted); max-width: 480px; margin: 0 auto 2rem; line-height: 1.75; }
 
-    /* Stats bar */
-    .twall-stats {
-      display: flex; justify-content: center; gap: 2.5rem;
-      flex-wrap: wrap; margin-bottom: 3.5rem;
-    }
-    .twall-stat {
-      text-align: center;
-      padding: 1.1rem 1.6rem;
-      background: var(--card-bg); border: 1.5px solid var(--border2);
-      border-radius: 8px; min-width: 110px;
-      box-shadow: var(--shadow-card);
-    }
-    .twall-stat-n {
-      font-family: var(--mono); font-size: 1.9rem; font-weight: 700;
-      color: var(--accent); line-height: 1; margin-bottom: 0.3rem;
-    }
-    .twall-stat-l {
-      font-family: var(--mono); font-size: 0.65rem; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted);
-    }
-
-    /* Masonry testimonial grid */
     .twall-grid {
       columns: 3; column-gap: 1.25rem;
       margin-bottom: 3rem;
@@ -746,8 +717,6 @@
       border-color: rgba(0,119,204,0.22);
     }
     html.dark .twall-card:hover { border-color: rgba(0,212,255,0.18); }
-
-    /* Accent stripe by app category */
     .twall-card::before {
       content: '';
       position: absolute; top: 0; left: 0; right: 0; height: 2px;
@@ -789,7 +758,6 @@
     }
     .twall-stars i { font-size: 0.65rem; color: #f59e0b; }
 
-    /* App chip on card */
     .twall-app-chip {
       display: inline-flex; align-items: center; gap: 0.3rem;
       font-family: var(--mono); font-size: 0.62rem; font-weight: 700;
@@ -801,20 +769,7 @@
     }
     html.dark .twall-app-chip { background: rgba(0,212,255,0.07); border-color: rgba(0,212,255,0.15); }
 
-    /* "Load more" testimonials */
-    .twall-load-more {
-      text-align: center; margin-bottom: 3.5rem;
-    }
-    .twall-load-btn {
-      background: var(--card-bg); border: 1.5px solid var(--border2);
-      color: var(--muted); font-family: var(--mono); font-size: 0.75rem;
-      font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
-      padding: 0.8rem 2rem; border-radius: 4px; cursor: pointer;
-      transition: all 0.2s;
-    }
-    .twall-load-btn:hover { border-color: var(--accent); color: var(--accent); }
-
-    /* ── SHARE YOUR EXPERIENCE FORM ── */
+    /* ── TESTIMONIAL FORM ── */
     .twall-form-wrap {
       background: var(--card-bg);
       border: 1.5px solid var(--border2);
@@ -863,7 +818,6 @@
     .tform-textarea { resize: vertical; min-height: 110px; line-height: 1.65; }
     .tform-select { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%2393a8b8' d='M6 8L0 0h12z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.85rem center; padding-right: 2.2rem; }
 
-    /* Star rating picker */
     .tform-stars { display: flex; gap: 0.35rem; }
     .tform-star-btn {
       background: none; border: none; cursor: pointer;
@@ -874,25 +828,12 @@
     .tform-star-btn.on { color: #f59e0b; }
     .tform-star-btn:hover { transform: scale(1.2); }
 
-    /* Character counter */
     .tform-char-hint {
       font-family: var(--mono); font-size: 0.63rem; color: var(--muted2);
       text-align: right; margin-top: 0.3rem;
     }
     .tform-char-hint.warn { color: #ef4444; }
 
-    /* Privacy note */
-    .tform-privacy {
-      display: flex; align-items: flex-start; gap: 0.65rem;
-      background: rgba(0,119,204,0.04); border: 1px solid var(--border);
-      border-radius: 5px; padding: 0.8rem 1rem;
-      margin-bottom: 1.35rem;
-    }
-    html.dark .tform-privacy { background: rgba(0,212,255,0.04); }
-    .tform-privacy i { color: var(--accent); font-size: 0.82rem; margin-top: 0.12rem; flex-shrink: 0; }
-    .tform-privacy p { font-size: 0.78rem; color: var(--muted); line-height: 1.6; margin: 0; }
-
-    /* Submit button */
     .tform-submit {
       width: 100%; background: var(--accent); color: #fff;
       border: none; border-radius: 5px;
@@ -907,13 +848,10 @@
       box-shadow: 0 8px 28px rgba(0,119,204,0.28);
     }
     .tform-submit:disabled { opacity: 0.6; cursor: not-allowed; }
-    html.dark .tform-submit:hover:not(:disabled) { box-shadow: 0 8px 28px rgba(0,212,255,0.2); }
 
-    /* Spinner */
     .tform-spin { animation: spin360 0.85s linear infinite; display: inline-block; }
     @keyframes spin360 { to { transform: rotate(360deg); } }
 
-    /* Success / error states */
     .tform-feedback {
       border-radius: 5px; padding: 1rem 1.1rem;
       font-size: 0.88rem; line-height: 1.6;
@@ -928,17 +866,8 @@
       background: rgba(239,68,68,0.07); border: 1.5px solid rgba(239,68,68,0.2);
       color: #ef4444;
     }
-    html.dark .tform-feedback.ok { color: var(--green); }
     .tform-feedback i { margin-top: 0.1rem; flex-shrink: 0; }
 
-    /* Pending moderation note */
-    .twall-pending-note {
-      text-align: center; margin-top: 1.1rem;
-      font-family: var(--mono); font-size: 0.65rem; color: var(--muted);
-      letter-spacing: 0.06em;
-    }
-
-    /* Empty state */
     .twall-empty {
       text-align: center; padding: 3.5rem 2rem;
       color: var(--muted); font-family: var(--mono); font-size: 0.85rem;
@@ -949,6 +878,7 @@
     @media(max-width:1100px) {
       .card-grid { grid-template-columns: repeat(2,1fr); }
       .card-grid-2 { grid-template-columns: repeat(2,1fr); }
+      .card-grid-3 { grid-template-columns: repeat(2,1fr); }
       .footer-grid { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
     }
     @media(max-width:900px) {
@@ -967,6 +897,7 @@
       .mobile-btn { display: block; }
       .card-grid { grid-template-columns: 1fr; }
       .card-grid-2 { grid-template-columns: 1fr; }
+      .card-grid-3 { grid-template-columns: 1fr; }
       .why-grid { grid-template-columns: 1fr; }
       .blog-layout { flex-direction: column; }
       .blog-sidebar { width: 100%; position: static; }
@@ -977,7 +908,6 @@
       .testi-quote { padding: 0; }
       .section { padding-top: 4rem; padding-bottom: 4rem; }
       .twall-form-hdr, .twall-form-body { padding: 1.3rem 1.2rem; }
-      .twall-stats { gap: 1rem; }
     }
     @media(max-width:480px) {
       html { font-size: 15.5px; }
@@ -1041,7 +971,7 @@ const htmlApps = [
     id: 'h3', cat: 'calc', name: "CalcuStats",
     icon: "fas fa-calculator",
     logo: "https://raw.githubusercontent.com/mudassiribrahim12/me/main/CalcuStats.png",
-    desc: "Perform sample size calculations and descriptive analysis",
+    desc: "Perform sample size calculations and descriptive analysis directly in your browser.",
     run: "https://shinyhealthtools.github.io/calcustats/",
     code: "https://github.com/shinyhealthtools/calcustats"
   },
@@ -1052,10 +982,26 @@ const htmlApps = [
     desc: "Perform simple mediation, serial mediation, moderation, and moderated mediation analysis.",
     run: "https://shinyhealthtools.github.io/medmodr/",
     code: "https://github.com/shinyhealthtools/medmodr"
+  },
+  {
+    id: 'h5', cat: 'data', name: "SysSampler",
+    icon: "fas fa-filter",
+    logo: "https://raw.githubusercontent.com/mudassiribrahim12/me/main/Sys%20Sampler.png",
+    desc: "Professional systematic sampling calculator. Compute sampling interval (K), and random start for structured survey design and methodology.",
+    run: "https://shinyhealthtools.github.io/systematicsampling/",
+    code: "https://github.com/shinyhealthtools/systematicsampling"
+  },
+  {
+    id: 'h6', cat: 'data', name: "Transpose Table",
+    icon: "fas fa-table",
+    logo: "https://raw.githubusercontent.com/shinyhealthtools/transposetable/main/transposetable.png",
+    desc: "Convert cross-tabulated (contingency table) data into column format for statistical analysis. Easily transform summary tables into individual-level observations for use in SPSS, R, and Excel.",
+    run: "https://shinyhealthtools.github.io/transposetable/",
+    code: "https://github.com/shinyhealthtools/transposetable"
   }
 ];
 
-/* ── SEEDED TESTIMONIALS (existing community testimonials) ── */
+/* ── SEEDED TESTIMONIALS ── */
 const SEED_TESTIMONIALS = [
   {
     id: 'seed-1',
@@ -1114,7 +1060,7 @@ const appNames = [
   "EpiDem Suite","ggPubPlot","FAnalyzr","FactorGuard","CATrend Analyzer",
   "CleanMyData","R DataLab","Data TransformR","APA Table Generator",
   "CMH Analyzer","PharmaCalc Pro","RegEffect Xplorer","Robust Regressor",
-  "SysSampler","TagSelect","QuickStatsGen","Other / General"
+  "SysSampler","TagSelect","QuickStatsGen","Transpose Table","Other / General"
 ];
 
 const countryList = [
@@ -1125,7 +1071,6 @@ const countryList = [
 
 /* ── STORAGE HELPERS ── */
 const STORAGE_KEY = 'sht-community-testimonials';
-const PENDING_KEY = 'sht-pending-testimonials';
 
 const loadTestimonials = async () => {
   try {
@@ -1136,54 +1081,6 @@ const loadTestimonials = async () => {
 
 const saveTestimonials = async (list) => {
   try { await window.storage.set(STORAGE_KEY, JSON.stringify(list), true); } catch {}
-};
-
-const loadPending = async () => {
-  try {
-    const r = await window.storage.get(PENDING_KEY, true);
-    return r ? JSON.parse(r.value) : [];
-  } catch { return []; }
-};
-
-const savePending = async (list) => {
-  try { await window.storage.set(PENDING_KEY, JSON.stringify(list), true); } catch {}
-};
-
-/* ── AI MODERATION via Anthropic API ── */
-const moderateTestimonial = async (text) => {
-  try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        messages: [{
-          role: 'user',
-          content: `You are a content moderator for ShinyHealthTools, a platform for open-source statistical tools used by health researchers. Review the following user testimonial submission.
-
-Testimonial: "${text}"
-
-Return ONLY valid JSON in this exact format (no markdown, no extra text):
-{
-  "approved": true or false,
-  "reason": "brief reason if rejected, empty string if approved",
-  "cleaned": "the testimonial text cleaned of any profanity or minor issues, keep original if clean"
-}
-
-Approve if: genuine experience with statistical tools, respectful, relevant to health research or data analysis.
-Reject if: spam, offensive content, unrelated content, fake-sounding, or promotional for competitors.`
-        }]
-      })
-    });
-    if (!res.ok) return { approved: true, cleaned: text, reason: '' };
-    const data = await res.json();
-    const raw = data.content?.find(b => b.type === 'text')?.text || '{}';
-    const clean = raw.replace(/```json|```/g, '').trim();
-    return JSON.parse(clean);
-  } catch {
-    return { approved: true, cleaned: text, reason: '' };
-  }
 };
 
 /* ── TESTIMONIALS (original rotating) ── */
@@ -1352,12 +1249,12 @@ const SearchOverlay = ({onClose}) => {
       <div className="search-box" onClick={e=>e.stopPropagation()}>
         <div className="search-box-inner">
           <i className="fas fa-search"></i>
-          <input ref={inputRef} className="search-box-input" placeholder="Search 25 statistical tools…"
+          <input ref={inputRef} className="search-box-input" placeholder="Search 27 statistical tools…"
             value={query} onChange={e=>{setQuery(e.target.value);doSearch(e.target.value);}}/>
           <button className="search-close-btn" onClick={onClose}>ESC</button>
         </div>
         <div className="search-results">
-          {!query.trim() && <div className="search-empty-state">Start typing to search all 25 tools.</div>}
+          {!query.trim() && <div className="search-empty-state">Start typing to search all 27 tools.</div>}
           {query.trim() && results.length===0 && <div className="search-no-results">No match for "{query}"</div>}
           {results.map(r=>(
             <div key={r.id} className="search-result-item" onClick={()=>{window.open(r.run,'_blank');onClose();}}>
@@ -1479,18 +1376,13 @@ const ThemeToggle = ({dark, setDark}) => (
   </div>
 );
 
-/* ════════════════════════════════════════════════════════════
-   ── NEW: WALL OF LOVE – COMMUNITY TESTIMONIALS SECTION ──
-   ════════════════════════════════════════════════════════════ */
-
-/* Avatar initials generator */
+/* ── AVATAR HELPERS ── */
 const getInitials = (name) => {
   if (!name || name.trim() === '') return '?';
   const parts = name.trim().split(/\s+/);
   return (parts[0][0] + (parts[1] ? parts[1][0] : '')).toUpperCase();
 };
 
-/* Avatar gradient by name hash */
 const avatarGradient = (name) => {
   const gradients = [
     'linear-gradient(135deg,#0077cc,#6c3fc5)',
@@ -1505,7 +1397,7 @@ const avatarGradient = (name) => {
   return gradients[h % gradients.length];
 };
 
-/* ── SINGLE TESTIMONIAL CARD ── */
+/* ── TESTIMONIAL CARD ── */
 const TestiCard = ({ t }) => (
   <div className="twall-card">
     <div className="twall-app-chip">
@@ -1534,7 +1426,7 @@ const TestiCard = ({ t }) => (
   </div>
 );
 
-/* ── TESTIMONIAL SUBMISSION FORM (with SIMPLE success message under button) ── */
+/* ── TESTIMONIAL FORM ── */
 const TestiForm = ({ onSuccess }) => {
   const [form, setForm] = useState({
     name: '', role: '', country: '', customCountry: '', app: '', rating: 5, text: ''
@@ -1551,7 +1443,6 @@ const TestiForm = ({ onSuccess }) => {
   const FORMSPREE_URL = 'https://formspree.io/f/xanrpwae';
   
   const handleSubmit = async () => {
-    // Validation
     if (!form.text.trim() || form.text.trim().length < 20) {
       setStatus('err'); 
       setErrMsg('Please write at least 20 characters about your experience.');
@@ -1602,7 +1493,6 @@ const TestiForm = ({ onSuccess }) => {
       
       if (response.ok) {
         setStatus('ok');
-        
         const entry = {
           id: 'user-' + Date.now(),
           text: form.text.trim(),
@@ -1613,15 +1503,9 @@ const TestiForm = ({ onSuccess }) => {
           rating: form.rating,
           date: new Date().toISOString().slice(0,10)
         };
-        
         setForm({ name:'', role:'', country:'', customCountry:'', app:'', rating:5, text: '' });
-        
         if (onSuccess) onSuccess(entry);
-        
-        // Show simple success message under button
         setShowSuccessMsg(true);
-        
-        // Hide after 5 seconds
         setTimeout(() => setShowSuccessMsg(false), 5000);
         setStatus(null);
       } else {
@@ -1649,23 +1533,18 @@ const TestiForm = ({ onSuccess }) => {
         </div>
       </div>
       <div className="twall-form-body">
-        
-        {/* ERROR MESSAGE */}
         {status === 'err' && (
-          <div className="tform-feedback err" style={{animation: 'fadeInUp 0.3s ease', marginBottom: '1rem'}}>
+          <div className="tform-feedback err" style={{marginBottom: '1rem'}}>
             <i className="fas fa-exclamation-circle"></i>
             <div>{errMsg}</div>
           </div>
         )}
-        
-        {/* LOADING MESSAGE */}
         {status === 'loading' && (
           <div className="tform-feedback" style={{background: 'rgba(0,119,204,0.08)', border: '1.5px solid var(--accent)', marginBottom: '1rem'}}>
             <i className="fas fa-circle-notch fa-spin" style={{color: 'var(--accent)'}}></i>
             <div>Submitting your testimonial...</div>
           </div>
         )}
-        
         <div className="tform-row">
           <div className="tform-group">
             <label className="tform-label">Your Name <span style={{color:'var(--muted)',fontWeight:400}}>(optional)</span></label>
@@ -1729,14 +1608,9 @@ const TestiForm = ({ onSuccess }) => {
             {form.text.length} / {maxChars} characters
           </div>
         </div>
-        
-        {/* Privacy Note */}
-
         <button className="tform-submit" onClick={handleSubmit} disabled={isSubmitting}>
           {isSubmitting ? (<><i className="fas fa-circle-notch tform-spin"></i> Submitting...</>) : (<><i className="fas fa-paper-plane"></i> Submit Testimonial</>)}
         </button>
-        
-        {/* SIMPLE SUCCESS MESSAGE - DIRECTLY UNDER THE BUTTON */}
         {showSuccessMsg && (
           <div style={{
             marginTop: '1rem',
@@ -1744,8 +1618,7 @@ const TestiForm = ({ onSuccess }) => {
             backgroundColor: 'rgba(0, 168, 85, 0.1)',
             border: '1px solid var(--green)',
             borderRadius: '6px',
-            textAlign: 'center',
-            animation: 'fadeInUp 0.3s ease'
+            textAlign: 'center'
           }}>
             <i className="fas fa-check-circle" style={{color: 'var(--green)', marginRight: '0.5rem'}}></i>
             <span style={{color: 'var(--green)', fontWeight: '500'}}>
@@ -1758,20 +1631,15 @@ const TestiForm = ({ onSuccess }) => {
   );
 };
 
-/* ── WALL OF LOVE — FULL SECTION (with SIMPLE success message under button) ── */
+/* ── WALL OF LOVE SECTION ── */
 const WallOfLove = () => {
   const [communityTestis, setCommunityTestis] = useState([]);
-  const [visibleCount, setVisibleCount] = useState(6);
-  const hdrRef = useFadeIn();
 
   const allTestis = useCallback(() => {
     const map = new Map();
     [...SEED_TESTIMONIALS, ...communityTestis].forEach(t => map.set(t.id, t));
     return Array.from(map.values());
   }, [communityTestis]);
-
-  const displayed = allTestis().slice(0, visibleCount);
-  const total = allTestis().length;
 
   useEffect(() => {
     loadTestimonials().then(stored => {
@@ -1820,7 +1688,7 @@ const HtmlAppsSection = ({setTab, isTab=false}) => {
             </div>
           </div>
         )}
-        <div className={`card-grid-2 stagger`} ref={isTab ? null : gridRef}>
+        <div className={`card-grid-3 stagger`} ref={isTab ? null : gridRef}>
           {htmlApps.map(a => <HtmlAppCard key={a.id} app={a} useFade={!isTab}/>)}
         </div>
         {!isTab && (
@@ -1854,13 +1722,13 @@ const HomeTab = ({setTab}) => {
             <h1 className="hero-title">
               Empowering Health<br/>Research with<br/><em>Innovative Tools</em>
             </h1>
-            <p className="hero-desc">ShinyHealthTools is a comprehensive platform designed to advance public health research globally. It features 21 validated R Shiny applications alongside 4 HTML-native tools, developed to support healthcare institutions, academic researchers, and clinical investigations without requiring any programming expertise.</p>
+            <p className="hero-desc">ShinyHealthTools is a comprehensive platform designed to advance public health research globally. It features 21 validated R Shiny applications alongside 6 HTML-native tools, developed to support healthcare institutions, academic researchers, and clinical investigations without requiring any programming expertise.</p>
             <p className="hero-desc" style={{marginTop:'0.35rem'}}>The applications on this platform provide a comprehensive suite of analytical capabilities, including survival analysis, mediation analysis, ROC analysis, factor analysis, regression modeling, data screening, epidemiological analysis, SPSS data conversion, and publication-ready visualizations. All tools are fully web-based, ensuring seamless access and efficient execution directly within the browser, without the need for specialized software installation.</p>
             <div className="hero-actions">
             </div>
             <div className="hero-metrics">
               <AnimatedMetric target={21}  suffix="" label="Shiny Tools"   duration={1600}/>
-              <AnimatedMetric target={4}   suffix="" label="HTML Tools"    duration={1000}/>
+              <AnimatedMetric target={6}   suffix="" label="HTML Tools"    duration={1000}/>
               <AnimatedMetric target={100} suffix="%" label="Open Source"  duration={1800}/>
               <AnimatedMetric target={0}   prefix="$" label="License Cost" duration={900}/>
             </div>
@@ -1874,7 +1742,7 @@ const HomeTab = ({setTab}) => {
         <div className="section-inner">
           <div className="section-hdr fade-up" ref={featuredHdrRef}>
             <div className="section-tag-label">Featured Applications</div>
-            <h2 className="section-title">Shiny Tool</h2>
+            <h2 className="section-title">Shiny Tools</h2>
           </div>
           <div className="card-grid stagger" ref={featuredGridRef}>
             {shinyApps.slice(0,6).map(a=><AppCard key={a.id} app={a} useFade={true}/>)}
@@ -1913,7 +1781,7 @@ const HomeTab = ({setTab}) => {
       {/* ORIGINAL ROTATING TESTIMONIALS */}
       <Testimonials/>
 
-      {/* ── NEW: WALL OF LOVE ── */}
+      {/* WALL OF LOVE */}
       <WallOfLove/>
     </>
   );
@@ -2098,7 +1966,7 @@ const Modal = ({title, content, onClose}) => {
 
 const ChatBot = () => {
   const [open, setOpen] = useState(false);
-  const [msgs, setMsgs] = useState([{s:'bot',t:"Hi! I'm the ShinyHealthTools assistant. Ask me anything about our 25 tools or how to get started."}]);
+  const [msgs, setMsgs] = useState([{s:'bot',t:"Hi! I'm the ShinyHealthTools assistant. Ask me anything about our 27 tools or how to get started."}]);
   const [input, setInput] = useState('');
   const [showSug, setShowSug] = useState(true);
   const endRef = useRef(null);
@@ -2106,16 +1974,18 @@ const ChatBot = () => {
   useEffect(()=>{endRef.current?.scrollIntoView({behavior:'smooth'});},[msgs]);
   const respond = q => {
     const lq = q.toLowerCase();
-    if(lq.includes('free')||lq.includes('cost')) return "All 25 tools are completely free for academic, government, and non-profit use. No license fees or subscriptions.";
-    if(lq.includes('html tool')||lq.includes('html app')) return "There are 4 HTML-native tools: ROC Curve Builder, CATrend Analyzer, CalcuStats, and MedModr. They run instantly in any browser — no Shiny server, no R install needed.";
+    if(lq.includes('free')||lq.includes('cost')) return "All 27 tools are completely free for academic, government, and non-profit use. No license fees or subscriptions.";
+    if(lq.includes('html tool')||lq.includes('html app')) return "There are 6 HTML-native tools: ROC Curve Builder, CATrend Analyzer, CalcuStats, MedModr, SysSampler, and Transpose Table. They run instantly in any browser — no Shiny server, no R install needed.";
     if(lq.includes('calcustats')||lq.includes('sample size')) return "CalcuStats handles sample size calculation, power analysis, and descriptive statistics — available as both a Shiny app and an HTML tool.";
+    if(lq.includes('syssampler')||lq.includes('systematic sampling')) return "SysSampler is a professional systematic sampling calculator. It computes the sampling interval (K) and random start for structured survey design. Available as both a Shiny app and an HTML tool.";
+    if(lq.includes('transpose')) return "Transpose Table converts cross-tabulated (contingency table) data into column format for statistical analysis — perfect for SPSS, R, and Excel users.";
     if(lq.includes('cite')) return "Cite as: 'ShinyHealthTools (2025). ShinyHealthTools: Statistical applications for health research. Retrieved from the website URL.'";
     if(lq.includes('source')||lq.includes('github')) return "All source code is at github.com/mudassiribrahim30 under MIT license. Fully open and auditable.";
-    if(lq.includes('how many')||lq.includes('available')) return "There are 25 tools total: 21 R/shiny tools and 4 HTML-native tools covering survival, ROC, factor analysis, regression, mediation, data conversion, and more.";
+    if(lq.includes('how many')||lq.includes('available')) return "There are 27 tools total: 21 R/shiny tools and 6 HTML-native tools covering survival, ROC, factor analysis, regression, mediation, data conversion, systematic sampling, and more.";
     if(lq.includes('roc')) return "ROC Curve Builder is available as both a Shiny app and an HTML-native tool. Both generate ROC curves with AUC and confidence intervals.";
     if(lq.includes('testimonial')||lq.includes('review')) return "Visit our Wall of Love section on the Home page to read community testimonials and share your own experience with ShinyHealthTools!";
     if(lq.includes('hello')||lq.includes('hi')) return "Hello! How can I help you with ShinyHealthTools today?";
-    return "Try asking about a specific app (e.g. 'Tell me about MedModr'), or browse the shiny tools or HTML Tools tabs.";
+    return "Try asking about a specific app (e.g. 'Tell me about MedModr'), or browse the Shiny Tools or HTML Tools tabs.";
   };
   const send = text => {
     if(!text.trim()) return;
@@ -2218,14 +2088,15 @@ const App = () => {
         </button>
       </nav>
 
-<div className={`mobile-nav${mobileOpen?' open':''}`}>
-  <button className="nav-link" onClick={()=>navTo('home')}><i className="fas fa-home" style={{marginRight:'0.65rem', width:'1.25rem'}}></i>Home</button>
-  <button className="nav-link" onClick={()=>navTo('apps')}><i className="fas fa-th-large" style={{marginRight:'0.65rem', width:'1.25rem'}}></i>Shiny Tools</button>
-  <button className="nav-link" onClick={()=>navTo('html')} style={{color:'var(--orange)'}}><i className="fas fa-code" style={{marginRight:'0.65rem', width:'1.25rem'}}></i>HTML Tools</button>
-  <button className="nav-link" onClick={()=>navTo('doc')}><i className="fas fa-book-open" style={{marginRight:'0.65rem', width:'1.25rem'}}></i>Docs</button>
-  <button className="nav-link" onClick={()=>navTo('blog')}><i className="fas fa-blog" style={{marginRight:'0.65rem', width:'1.25rem'}}></i>Blog</button>
-  <button className="nav-link" onClick={()=>{setSearchOpen(true);setMobileOpen(false);}}><i className="fas fa-search" style={{marginRight:'0.65rem', width:'1.25rem'}}></i>Search</button>
-</div>
+      <div className={`mobile-nav${mobileOpen?' open':''}`}>
+        <button className="nav-link" onClick={()=>navTo('home')}>Home</button>
+        <button className="nav-link" onClick={()=>navTo('apps')}>Shiny Tools</button>
+        <button className="nav-link" onClick={()=>navTo('html')} style={{color:'var(--orange)'}}>HTML Tools</button>
+        <button className="nav-link" onClick={()=>navTo('blog')}>Blog</button>
+        <a href="https://shinyopensource.github.io/documentation/" target="_blank" className="nav-link">Docs</a>
+        <a href="https://mudasiribrahim.github.io/gh/" target="_blank" className="nav-link">Developer</a>
+        <button className="nav-link" onClick={()=>{setSearchOpen(true);setMobileOpen(false);}}>Search</button>
+      </div>
 
       <main>
         {tab==='home'          && <HomeTab setTab={setTab}/>}
@@ -2252,12 +2123,12 @@ const App = () => {
               </div>
             </div>
             <div>
-              <div className="fcol-title">shiny tools</div>
+              <div className="fcol-title">Shiny Tools</div>
               {['FactorGuard','CalcuStats','ROC Curve Builder','Data2SPSS','KMPlot Genie','MedModr'].map(n=>{
                 const a=shinyApps.find(x=>x.name===n);
                 return <a key={n} href={a?.run} target="_blank" className="flink">{n}</a>;
               })}
-              <span className="flink" onClick={()=>navTo('apps')}>All 21 shiny tools →</span>
+              <span className="flink" onClick={()=>navTo('apps')}>All 21 Shiny tools →</span>
             </div>
             <div>
               <div className="fcol-title">HTML Tools</div>
@@ -2265,13 +2136,13 @@ const App = () => {
               <div className="fcol-title" style={{marginTop:'1.2rem'}}>Resources</div>
               <a href="https://shinyopensource.github.io/documentation/" target="_blank" className="flink">Documentation</a>
               <span className="flink" onClick={()=>openModal('Citation Guide','To cite ShinyHealthTools in publications:<br/><br/>ShinyHealthTools (2025). ShinyHealthTools: Statistical applications for health research. Retrieved from [website URL].<br/><br/>For specific apps, include the app name and version.')}>Citation Guide</span>
-              <span className="flink" onClick={()=>openModal('Release Notes','<strong>v2.2.0</strong> (April 2026): Renamed to ShinyHealthTools, added 4 HTML-native tools tab, 21 shiny tools retained, Testimonials submission form added.')}>Release Notes</span>
+              <span className="flink" onClick={()=>openModal('Release Notes','<strong>v2.3.0</strong> (April 2026): Added SysSampler and Transpose Table as HTML-native tools, bringing total HTML tools to 6.')}>Release Notes</span>
               <span className="flink" onClick={()=>navTo('blog')}>Blog</span>
             </div>
             <div>
               <div className="fcol-title" style={{marginTop:'1.2rem'}}>Legal & Support</div>
               <span className="flink" onClick={()=>openModal('Privacy Policy',privacy)}>Privacy</span>
-              <span className="flink" onClick={()=>openModal('FAQ','<strong>Q: Are the tools really free?</strong><br/>A: Yes, completely free for academic, government, and non-profit use.<br/><br/><strong>Q: Do I need to install R?</strong><br/>A: No. HTML tools need nothing at all. shiny tools run in your browser via shinyapps.io.<br/><br/><strong>Q: How do I cite these tools?</strong><br/>A: See the Citation Guide in Resources.<br/><br/><strong>Q: Is my data secure?</strong><br/>A: All processing is local — no data leaves your machine.')}>FAQ</span>
+              <span className="flink" onClick={()=>openModal('FAQ','<strong>Q: Are the tools really free?</strong><br/>A: Yes, completely free for academic, government, and non-profit use.<br/><br/><strong>Q: Do I need to install R?</strong><br/>A: No. HTML tools need nothing at all. Shiny tools run in your browser via shinyapps.io.<br/><br/><strong>Q: How do I cite these tools?</strong><br/>A: See the Citation Guide in Resources.<br/><br/><strong>Q: Is my data secure?</strong><br/>A: All processing is local — no data leaves your machine.')}>FAQ</span>
               <span className="flink" onClick={()=>openModal('Contact','For technical assistance, email <a href="mailto:mudassiribrahim30@gmail.com">mudassiribrahim30@gmail.com</a>. Responses within 24 hours on business days.')}>Contact</span>
               <a href="https://buymeacoffee.com/mudasiribrahim30" target="_blank" className="flink">Donate</a>
             </div>
