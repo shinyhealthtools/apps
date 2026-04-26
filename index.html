@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
-  <title>ShinyHealthTools — Free Statistical Applications for Health Research</title>
+  <title>ShinyHealthTools: Free Statistical Applications for Health Research</title>
   <meta name="description" content="ShinyHealthTools delivers 21 validated R/Shiny applications plus 6 HTML-native tools built by Mudasir Mohammed Ibrahim for sample size calculations, survival analysis, mediation analysis, ROC analysis, factor analysis, data conversion, and more.">
   <meta name="keywords" content="statistical software, data analysis, web applications, research, R Shiny, SPSS alternative, sample size calculator, survival analysis, factor analysis, health research tools, ROC curve, open source statistics">
   <link rel="apple-touch-icon" sizes="180x180" href="https://raw.githubusercontent.com/mudassiribrahim12/ShinyHealthTools/main/apple-touch-icon.png">
@@ -20,7 +20,7 @@
   <meta name="google-site-verification" content="wziTcVA66OowBWGGGHsar8ky99roP427M_3ZTu8x1sI" />
 
 <style>
-  /* ── LIGHT MODE ── */
+  /* ── DEFAULT (white) ── */
   :root {
     --bg:           #ffffff;
     --text:         #000000;
@@ -46,34 +46,48 @@
     --table-dot:    #cccccc;
     --bq-bd:        #cccccc;
     --bq-cite-bd:   #0000aa;
+    --sidebar-bg:   #f5f5f5;
+    --sidebar-bd:   #aaaaaa;
+    --sidebar-link: #0000cc;
+    --sidebar-active-bg: #e0e0e0;
+    --faq-q-bg:     #f0f0f0;
+    --faq-q-bd:     #cccccc;
+    --faq-a-bg:     #fafafa;
   }
 
-  /* ── DARK MODE ── */
-  html.dark {
-    --bg:           #1c1c1c;
-    --text:         #e0e0e0;
-    --text-muted:   #bbbbbb;
-    --text-dim:     #999999;
-    --heading:      #e0e0e0;
-    --link:         #88aaff;
-    --link-visited: #cc99ff;
-    --link-hover:   #ff8888;
-    --hr:           #444444;
-    --notice-bg:    #252510;
-    --notice-bd:    #555555;
-    --badge-new-bg: #002200;
-    --badge-new-bd: #006600;
-    --badge-new-tx: #88dd88;
-    --toggle-bg:    #dddddd;
-    --toggle-txt:   #111111;
-    --toggle-bd:    #aaaaaa;
-    --header-bd:    #555555;
-    --footer-bd:    #444444;
-    --toc-bd:       #555555;
-    --toc-cell:     #333333;
-    --table-dot:    #444444;
-    --bq-bd:        #555555;
-    --bq-cite-bd:   #7777cc;
+  /* ── YELLOW MODE (faded yellow, statpages.info style) ── */
+  html.yellow {
+    --bg:           #fffff0;
+    --text:         #000000;
+    --text-muted:   #333333;
+    --text-dim:     #555555;
+    --heading:      #000000;
+    --link:         #0000cc;
+    --link-visited: #551a8b;
+    --link-hover:   #cc0000;
+    --hr:           #cccc99;
+    --notice-bg:    #fffde0;
+    --notice-bd:    #cccc99;
+    --badge-new-bg: #ccffcc;
+    --badge-new-bd: #009900;
+    --badge-new-tx: #006600;
+    --toggle-bg:    #222222;
+    --toggle-txt:   #fffff0;
+    --toggle-bd:    #333333;
+    --header-bd:    #bbbb88;
+    --footer-bd:    #cccc99;
+    --toc-bd:       #cccc99;
+    --toc-cell:     #fffde0;
+    --table-dot:    #ddddaa;
+    --bq-bd:        #ddddaa;
+    --bq-cite-bd:   #0000aa;
+    --sidebar-bg:   #fffde0;
+    --sidebar-bd:   #cccc99;
+    --sidebar-link: #0000cc;
+    --sidebar-active-bg: #eeeecc;
+    --faq-q-bg:     #fffad0;
+    --faq-q-bd:     #cccc99;
+    --faq-a-bg:     #fffff8;
   }
 
   * { box-sizing: border-box; }
@@ -96,7 +110,10 @@
     padding: 0 28px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
     height: 50px;
     transition: background-color 0.2s, border-color 0.2s;
   }
@@ -122,11 +139,186 @@
   }
   #theme-btn:hover { opacity: 0.8; }
 
+  /* ── HEADER RIGHT GROUP ── */
+  .header-right {
+    position: absolute;
+    right: 28px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* ── SEARCH ── */
+  #search-btn {
+    font-size: 16px;
+    background: none;
+    border: 1px solid var(--header-bd);
+    color: var(--heading);
+    cursor: pointer;
+    padding: 3px 8px;
+    line-height: 1;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  #search-btn:hover { color: var(--link-hover); border-color: var(--link-hover); }
+
+  #search-wrap {
+    position: relative;
+  }
+
+  .search-box {
+    position: absolute;
+    top: 34px;
+    right: 0;
+    width: 340px;
+    background-color: var(--bg);
+    border: 1px solid var(--header-bd);
+    z-index: 200;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transition: background-color 0.2s, border-color 0.2s;
+  }
+  .search-box.hidden { display: none; }
+
+  #search-input {
+    width: 100%;
+    padding: 8px 10px;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 15px;
+    border: none;
+    border-bottom: 1px solid var(--hr);
+    background-color: var(--bg);
+    color: var(--text);
+    outline: none;
+    box-sizing: border-box;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+  }
+
+  .search-results {
+    max-height: 320px;
+    overflow-y: auto;
+  }
+  .search-results:empty { display: none; }
+
+  .sr-item {
+    display: block;
+    padding: 7px 12px;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 14px;
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--table-dot);
+    cursor: pointer;
+    line-height: 1.5;
+    transition: background-color 0.1s;
+  }
+  .sr-item:last-child { border-bottom: none; }
+  .sr-item:hover, .sr-item.focused {
+    background-color: var(--sidebar-active-bg);
+    color: var(--link-hover);
+  }
+  .sr-item .sr-section {
+    display: block;
+    font-size: 11px;
+    color: var(--text-dim);
+    font-style: italic;
+    margin-bottom: 1px;
+  }
+  .sr-item .sr-snippet mark {
+    background: #ffff66;
+    color: #000;
+    font-style: normal;
+  }
+  .sr-none {
+    padding: 10px 12px;
+    font-size: 14px;
+    color: var(--text-dim);
+    font-style: italic;
+  }
+
+  @media (max-width: 600px) {
+    .search-box { width: calc(100vw - 20px); right: auto; left: 50%; transform: translateX(-50%); }
+    .header-right { right: 14px; gap: 5px; }
+  }
+
+  /* ── LAYOUT: SIDEBAR + CONTENT ── */
+  .layout-wrap {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  /* ── LEFT SIDEBAR ── */
+  .sidebar {
+    width: 195px;
+    min-width: 195px;
+    position: sticky;
+    top: 50px;
+    height: calc(100vh - 50px);
+    overflow-y: auto;
+    border-right: 1px solid var(--sidebar-bd);
+    background-color: var(--sidebar-bg);
+    padding: 14px 0 30px 0;
+    transition: background-color 0.2s, border-color 0.2s;
+  }
+
+  .sidebar-title {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 13px;
+    font-weight: bold;
+    color: var(--text-muted);
+    padding: 0 12px 8px 12px;
+    border-bottom: 1px solid var(--sidebar-bd);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .sidebar nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .sidebar nav ul li {
+    margin: 0;
+    padding: 0;
+  }
+
+  .sidebar nav ul li a {
+    display: block;
+    padding: 6px 12px;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 14.5px;
+    color: var(--sidebar-link);
+    text-decoration: none;
+    border-left: 3px solid transparent;
+    line-height: 1.4;
+    transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+  }
+
+  .sidebar nav ul li a:visited {
+    color: var(--link-visited);
+  }
+
+  .sidebar nav ul li a:hover {
+    color: var(--link-hover);
+    background-color: var(--sidebar-active-bg);
+    border-left-color: var(--link-hover);
+    text-decoration: none;
+  }
+
+  .sidebar nav ul li a.active {
+    font-weight: bold;
+    background-color: var(--sidebar-active-bg);
+    border-left-color: var(--link);
+  }
+
   /* ── PAGE CONTENT ── */
   .page-wrap {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 22px 28px 50px 28px;
+    flex: 1;
+    min-width: 0;
+    max-width: 980px;
+    padding: 22px 32px 50px 32px;
   }
 
   /* ── TYPOGRAPHY ── */
@@ -170,25 +362,6 @@
 
   /* ── COUNT LABEL ── */
   .count-label { font-size: 15px; color: var(--text-dim); font-style: italic; }
-
-  /* ── TABLE OF CONTENTS ── */
-  .toc-table {
-    border: 1px solid var(--toc-bd);
-    border-collapse: collapse;
-    width: 100%;
-    margin: 12px 0;
-    transition: border-color 0.2s;
-  }
-  .toc-table td {
-    padding: 6px 14px;
-    border: 1px solid var(--toc-cell);
-    text-align: center;
-    font-size: 15.5px;
-    font-weight: bold;
-    transition: border-color 0.2s;
-  }
-  .toc-table td a { text-decoration: none; }
-  .toc-table td a:hover { text-decoration: underline; }
 
   /* ── APPS TABLE ── */
   table.apps-table {
@@ -234,518 +407,722 @@
   }
 
   /* ── SECTION ANCHOR ── */
-  .section-anchor { display: block; height: 0; overflow: hidden; }
+  .section-anchor {
+    display: block;
+    height: 0;
+    overflow: hidden;
+    /* offset for sticky header */
+    margin-top: -60px;
+    padding-top: 60px;
+  }
+
+  /* ── FAQ SECTION ── */
+  .faq-list {
+    margin: 10px 0 18px 0;
+  }
+
+  .faq-item {
+    border: 1px solid var(--faq-q-bd);
+    margin-bottom: 10px;
+    transition: border-color 0.2s;
+  }
+
+  .faq-question {
+    width: 100%;
+    background-color: var(--faq-q-bg);
+    border: none;
+    text-align: left;
+    padding: 11px 14px 11px 14px;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--text);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+    line-height: 1.5;
+    transition: background-color 0.2s, color 0.2s;
+  }
+
+  .faq-question:hover {
+    color: var(--link-hover);
+  }
+
+  .faq-question .faq-arrow {
+    font-size: 13px;
+    color: var(--text-dim);
+    flex-shrink: 0;
+    margin-top: 3px;
+    transition: transform 0.22s, color 0.2s;
+    font-style: normal;
+  }
+
+  .faq-item.open .faq-question .faq-arrow {
+    transform: rotate(90deg);
+  }
+
+  .faq-answer {
+    display: none;
+    background-color: var(--faq-a-bg);
+    padding: 10px 16px 12px 16px;
+    font-size: 15.5px;
+    line-height: 1.82;
+    color: var(--text-muted);
+    border-top: 1px solid var(--faq-q-bd);
+    transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+  }
+
+  .faq-item.open .faq-answer {
+    display: block;
+  }
+
+  .faq-answer p {
+    margin: 6px 0;
+  }
 
   /* ── SITE FOOTER ── */
   .site-footer {
     width: 100%;
     border-top: 1px solid var(--footer-bd);
-    padding: 14px 28px;
+    padding: 12px 28px;
     font-size: 14px;
     color: var(--text-dim);
-    text-align: center;
-    line-height: 1.9;
     background-color: var(--bg);
     transition: background-color 0.2s, border-color 0.2s, color 0.2s;
   }
-  .site-footer p { margin: 3px 0; }
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    line-height: 1.8;
+  }
+  .footer-left { text-align: left; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .footer-right {
+    text-align: right;
+    font-style: italic;
+    color: var(--text-dim);
+  }
+
+  /* GitHub icon in footer */
+  .footer-github {
+    display: inline-flex;
+    align-items: center;
+    color: var(--text-dim);
+    text-decoration: none;
+    transition: color 0.2s;
+    vertical-align: middle;
+    margin-left: 4px;
+  }
+  .footer-github:hover {
+    color: var(--link-hover);
+  }
+  .footer-github svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+    vertical-align: middle;
+  }
+
+  @media (max-width: 600px) {
+    .footer-inner { flex-direction: column; align-items: flex-start; }
+    .footer-right { text-align: left; }
+    .site-footer { padding: 12px 16px; }
+  }
+
+  /* ── SCROLLBAR for sidebar ── */
+  .sidebar::-webkit-scrollbar { width: 5px; }
+  .sidebar::-webkit-scrollbar-track { background: transparent; }
+  .sidebar::-webkit-scrollbar-thumb { background: var(--sidebar-bd); }
+
+  /* ── HAMBURGER BUTTON (mobile only) ── */
+  #menu-btn {
+    display: none;
+    font-size: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--heading);
+    position: absolute;
+    left: 14px;
+    padding: 4px 8px;
+    line-height: 1;
+  }
+
+  /* ── SIDEBAR OVERLAY (mobile) ── */
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    z-index: 149;
+  }
+  .sidebar-overlay.open { display: block; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    body { font-size: 15px; }
+
+    #menu-btn { display: block; }
+
+    #theme-btn { right: 14px; font-size: 11px; padding: 3px 9px; }
+
+    .site-header { padding: 0 14px; }
+
+    /* Sidebar slides in from left as drawer on mobile */
+    .sidebar {
+      position: fixed;
+      top: 50px;
+      left: 0;
+      height: calc(100vh - 50px);
+      width: 240px;
+      min-width: 0;
+      z-index: 150;
+      transform: translateX(-100%);
+      transition: transform 0.25s ease, background-color 0.2s, border-color 0.2s;
+      box-shadow: 2px 0 8px rgba(0,0,0,0.15);
+    }
+    .sidebar.open {
+      transform: translateX(0);
+    }
+
+    .page-wrap {
+      padding: 16px 16px 40px 16px;
+      max-width: 100%;
+    }
+
+    h2 { font-size: 18px; }
+    h3 { font-size: 15px; }
+
+    ul { padding-left: 18px; }
+
+    blockquote { margin-left: 10px; }
+
+    .notice-box { font-size: 14px; padding: 10px 12px; }
+
+    .faq-question { font-size: 14.5px; }
+    .faq-answer { font-size: 14px; }
+  }
+
+  @media (max-width: 480px) {
+    body { font-size: 14px; }
+    .site-header .brand { font-size: 16px; }
+    .page-wrap { padding: 12px 12px 36px 12px; }
+    h2 { font-size: 16px; }
+    h3 { font-size: 14px; }
+  }
 </style>
 </head>
 <body>
 
 <!-- SITE HEADER -->
 <header class="site-header">
+  <button id="menu-btn" onclick="toggleMenu()" aria-label="Toggle navigation">&#9776;</button>
   <a class="brand" href="#">ShinyHealthTools</a>
-  <button id="theme-btn" onclick="toggleTheme()">&#9790; Dark Mode</button>
+  <div class="header-right">
+    <div id="search-wrap">
+      <button id="search-btn" onclick="toggleSearch()" aria-label="Search">&#128269;</button>
+      <div id="search-box" class="search-box hidden">
+        <input id="search-input" type="text" placeholder="Search…" autocomplete="off" oninput="doSearch(this.value)" onkeydown="searchKeyNav(event)" />
+        <div id="search-results" class="search-results"></div>
+      </div>
+    </div>
+    <button id="theme-btn" onclick="toggleTheme()">&#9788; Yellow</button>
+  </div>
 </header>
 
-<!-- MAIN CONTENT -->
-<div class="page-wrap">
+<!-- SIDEBAR OVERLAY (mobile backdrop) -->
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="closeMenu()"></div>
 
-<!-- ABOUT NOTICE -->
+<!-- LAYOUT WRAPPER -->
+<div class="layout-wrap">
+
+  <!-- LEFT SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-title">Sections</div>
+    <nav>
+      <ul>
+        <li><a href="#about-resource">About This Website</a></li>
+        <li><a href="#categories">Browse by Research Purpose</a></li>
+        <li><a href="#sample-size">Sample Size Calculation &amp; Power Analysis</a></li>
+        <li><a href="#survival">Survival Analysis</a></li>
+        <li><a href="#mediation">Mediation &amp; Moderation Analysis</a></li>
+        <li><a href="#regression">Regression &amp; Statistical Modeling</a></li>
+        <li><a href="#factor">Factor Analysis &amp; Psychometrics</a></li>
+        <li><a href="#visualization">Visualization &amp; Diagnostic Tools</a></li>
+        <li><a href="#epidemiology">Epidemiology &amp; Public Health</a></li>
+        <li><a href="#data-tools">Data Preparation, Conversion &amp; Sampling</a></li>
+        <li><a href="#testimonials">What Researchers Say</a></li>
+        <li><a href="#why-use">Why Use ShinyHealthTools?</a></li>
+        <li><a href="#citation">How to Cite ShinyHealthTools</a></li>
+        <li><a href="#faq">Frequently Asked Questions</a></li>
+        <li><a href="#about">About the Developer</a></li>
+        <li><a href="#contact">Contact &amp; Support</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <div class="page-wrap">
+
+<!-- ABOUT THIS RESOURCE -->
+<span class="section-anchor" id="about-resource"></span>
+<h3>About This Website</h3>
 <div class="notice-box">
-  <p><b>About This Resource</b></p>
   <p>
-    ShinyHealthTools was built on a single conviction: that advanced statistical analysis should never be locked behind
-    commercial software or require programming expertise. These 27 tools are offered freely to academics, clinicians,
-    government researchers, and students worldwide — with no fees, no subscriptions, and no installation required.
+    ShinyHealthTools was built on a single conviction: that advanced statistical analysis should never be locked behind commercial software or require programming expertise. The name reflects its origins, as many of the tools were initially developed as Shiny applications to make complex analyses interactive, intuitive, and user friendly.
   </p>
   <p>
-    All applications run directly in any modern web browser. Source code is openly available on GitHub under the MIT License.
-    This site is designed to remain a useful, stable resource for health researchers for as long as possible.
+    As the platform has evolved, practical limitations, particularly those associated with free hosting on shiny.io, have driven a transition toward more scalable solutions. Many tools have been re-engineered into lightweight, browser based HTML applications, with continuous efforts underway to translate the majority of the apps into this format. This ensures improved performance, broader accessibility, and long term sustainability. The name ShinyHealthTools is retained to represent not only its origins, but also its ongoing commitment to clarity, interactivity, and simplicity in data analysis.
   </p>
-  <p><i>"Data analysis should be simple and accessible to all." — Mudasir Mohammed Ibrahim</i></p>
+  <p>
+    These tools are offered freely to academics, clinicians, government researchers, and students worldwide, with no fees, no subscriptions, and no installation required. All applications run directly in any modern web browser. Source code is openly available on GitHub under the MIT License, supporting transparency, collaboration, and reproducibility.
+  </p>
+  <p>
+    This site is designed to remain a stable and valuable resource for health researchers globally, continuously evolving to meet the needs of a growing research community.
+  </p>
+  <p><i>"Data analysis should be simple and accessible to all." — Mudasir Mohammed Ibrahim (Founder)</i></p>
 </div>
 
-<!-- TABLE OF CONTENTS -->
-<h3>Sections of This Site</h3>
-<table class="toc-table">
-  <tr>
-    <td><a href="#shiny-tools">Shiny Applications (21)</a></td>
-    <td><a href="#html-tools">HTML-Native Tools (6)</a></td>
-    <td><a href="#categories">Browse by Category</a></td>
-  </tr>
-  <tr>
-    <td><a href="#sample-size">Sample Size &amp; Power</a></td>
-    <td><a href="#survival">Survival Analysis</a></td>
-    <td><a href="#regression">Regression &amp; Modeling</a></td>
-  </tr>
-  <tr>
-    <td><a href="#mediation">Mediation &amp; Moderation</a></td>
-    <td><a href="#factor">Factor Analysis</a></td>
-    <td><a href="#data-tools">Data Tools</a></td>
-  </tr>
-  <tr>
-    <td><a href="#visualization">Visualization</a></td>
-    <td><a href="#epidemiology">Epidemiology</a></td>
-    <td><a href="#testimonials">User Testimonials</a></td>
-  </tr>
-  <tr>
-    <td><a href="#citation">How to Cite</a></td>
-    <td><a href="#about">About the Developer</a></td>
-    <td><a href="#contact">Contact &amp; Support</a></td>
-  </tr>
-</table>
+    <hr>
 
-<hr>
+    <!-- BY CATEGORY -->
+    <span class="section-anchor" id="categories"></span>
+    <h2>Browse by Research Purpose</h2>
 
-<!-- SHINY APPS -->
-<span class="section-anchor" id="shiny-tools"></span>
-<h3>R/Shiny Applications — Quick Index</h3>
-<p class="count-label">21 validated applications deployed on shinyapps.io. Launch from any modern browser. No R installation needed.</p>
+    <span class="section-anchor" id="sample-size"></span>
+    <h3>Sample Size Calculation &amp; Power Analysis</h3>
+    <ul>
+      <li>
+        <b><a href="https://mudassiribrahim2025.shinyapps.io/CalcuStats/" target="_blank">CalcuStats</a></b> (Shiny) /
+        <b><a href="https://shinyhealthtools.github.io/calcustats/" target="_blank">CalcuStats</a></b> (HTML) —
+        Performs sample size calculations for known and unknown populations. Adjusts for non-response rate. Generates a publication-ready participant flowchart with one click. Also includes descriptive and inferential statistics. Suitable for cross-sectional and other research studies.
+        &nbsp;<a href="https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/CalcuStats.R" target="_blank">[Source — Shiny]</a>
+        &nbsp;<a href="https://github.com/shinyhealthtools/calcustats" target="_blank">[Source — HTML]</a>
+      </li>
+    </ul>
 
-<table class="apps-table">
-  <tr>
-    <td><a href="https://mudassiribrahim2026.shinyapps.io/FactorGuard/" target="_blank">FactorGuard</a></td>
-    <td>Parallel analysis &amp; scree plot for factor retention in EFA. &nbsp;<a href="https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/FactorGuard.R" target="_blank">[Source]</a></td>
-  </tr>
-  <tr>
-    <td><a href="https://mudassiribrahim2025.shinyapps.io/CalcuStats/" target="_blank">CalcuStats</a></td>
-    <td>Sample size, power analysis, and descriptive statistics with non-response adjustments. &nbsp;<a href="https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/CalcuStats.R" target="_blank">[Source]</a></td>
-  </tr>
-  <tr>
-    <td><a href="https://newappstesting.shinyapps.io/CATrendAnalyzer/" target="_blank">CATrend Analyzer</a></td>
-    <td>Cochran-Armitage trend test for dose-response and regulatory analysis. &nbsp;<a href="https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/CATrendAnalyzer.R" target="_blank">[Source]</a></td>
-  </tr>
-  <tr>
-    <td><a href="https://mudassiribrahim30.shinyapps.io/ROC_CURVE/" target="_blank">ROC Curve Builder</a></td>
-    <td>ROC curves with AUC and confusion matrix for diagnostic test evaluation. &nbsp;<a href="https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/ROC%20Curve%20Builder.R" target="_blank">[Source]</a></td>
-  </tr>
-  <tr>
-    <td><a href="https://newappstesting.shinyapps.io/Data2SPSS/" target="_blank">Data2SPSS</a></td>
-    <td>Converts RData, Stata, SAS, Excel, or CSV files to/from SPSS (.sav) format. &nbsp;<a href="https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/Data2SPSS" target="_blank">[Source]</a></td>
-  </tr>
-  <tr>
-    <td><a href="https://mudassiribrahim30.shinyapps.io/MedModr/" target="_blank">MedModr</a></td>
-    <td>Simple, serial, and moderated mediation and moderation analysis. &nbsp;<a href="https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/MedModr.R" target="_blank">[Source]</a></td>
-  </tr>
-  <tr>
-    <td><a href="https://mudassiribrahim2025.shinyapps.io/EpiDemSuite/" target="_blank">EpiDem Suite</a></td>
-    <td>Comprehensive epidemiological statistics for public health research. &nbsp;<a href="https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/EpiDem%20Suite.R" target="_blank">[Source]</a></td>
-  </tr>
-  <tr>
-    <td><a href="https://mudassiribrahim2025.shinyapps.io/ggPubPlot/" target="_blank">ggPubPlot</a></td>
-    <td>Publication-ready ggplot2 graphics with journal-style formatting. &nbsp;<a href="https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/ggPubPlot.R" target="_blank">[Source]</a></td>
-  </tr>
-  <tr>
-    <td><a href="https://newappstesting.shinyapps.io/APATableGenerator/" target="_blank">APA Table Generator</a></td>
-    <td>Creates APA-formatted tables ready for manuscript submission. &nbsp;<a href="https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/APA%20Table%20Generator%20Pro.R" target="_blank">[Source]</a></td>
-  </tr>
-  <tr>
-    <td><a href="https://mudassiribrahim2025b.shinyapps.io/SysSampler/" target="_blank">SysSampler</a></td>
-    <td>Systematic sampling: computes interval (K) and random start for survey design. &nbsp;<a href="https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/SysSampler" target="_blank">[Source]</a></td>
-  </tr>
-  <tr>
-    <td><a href="https://newappstesting.shinyapps.io/CMHAnalyzer/" target="_blank">CMH Analyzer</a></td>
-    <td>Cochran-Mantel-Haenszel test for stratified categorical data. &nbsp;<a href="https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/CMHAnalyzer.R" target="_blank">[Source]</a></td>
-  </tr>
-  <tr>
-    <td><a href="https://newappstesting.shinyapps.io/RDataLab/" target="_blank">R DataLab</a></td>
-    <td>Interactive platform for clinical and research dataset exploration and analysis. &nbsp;<a href="https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/RDataLab.R" target="_blank">[Source]</a></td>
-  </tr>
-  <tr>
-    <td><a href="https://mudassiribrahim2025b.shinyapps.io/PharmaCalcPro/" target="_blank">PharmaCalc Pro</a></td>
-    <td>Pharmaceutical dosage and formulation computations for clinical use. &nbsp;<a href="https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/PharmaCalcPro.R" target="_blank">[Source]</a></td>
-  </tr>
-  <tr>
-    <td><a href="https://mudassiribrahim2025b.shinyapps.io/RegEffectXplorer/" target="_blank">RegEffect Xplorer</a></td>
-    <td>Interactive visualisation of regression effects and variable relationships. &nbsp;<a href="https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/RegEffectXplorer.R" target="_blank">[Source]</a></td>
-  </tr>
-  <tr>
-    <td><a href="https://mudassiribrahim2025b.shinyapps.io/DataTransformR/" target="_blank">Data TransformR</a></td>
-    <td>Variable transformation and preprocessing for downstream modelling. &nbsp;<a href="https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/DataTransformR.R" target="_blank">[Source]</a></td>
-  </tr>
-  <tr>
-    <td><a href="https://mudassiribrahim2025b.shinyapps.io/CleanMyData/" target="_blank">CleanMyData</a></td>
-    <td>Data screening for missing values, outliers, and inconsistencies. &nbsp;<a href="https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/CleanMyData.R" target="_blank">[Source]</a></td>
-  </tr>
-  <tr>
-    <td><a href="https://mudassiribrahim30.shinyapps.io/KMPlotGenie/" target="_blank">KMPlot Genie</a></td>
-    <td>Kaplan-Meier survival curves with log-rank tests for time-to-event data. &nbsp;<a href="https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/KMPlotGenie.R" target="_blank">[Source]</a></td>
-  </tr>
-  <tr>
-    <td><a href="https://mudassiribrahim2025.shinyapps.io/QuickStatsGen/" target="_blank">QuickStatsGen</a></td>
-    <td>Simulates synthetic datasets for teaching and pilot analysis testing. &nbsp;<a href="https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/QuickStatsGen.R" target="_blank">[Source]</a></td>
-  </tr>
-  <tr>
-    <td><a href="https://mudassiribrahim2025.shinyapps.io/Robustregression/" target="_blank">Robust Regressor</a></td>
-    <td>Outlier-resistant regression via <i>robustbase</i> with full diagnostics. &nbsp;<a href="https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/Robust%20%20Regressor.R" target="_blank">[Source]</a></td>
-  </tr>
-  <tr>
-    <td><a href="https://mudassiribrahim30.shinyapps.io/Tagselect/" target="_blank">TagSelect</a></td>
-    <td>Participant randomisation and selection for research and clinical trials. &nbsp;<a href="https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/TagSelect.R" target="_blank">[Source]</a></td>
-  </tr>
-  <tr>
-    <td><a href="https://mudassiribrahim30.shinyapps.io/fanalyzr/" target="_blank">FAnalyzr</a></td>
-    <td>Exploratory and confirmatory factor analysis plus dimensionality reduction. &nbsp;<a href="https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/FAnalyzr.R" target="_blank">[Source]</a></td>
-  </tr>
-</table>
+    <span class="section-anchor" id="survival"></span>
+    <h3>Survival Analysis</h3>
+    <ul>
+      <li>
+        <b><a href="https://mudassiribrahim30.shinyapps.io/KMPlotGenie/" target="_blank">KMPlot Genie</a></b> (Shiny) —
+        Creates Kaplan-Meier survival curves with log-rank test p-values. Handles right-censored time-to-event data.
+        Produces publication-ready plots for clinical and epidemiological manuscripts.
+        &nbsp;<a href="https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/KMPlotGenie.R" target="_blank">[Source]</a>
+      </li>
+    </ul>
 
-<hr>
+    <span class="section-anchor" id="mediation"></span>
+    <h3>Mediation &amp; Moderation Analysis</h3>
+    <ul>
+      <li>
+        <b><a href="https://mudassiribrahim30.shinyapps.io/MedModr/" target="_blank">MedModr</a></b> (Shiny) /
+        <b><a href="https://shinyhealthtools.github.io/medmodr/" target="_blank">MedModr</a></b> (HTML) —
+        Supports simple mediation, serial mediation, moderation, and moderated mediation (conditional indirect effects).
+        Generates interactive path diagrams and simple slopes plots with embedded coefficients and p-values. For the shiny version, users can choose between an intuitive interactive interface or a syntax mode.
+        &nbsp;<a href="https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/MedModr.R" target="_blank">[Source — Shiny]</a>
+        &nbsp;<a href="https://github.com/shinyhealthtools/medmodr" target="_blank">[Source — HTML]</a>
+      </li>
+    </ul>
 
-<!-- HTML TOOLS -->
-<span class="section-anchor" id="html-tools"></span>
-<h3>HTML-Native Tools <span class="badge-new">Zero Installation</span></h3>
-<p class="count-label">6 tools that run entirely client-side in your browser. No server, no R, no login. Click and use immediately.</p>
+    <span class="section-anchor" id="regression"></span>
+    <h3>Regression &amp; Statistical Modeling</h3>
+    <ul>
+      <li>
+        <b><a href="https://mudassiribrahim2025.shinyapps.io/Robustregression/" target="_blank">Robust Regressor</a></b> (Shiny) — Tool for robust regression via the <i>robustbase</i> R package. Outlier-resistant parameter estimation with full model diagnostics. Useful when standard OLS is compromised by influential observations.
+        &nbsp;<a href="https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/Robust%20%20Regressor.R" target="_blank">[Source]</a>
+      </li>
+      <li>
+        <b><a href="https://newappstesting.shinyapps.io/CMHAnalyzer/" target="_blank">CMH Analyzer</a></b> (Shiny) —
+        Tool for Cochran-Mantel-Haenszel test for stratified 2×2 tables. Controls for confounding in categorical outcomes. 
+        &nbsp;<a href="https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/CMHAnalyzer.R" target="_blank">[Source]</a>
+      </li>
+      <li>
+        <b><a href="https://newappstesting.shinyapps.io/CATrendAnalyzer/" target="_blank">CATrend Analyzer</a></b> (Shiny) /
+        <b><a href="https://shinyhealthtools.github.io/catrendanalyzer/" target="_blank">CATrend Analyzer</a></b> (HTML) —
+        Tool for Cochran-Armitage Trend test (CATT) for ordinal categorical data with interactive chart outputs. 
+        &nbsp;<a href="https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/CATrendAnalyzer.R" target="_blank">[Source — Shiny]</a>
+        &nbsp;<a href="https://github.com/shinyhealthtools/catrendanalyzer" target="_blank">[Source — HTML]</a>
+      </li>
+    </ul>
 
-<table class="apps-table">
-  <tr>
-    <td><a href="https://shinyhealthtools.github.io/roccurvebuilder/" target="_blank">ROC Curve Builder</a></td>
-    <td>Visualize and construct receiver operating characteristic curves for binary classification evaluation. &nbsp;<a href="https://github.com/mudassiribrahim12/ROCCurve-Builder" target="_blank">[Source]</a></td>
-  </tr>
-  <tr>
-    <td><a href="https://shinyhealthtools.github.io/catrendanalyzer/" target="_blank">CATrend Analyzer</a></td>
-    <td>Explore and visualize categorical trends across datasets with interactive chart outputs. &nbsp;<a href="https://github.com/shinyhealthtools/catrendanalyzer" target="_blank">[Source]</a></td>
-  </tr>
-  <tr>
-    <td><a href="https://shinyhealthtools.github.io/calcustats/" target="_blank">CalcuStats</a></td>
-    <td>Compute optimal sample size using validated formulas, analyze data with descriptive and inferential statistics, and generate publication-ready flowcharts — fully customizable and one-click. &nbsp;<a href="https://github.com/shinyhealthtools/calcustats" target="_blank">[Source]</a></td>
-  </tr>
-  <tr>
-    <td><a href="https://shinyhealthtools.github.io/medmodr/" target="_blank">MedModr</a></td>
-    <td>Perform simple mediation, serial mediation, moderation, and moderated mediation (conditional process analysis). Generates interactive path diagrams and simple slopes plots with embedded coefficients and p-values. &nbsp;<a href="https://github.com/shinyhealthtools/medmodr" target="_blank">[Source]</a></td>
-  </tr>
-  <tr>
-    <td><a href="https://shinyhealthtools.github.io/systematicsampling/" target="_blank">SysSampler</a></td>
-    <td>Professional systematic sampling calculator. Computes sampling interval (K) and random start for structured survey design. &nbsp;<a href="https://github.com/shinyhealthtools/systematicsampling" target="_blank">[Source]</a></td>
-  </tr>
-  <tr>
-    <td><a href="https://shinyhealthtools.github.io/transposetable/" target="_blank">Transpose Table</a></td>
-    <td>Converts cross-tabulated (contingency table) data into column format for statistical analysis. Ideal for SPSS, R, and Excel users. &nbsp;<a href="https://github.com/shinyhealthtools/transposetable" target="_blank">[Source]</a></td>
-  </tr>
-</table>
+    <span class="section-anchor" id="factor"></span>
+    <h3>Factor Analysis &amp; Psychometrics</h3>
+    <ul>
+      <li>
+        <b><a href="https://mudassiribrahim2026.shinyapps.io/FactorGuard/" target="_blank">FactorGuard</a></b> (Shiny) —
+        Tool for parallel analysis with scree plot visualization. Determines the correct number of factors to retain in EFA.
+        More statistically rigorous than the eigenvalue-greater-than-one rule, preventing over-extraction.
+        &nbsp;<a href="https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/FactorGuard.R" target="_blank">[Source]</a>
+      </li>
+      <li>
+        <b><a href="https://mudassiribrahim30.shinyapps.io/fanalyzr/" target="_blank">FAnalyzr</a></b> (Shiny) —
+        Full exploratory and confirmatory factor analysis (EFA and CFA) tool. Supports dimensionality reduction
+        for scale development and validation research. Includes factor loading tables and path diagrams.
+        &nbsp;<a href="https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/FAnalyzr.R" target="_blank">[Source]</a>
+      </li>
+    </ul>
 
-<hr>
+    <span class="section-anchor" id="visualization"></span>
+    <h3>Visualization &amp; Diagnostic Tools</h3>
+    <ul>
+      <li>
+        <b><a href="https://mudassiribrahim30.shinyapps.io/ROC_CURVE/" target="_blank">ROC Curve Builder</a></b> (Shiny) /
+        <b><a href="https://shinyhealthtools.github.io/roccurvebuilder/" target="_blank">ROC Curve Builder</a></b> (HTML) —
+        Generates ROC curves for evaluating binary diagnostic tests. Reports AUC, 95% confidence intervals,
+        sensitivity, specificity, and other metrics.
+        &nbsp;<a href="https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/ROC%20Curve%20Builder.R" target="_blank">[Source — Shiny]</a>
+        &nbsp;<a href="https://github.com/mudassiribrahim12/ROCCurve-Builder" target="_blank">[Source — HTML]</a>
+      </li>
+      <li>
+        <b><a href="https://mudassiribrahim2025.shinyapps.io/ggPubPlot/" target="_blank">ggPubPlot</a></b> (Shiny) —
+        Tool for creating publication-ready plots using ggplot2. Supports box plots, bar charts, violin plots, and scatter plots with journal-compliant formatting and high-resolution export.
+        &nbsp;<a href="https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/ggPubPlot.R" target="_blank">[Source]</a>
+      </li>
+      <li>
+        <b><a href="https://mudassiribrahim2025b.shinyapps.io/RegEffectXplorer/" target="_blank">RegEffect Xplorer</a></b> (Shiny) —
+        Visual exploration of regression model effects and variable relationships.
+        &nbsp;<a href="https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/RegEffectXplorer.R" target="_blank">[Source]</a>
+      </li>
+    </ul>
 
-<!-- BY CATEGORY -->
-<span class="section-anchor" id="categories"></span>
-<h2>Browse by Research Purpose</h2>
+    <span class="section-anchor" id="epidemiology"></span>
+    <h3>Epidemiology &amp; Public Health</h3>
+    <ul>
+      <li>
+        <b><a href="https://mudassiribrahim2025.shinyapps.io/EpiDemSuite/" target="_blank">EpiDem Suite</a></b> (Shiny) —
+        A comprehensive suite of epidemiological statistics covering relative risk, odds ratios, incidence rates,
+        attributable risk, and other common public health measures. Designed for routine use in health research settings.
+        &nbsp;<a href="https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/EpiDem%20Suite.R" target="_blank">[Source]</a>
+      </li>
+      <li>
+        <b><a href="https://mudassiribrahim2025b.shinyapps.io/PharmaCalcPro/" target="_blank">PharmaCalc Pro</a></b> (Shiny) —
+        Pharmaceutical calculations including dosage, formulation, and pharmacokinetic computations for clinical researchers and healthcare professionals.
+        &nbsp;<a href="https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/PharmaCalcPro.R" target="_blank">[Source]</a>
+      </li>
+    </ul>
 
-<span class="section-anchor" id="sample-size"></span>
-<h3>Sample Size Calculation &amp; Power Analysis</h3>
-<ul>
-  <li>
-    <b><a href="https://mudassiribrahim2025.shinyapps.io/CalcuStats/" target="_blank">CalcuStats</a></b> (Shiny) /
-    <b><a href="https://shinyhealthtools.github.io/calcustats/" target="_blank">CalcuStats</a></b> (HTML) —
-    Performs sample size calculations for known and unknown populations. Adjusts for non-response rate. Generates a publication-ready participant flowchart. Suitable for cross-sectional and other research studies.
-  </li>
-  <li>
-    <b><a href="https://newappstesting.shinyapps.io/RDataLab/" target="_blank">R DataLab</a></b> —
-    A full-feature statistical analysis platform for descriptive and inferential statistical analyses.
-  </li>
-</ul>
+    <span class="section-anchor" id="data-tools"></span>
+    <h3>Data Preparation, Conversion &amp; Sampling</h3>
+    <ul>
+      <li>
+        <b><a href="https://newappstesting.shinyapps.io/Data2SPSS/" target="_blank">Data2SPSS</a></b> (Shiny) —
+        Converts files from R (.RData), Stata (.dta), SAS (.sas7bdat), Excel (.xlsx), and CSV formats
+        into SPSS-compatible .sav files, preserving variable and value labels. Also converts SPSS .sav back to other formats.
+        &nbsp;<a href="https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/Data2SPSS" target="_blank">[Source]</a>
+      </li>
+      <li>
+        <b><a href="https://mudassiribrahim2025b.shinyapps.io/DataTransformR/" target="_blank">Data TransformR</a></b> (Shiny) —
+        Variable recoding, log transformation, standardisation, and preprocessing before model fitting. Preview transformed distributions before export.
+        &nbsp;<a href="https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/DataTransformR.R" target="_blank">[Source]</a>
+      </li>
+      <li>
+        <b><a href="https://mudassiribrahim2025b.shinyapps.io/CleanMyData/" target="_blank">CleanMyData</a></b> (Shiny) —
+        Data quality screening: identifies missing values, detects outliers using IQR and z-score methods, flags inconsistencies,
+        and provides visual summaries of data problems before analysis.
+        &nbsp;<a href="https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/CleanMyData.R" target="_blank">[Source]</a>
+      </li>
+      <li>
+        <b><a href="https://mudassiribrahim2025.shinyapps.io/QuickStatsGen/" target="_blank">QuickStatsGen</a></b> (Shiny) —
+        Simulates synthetic research datasets for teaching, protocol development, and pilot testing of analysis pipelines.
+        Control over variable types, distributions, means, SD, and correlations.
+        &nbsp;<a href="https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/QuickStatsGen.R" target="_blank">[Source]</a>
+      </li>
+      <li>
+        <b><a href="https://mudassiribrahim2025b.shinyapps.io/SysSampler/" target="_blank">SysSampler</a></b> (Shiny) /
+        <b><a href="https://shinyhealthtools.github.io/systematicsampling/" target="_blank">SysSampler</a></b> (HTML) —
+        Computes the systematic sampling interval (K) and generates a random starting point for structured survey sampling frameworks.
+        Produces the full list of selected participant numbers for field use.
+        &nbsp;<a href="https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/SysSampler" target="_blank">[Source — Shiny]</a>
+        &nbsp;<a href="https://github.com/shinyhealthtools/systematicsampling" target="_blank">[Source — HTML]</a>
+      </li>
+      <li>
+        <b><a href="https://mudassiribrahim30.shinyapps.io/Tagselect/" target="_blank">TagSelect</a></b> (Shiny) —
+        Participant randomisation and selection tool for research studies and clinical trials with traceable, auditable selection records.
+        &nbsp;<a href="https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/TagSelect.R" target="_blank">[Source]</a>
+      </li>
+      <li>
+        <b><a href="https://newappstesting.shinyapps.io/APATableGenerator/" target="_blank">APA Table Generator</a></b> (Shiny) —
+        Produces APA 7th-edition formatted tables from pasted or uploaded data, ready to copy directly into a manuscript with no reformatting required.
+        &nbsp;<a href="https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/APA%20Table%20Generator%20Pro.R" target="_blank">[Source]</a>
+      </li>
+      <li>
+        <b><a href="https://shinyhealthtools.github.io/transposetable/" target="_blank">Transpose Table</a></b> (HTML) —
+        Converts cross-tabulated (contingency table) summary data back into individual-level column-format observations for import into statistical softwares such as SPSS, R, or Excel. Ideal for re-analysing published grouped data.
+        &nbsp;<a href="https://github.com/shinyhealthtools/transposetable" target="_blank">[Source]</a>
+      </li>
+      <li>
+        <b><a href="https://newappstesting.shinyapps.io/RDataLab/" target="_blank">R DataLab</a></b> (Shiny) —
+        An interactive analysis workspace combining data exploration, visualisation, and modelling in a single interface.
+        &nbsp;<a href="https://github.com/mudassiribrahim30/R-Shiny-Apps/blob/main/RDataLab.R" target="_blank">[Source]</a>
+      </li>
+    </ul>
 
-<span class="section-anchor" id="survival"></span>
-<h3>Survival Analysis</h3>
-<ul>
-  <li>
-    <b><a href="https://mudassiribrahim30.shinyapps.io/KMPlotGenie/" target="_blank">KMPlot Genie</a></b> —
-    Kaplan-Meier survival curves with log-rank test p-values. Handles right-censored time-to-event data.
-    Produces publication-ready plots for clinical and epidemiological manuscripts.
-  </li>
-</ul>
+    <hr>
 
-<span class="section-anchor" id="mediation"></span>
-<h3>Mediation &amp; Moderation Analysis</h3>
-<ul>
-  <li>
-    <b><a href="https://mudassiribrahim30.shinyapps.io/MedModr/" target="_blank">MedModr</a></b> (Shiny) /
-    <b><a href="https://shinyhealthtools.github.io/medmodr/" target="_blank">MedModr</a></b> (HTML) —
-    Supports simple mediation, serial mediation, moderation, and moderated mediation (conditional indirect effects).
-    Generates interactive path diagrams and simple slopes plots with embedded coefficients and p-values.
-    Users can choose between an intuitive interactive interface or a syntax mode.
-  </li>
-</ul>
+    <!-- TESTIMONIALS -->
+    <span class="section-anchor" id="testimonials"></span>
+    <h3>What Researchers Say</h3>
 
-<span class="section-anchor" id="regression"></span>
-<h3>Regression &amp; Statistical Modeling</h3>
-<ul>
-  <li>
-    <b><a href="https://mudassiribrahim2025.shinyapps.io/Robustregression/" target="_blank">Robust Regressor</a></b> —
-    Robust regression via the <i>robustbase</i> R package. Outlier-resistant parameter estimation with full model diagnostics.
-  </li>
-  <li>
-    <b><a href="https://mudassiribrahim2025b.shinyapps.io/RegEffectXplorer/" target="_blank">RegEffect Xplorer</a></b> —
-    Visualises regression coefficients and model effects interactively. Useful for communicating regression results in manuscripts and presentations.
-  </li>
-  <li>
-    <b><a href="https://newappstesting.shinyapps.io/CMHAnalyzer/" target="_blank">CMH Analyzer</a></b> —
-    Cochran-Mantel-Haenszel test for stratified 2×2 tables. Controls for confounding in categorical outcomes. Widely used in epidemiology and pharmaceutical research.
-  </li>
-  <li>
-    <b><a href="https://newappstesting.shinyapps.io/CATrendAnalyzer/" target="_blank">CATrend Analyzer</a></b> (Shiny) /
-    <b><a href="https://shinyhealthtools.github.io/catrendanalyzer/" target="_blank">CATrend Analyzer</a></b> (HTML) —
-    Cochran-Armitage trend test for ordinal categorical data. Frequently used in dose-response and regulatory contexts.
-  </li>
-</ul>
+    <blockquote>
+      "My experience using CalcuStats has been really good. The app is easy to use and very straightforward, even if you're not strong in statistics. It quickly gives accurate results once you enter your values. It has saved me a lot of time. One more special feature I am very passionate about is the non-response rate. A helpful and reliable tool for sample size calculation."
+      <span class="attrib">— Health Researcher, Ghana</span>
+    </blockquote>
 
-<span class="section-anchor" id="factor"></span>
-<h3>Factor Analysis &amp; Psychometrics</h3>
-<ul>
-  <li>
-    <b><a href="https://mudassiribrahim2026.shinyapps.io/FactorGuard/" target="_blank">FactorGuard</a></b> —
-    Parallel analysis with scree plot visualization. Determines the correct number of factors to retain in EFA.
-    More statistically rigorous than the eigenvalue-greater-than-one rule.
-  </li>
-  <li>
-    <b><a href="https://mudassiribrahim30.shinyapps.io/fanalyzr/" target="_blank">FAnalyzr</a></b> —
-    Full exploratory and confirmatory factor analysis (EFA and CFA). Supports dimensionality reduction
-    for scale development and validation research.
-  </li>
-</ul>
+    <blockquote>
+      "This app (CalcuStats) made the work very simple for me. It even helped me generate a flowchart with just a click."
+      <span class="attrib">— Health Researcher, Ghana</span>
+    </blockquote>
 
-<span class="section-anchor" id="visualization"></span>
-<h3>Visualization &amp; Diagnostic Tools</h3>
-<ul>
-  <li>
-    <b><a href="https://mudassiribrahim30.shinyapps.io/ROC_CURVE/" target="_blank">ROC Curve Builder</a></b> (Shiny) /
-    <b><a href="https://shinyhealthtools.github.io/roccurvebuilder/" target="_blank">ROC Curve Builder</a></b> (HTML) —
-    ROC curves for evaluating binary diagnostic tests. Reports AUC, 95% confidence intervals,
-    sensitivity, specificity, and optimal Youden's J threshold.
-  </li>
-  <li>
-    <b><a href="https://mudassiribrahim2025.shinyapps.io/ggPubPlot/" target="_blank">ggPubPlot</a></b> —
-    Publication-ready plots using ggplot2. Supports box plots, bar charts, violin plots, and scatter plots with journal-compliant formatting.
-  </li>
-  <li>
-    <b><a href="https://mudassiribrahim2025b.shinyapps.io/RegEffectXplorer/" target="_blank">RegEffect Xplorer</a></b> —
-    Visual exploration of regression model effects and variable relationships.
-  </li>
-</ul>
+    <blockquote>
+      "Data2SPSS saves my time each week. Seamless conversion with no errors."
+      <span class="attrib">— Data Analyst, Ghana</span>
+    </blockquote>
 
-<span class="section-anchor" id="epidemiology"></span>
-<h3>Epidemiology &amp; Public Health</h3>
-<ul>
-  <li>
-    <b><a href="https://mudassiribrahim2025.shinyapps.io/EpiDemSuite/" target="_blank">EpiDem Suite</a></b> —
-    A comprehensive suite of epidemiological statistics covering relative risk, odds ratios, incidence rates,
-    and other common public health measures. Designed for routine use in health research settings.
-  </li>
-  <li>
-    <b><a href="https://mudassiribrahim2025b.shinyapps.io/PharmaCalcPro/" target="_blank">PharmaCalc Pro</a></b> —
-    Pharmaceutical calculations including dosage, formulation, and pharmacokinetic computations for clinical researchers.
-  </li>
-</ul>
+    <blockquote>
+      "It is very easy to use, fast and efficient. No need wasting time again to calculate sample size. I recommend to all."
+      <span class="attrib">— Clinical Researcher, Ghana</span>
+    </blockquote>
 
-<span class="section-anchor" id="data-tools"></span>
-<h3>Data Preparation, Conversion &amp; Sampling</h3>
-<ul>
-  <li>
-    <b><a href="https://newappstesting.shinyapps.io/Data2SPSS/" target="_blank">Data2SPSS</a></b> —
-    Converts files from R (.RData), Stata (.dta), SAS (.sas7bdat), Excel (.xlsx), and CSV formats
-    into SPSS-compatible .sav files, preserving variable and value labels.
-  </li>
-  <li>
-    <b><a href="https://mudassiribrahim2025b.shinyapps.io/DataTransformR/" target="_blank">Data TransformR</a></b> —
-    Variable recoding, log transformation, standardisation, and preprocessing before model fitting.
-  </li>
-  <li>
-    <b><a href="https://mudassiribrahim2025b.shinyapps.io/CleanMyData/" target="_blank">CleanMyData</a></b> —
-    Data quality screening: identifies missing values, detects outliers, flags inconsistencies,
-    and provides visual summaries of data problems.
-  </li>
-  <li>
-    <b><a href="https://mudassiribrahim2025.shinyapps.io/QuickStatsGen/" target="_blank">QuickStatsGen</a></b> —
-    Simulates synthetic research datasets for teaching, protocol development, and pilot testing of analysis pipelines.
-  </li>
-  <li>
-    <b><a href="https://mudassiribrahim2025b.shinyapps.io/SysSampler/" target="_blank">SysSampler</a></b> (Shiny) /
-    <b><a href="https://shinyhealthtools.github.io/systematicsampling/" target="_blank">SysSampler</a></b> (HTML) —
-    Computes the systematic sampling interval (K) and generates a random starting point for structured survey sampling frameworks.
-  </li>
-  <li>
-    <b><a href="https://mudassiribrahim30.shinyapps.io/Tagselect/" target="_blank">TagSelect</a></b> —
-    Randomisation and participant selection for research studies and clinical trials with traceable selection records.
-  </li>
-  <li>
-    <b><a href="https://newappstesting.shinyapps.io/APATableGenerator/" target="_blank">APA Table Generator</a></b> —
-    Produces APA 7th-edition formatted tables from pasted or uploaded data, ready to copy directly into a manuscript.
-  </li>
-  <li>
-    <b><a href="https://shinyhealthtools.github.io/transposetable/" target="_blank">Transpose Table</a></b> (HTML) —
-    Converts cross-tabulated summary data back into individual-level observations for import into SPSS, R, or Excel.
-  </li>
-  <li>
-    <b><a href="https://newappstesting.shinyapps.io/RDataLab/" target="_blank">R DataLab</a></b> —
-    An interactive analysis workspace combining data exploration, visualisation, and modelling in a single interface.
-  </li>
-</ul>
+    <hr>
 
-<hr>
+    <!-- WHY USE -->
+    <span class="section-anchor" id="why-use"></span>
+    <h3>Why Use ShinyHealthTools?</h3>
+    <ul>
+      <li>
+        <b>Validated for research.</b> All tools are benchmarked against established software and methods.
+        Results are suitable for grant applications, regulatory submissions, and peer-reviewed publications.
+      </li>
+      <li>
+        <b>Fully open source.</b> All source code is publicly available on
+        <a href="https://github.com/mudassiribrahim30/R-Shiny-Apps" target="_blank">GitHub</a>
+        under the MIT License. Built with R 4.3+, tidyverse, survival, psych, and other standard CRAN packages.
+      </li>
+      <li>
+        <b>No installation required.</b> Shiny applications run via shinyapps.io. HTML tools run directly in your browser.
+        Works on any operating system with no administrator rights or R setup required.
+      </li>
+      <li>
+        <b>Permanently free.</b> No license fees, no subscriptions, no institutional access walls.
+        All 27 tools are and will remain free for academic, government, clinical, and non-profit use.
+      </li>
+      <li>
+        <b>No data leaves your machine.</b> HTML-native tools execute entirely client-side. Shiny tools
+        process data in ephemeral sessions. No personal or clinical data is retained on any server.
+      </li>
+      <li>
+        <b>Designed for low-resource settings.</b> Built with health researchers in sub-Saharan Africa
+        and other resource-limited environments in mind. Works on modest hardware and slow internet connections.
+      </li>
+    </ul>
 
-<!-- TESTIMONIALS -->
-<span class="section-anchor" id="testimonials"></span>
-<h3>What Researchers Say</h3>
+    <hr>
 
-<blockquote>
-  "My experience using CalcuStats has been really good. The app is easy to use and very straightforward, even if you're not strong in statistics. It quickly gives accurate results once you enter your values. It has saved me a lot of time. One more special feature I am very passionate about is the non-response rate. A helpful and reliable tool for sample size calculation."
-  <span class="attrib">— Health Researcher, Ghana</span>
-</blockquote>
+    <!-- CITATION -->
+    <span class="section-anchor" id="citation"></span>
+    <h3>How to Cite ShinyHealthTools</h3>
+    <p>If ShinyHealthTools or any of its applications have been useful in your research, please cite as:</p>
 
-<blockquote>
-  "We compared MedModr with the PROCESS macro and obtained identical results, but MedModr offers a far more interactive experience. Users can choose between an intuitive interactive interface or a syntax mode to write code directly. Highly recommended for researchers seeking both transparency and flexibility."
-  <span class="attrib">— Health Researcher &amp; Data Analyst, Ghana</span>
-</blockquote>
+    <blockquote class="cite-bq">
+      Ibrahim, M. M. (2026). <i>ShinyHealthTools: Free browser-based statistical applications for health research.</i>
+      Retrieved from <a href="https://shinyhealthtools.github.io/apps/" target="_blank">https://shinyhealthtools.github.io/apps/</a>
+    </blockquote>
 
-<blockquote>
-  "This app (CalcuStats) made the work very simple for me. It even helped me generate a flowchart with just a click."
-  <span class="attrib">— Health Researcher, Ghana</span>
-</blockquote>
+    <p>For individual application citations, include the application name. For example:</p>
+    <blockquote class="cite-bq">
+      Ibrahim, M. M. (2026). <i>MedModr: Mediation and Moderation analysis tool [Web application].</i>
+      ShinyHealthTools. Retrieved from <a href="https://shinyhealthtools.github.io/medmodr/" target="_blank">https://shinyhealthtools.github.io/medmodr/</a>
+    </blockquote>
 
-<blockquote>
-  "Data2SPSS saves my time each week. Seamless conversion with no errors."
-  <span class="attrib">— Data Analyst, Ghana</span>
-</blockquote>
+    <p>Source code may be cited as:</p>
+    <blockquote class="cite-bq">
+      Ibrahim, M. M. (2025). <i>R-Shiny-Apps [Source code].</i>
+      GitHub. <a href="https://github.com/mudassiribrahim30/R-Shiny-Apps" target="_blank">https://github.com/mudassiribrahim30/R-Shiny-Apps</a>
+    </blockquote>
 
-<blockquote>
-  "It is very easy to use, fast and efficient. No need wasting time again to calculate sample size. I recommend to all."
-  <span class="attrib">— Clinical Researcher, Ghana</span>
-</blockquote>
+    <hr>
+    
+       <!-- ABOUT -->
+    <span class="section-anchor" id="about"></span>
+    <h3>About the Developer</h3>
+    <p>
+      ShinyHealthTools was created and is maintained by <b><a href="https://mudasiribrahim.github.io/gh/" target="_blank">Mudasir Mohammed Ibrahim</a></b>,
+      a Ghanaian nurse researcher, data analyst, and open-source software advocate with a focus on public health research tools.
+    </p>
+    <p>
+      The project is particularly oriented toward health research settings in sub-Saharan Africa and other
+      low- and middle-income contexts, where commercial software licensing costs can be prohibitive.
+    </p>
+    <p>
+      Mudasir maintains a portfolio of applications covering the full research workflow —
+      from study design and sampling (e.g., CalcuStats, SysSampler) through data preparation (CleanMyData, DataTransformR, Data2SPSS),
+      analysis (e.g., CATrend Analyzer, MedModr, KMPlot Genie, FAnalyzr, EpiDem Suite), and dissemination (e.g., ggPubPlot, APA Table Generator).
+    </p>
+    <p>See also: <a href="https://shinyopensource.github.io/documentation/" target="_blank">Full documentation site</a></p>
 
-<hr>
+    <hr>
 
-<!-- WHY USE -->
-<h3>Why Use ShinyHealthTools?</h3>
-<ul>
-  <li>
-    <b>Validated for research.</b> All tools are benchmarked against established software and methods.
-    Results are suitable for grant applications, regulatory submissions, and peer-reviewed publications.
-  </li>
-  <li>
-    <b>Fully open source.</b> All source code is publicly available on
-    <a href="https://github.com/mudassiribrahim30/R-Shiny-Apps" target="_blank">GitHub</a>
-    under the MIT License. Built with R 4.3+, tidyverse, survival, psych, and other standard CRAN packages.
-  </li>
-  <li>
-    <b>No installation required.</b> Shiny applications run via shinyapps.io. HTML tools run directly in your browser.
-    Works on any operating system with no administrator rights or R setup required.
-  </li>
-  <li>
-    <b>Permanently free.</b> No license fees, no subscriptions, no institutional access walls.
-    All 27 tools are and will remain free for academic, government, clinical, and non-profit use.
-  </li>
-  <li>
-    <b>No data leaves your machine.</b> HTML-native tools execute entirely client-side. Shiny tools
-    process data in ephemeral sessions. No personal or clinical data is retained on any server.
-  </li>
-  <li>
-    <b>Designed for low-resource settings.</b> Built with health researchers in sub-Saharan Africa
-    and other resource-limited environments in mind. Works on modest hardware and slow internet connections.
-  </li>
-</ul>
+    <!-- FREQUENTLY ASKED QUESTIONS -->
+    <span class="section-anchor" id="faq"></span>
+    <h3>Frequently Asked Questions</h3>
 
-<hr>
+    <div class="faq-list">
 
-<!-- CITATION -->
-<span class="section-anchor" id="citation"></span>
-<h3>How to Cite ShinyHealthTools</h3>
-<p>If ShinyHealthTools or any of its applications have been useful in your research, please cite as:</p>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+          Is Mudasir a developer or trained programmer? How did he learn to create these apps?
+          <span class="faq-arrow">&#9658;</span>
+        </button>
+        <div class="faq-answer">
+          <p>
+            Not in the traditional sense. Mudasir is first and foremost a passionate nurse and researcher. He does have a working knowledge of coding in R for statistical analysis, which formed the early foundation of these tools. However, the applications themselves with their interfaces, added functions, and complex logic are built with the support of AI coding tools that assist in writing code, implementing new features, and debugging. This process is far from instant: a single app can take weeks or even months to move from idea to a working, reliable tool. The creation of each application represents a sustained, iterative effort rather than a quick technical exercise.
+          </p>
+        </div>
+      </div>
 
-<blockquote class="cite-bq">
-  Ibrahim, M. M. (2026). <i>ShinyHealthTools: Free browser-based statistical applications for health research.</i>
-  Retrieved from <a href="https://shinyhealthtools.github.io/apps/" target="_blank">https://shinyhealthtools.github.io/apps/</a>
-</blockquote>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+          How did Mudasir develop a passion for statistics despite being a nurse without a formal statistics background?
+          <span class="faq-arrow">&#9658;</span>
+        </button>
+        <div class="faq-answer">
+          <p>
+            From the very beginning, Mudasir had a strong affinity for numbers. As a student, he studied business and cost accounting at high school level, which gave him an early appreciation for quantitative reasoning over purely qualitative thinking. When he entered nursing and research, that same orientation drew him naturally toward data and figures. He taught himself descriptive and inferential statistics, eventually progressing to advanced methods including structural equation modelling (SEM), all through self-directed learning. As he puts it: <i>"You are never satisfied with what you know."</i> That restless curiosity has driven him to keep going deeper, and the tools on this platform are a direct product of that ongoing journey.
+          </p>
+        </div>
+      </div>
 
-<p>For individual application citations, include the application name. For example:</p>
-<blockquote class="cite-bq">
-  Ibrahim, M. M. (2026). <i>MedModr: Mediation and Moderation analysis tool [Web application].</i>
-  ShinyHealthTools. Retrieved from <a href="https://shinyhealthtools.github.io/medmodr/" target="_blank">https://shinyhealthtools.github.io/medmodr/</a>
-</blockquote>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+          What is the philosophy behind ShinyHealthTools?
+          <span class="faq-arrow">&#9658;</span>
+        </button>
+        <div class="faq-answer">
+          <p>
+            The platform was born out of a deeply personal frustration. While conducting research and statistical analyses, Mudasir found himself repeatedly unable to access certain tests and methods because they required expensive commercial software; software that was simply out of reach without institutional funding or licensing support. At that point, cracked or pirated software was often the only practical option available. That experience was both humbling and motivating.
+          </p>
+          <p>
+            Being from Africa, where early-career researchers, graduates, and students frequently face these same barriers, Mudasir felt a responsibility to do something about it. He wanted to be <i>translational</i>, to bridge the gap between sophisticated statistical methods and the people who need them most but can least afford the gatekeepers. ShinyHealthTools is his answer to that problem: a growing collection of free, validated, browser-based tools that remove cost and complexity as barriers to rigorous research.
+          </p>
+        </div>
+      </div>
 
-<p>Source code may be cited as:</p>
-<blockquote class="cite-bq">
-  Ibrahim, M. M. (2025). <i>R-Shiny-Apps [Source code].</i>
-  GitHub. <a href="https://github.com/mudassiribrahim30/R-Shiny-Apps" target="_blank">https://github.com/mudassiribrahim30/R-Shiny-Apps</a>
-</blockquote>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+          Can the apps be trusted for academic and clinical use?
+          <span class="faq-arrow">&#9658;</span>
+        </button>
+        <div class="faq-answer">
+          <p>
+            Yes. All ShinyHealthTools applications are validated against established reference software including SAS JMP, SPSS, and R, and outputs are benchmarked to ensure consistency and accuracy. For example, MedModr has been independently confirmed to produce results identical to those of the widely used PROCESS macro. The tools are considered reliable for use in peer-reviewed research, grant applications, and clinical analyses.
+          </p>
+          <p>
+            That said, no software is perfect, and issues can arise. Bugs are fixed on an ongoing basis as they are identified, and the source code for every tool is openly available on GitHub for scrutiny by the research community. Transparency is a core commitment of this project, and users are encouraged to report any anomalies they encounter.
+          </p>
+        </div>
+      </div>
 
-<hr>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+          What are Mudasir's dreams and aspirations for the future?
+          <span class="faq-arrow">&#9658;</span>
+        </button>
+        <div class="faq-answer">
+          <p>
+            Mudasir's professional aspirations extend well beyond software development. He hopes to build a career as an epidemiologist, where he can contribute to population health research at a deeper level and bring the same rigour and accessibility he has championed through ShinyHealthTools to real-world public health challenges.
+          </p>
+          <p>
+            Beyond that, he carries a larger ambition: to be recognised among the nurses who have made a meaningful contribution to biostatistics and advanced analytical methods, not just locally, but globally. He wants to demonstrate that a nurse from Africa can be a serious, respected voice in the world of health data science. The joy he gets from building tools that ease the burden of analysis for other researchers particularly those in resource-limited settings is what sustains that ambition. As he puts it, creating something that gives others a genuine advantage in their work is its own reward.
+          </p>
+        </div>
+      </div>
+    </div>
 
-<!-- ABOUT -->
-<span class="section-anchor" id="about"></span>
-<h3>About the Developer</h3>
-<p>
-  ShinyHealthTools was created and is maintained by <b><a href="https://mudasiribrahim.github.io/gh/" target="_blank">Mudasir Mohammed Ibrahim</a></b>,
-  a nurse researcher, data analyst, and open-source software advocate with a focus on public health research tools.
-</p>
-<p>
-  The platform grew from a recognition that many powerful statistical methods remain inaccessible to
-  researchers who lack programming skills or institutional access to commercial software such as SPSS,
-  SAS, SmartPLS, Mplus, or Stata. ShinyHealthTools addresses this gap by providing validated, free, browser-based alternatives
-  to the most commonly needed health research analyses.
-</p>
-<p>
-  The project is particularly oriented toward health research settings in sub-Saharan Africa and other
-  low- and middle-income contexts, where commercial software licensing costs can be prohibitive.
-</p>
-<p>
-  Mudasir maintains a portfolio of applications covering the full research workflow —
-  from study design and sampling (CalcuStats, SysSampler) through data preparation (CleanMyData, DataTransformR, Data2SPSS),
-  analysis (MedModr, KMPlot Genie, FAnalyzr, EpiDem Suite), and dissemination (ggPubPlot, APA Table Generator).
-</p>
-<p>See also: <a href="https://mudasiribrahim.github.io/gh/" target="_blank">Personal site</a></p>
+    <hr>
 
-<hr>
 
-<!-- CONTACT -->
-<span class="section-anchor" id="contact"></span>
-<h3>Contact &amp; Support</h3>
-<ul>
-  <li>
-    <b>Technical questions or bug reports:</b>
-    <a href="mailto:mudassiribrahim30@gmail.com">mudassiribrahim30@gmail.com</a>.
-    Responses are typically provided within 24 hours on business days.
-  </li>
-  <li>
-    <b>Support the project:</b> If any of the tools have saved you time in your research,
-    consider <a href="https://buymeacoffee.com/mudasiribrahim30" target="_blank">supporting the developer</a>.
-    This helps cover hosting, maintenance, and further development costs.
-  </li>
-  <li>
-    <b>Documentation:</b> <a href="https://shinyopensource.github.io/documentation/" target="_blank">Full documentation site</a>
-  </li>
-  <li>
-    <b>YouTube tutorials:</b> <a href="https://www.youtube.com/@mudasirmohammedibrahim1026" target="_blank">YouTube channel</a>
-  </li>
-</ul>
+    <!-- CONTACT -->
+    <span class="section-anchor" id="contact"></span>
+    <h3>Contact &amp; Support</h3>
+    <ul>
+      <li>
+        <b>Technical questions or bug reports:</b>
+        <a href="mailto:mudassiribrahim30@gmail.com">mudassiribrahim30@gmail.com</a>.
+        Responses are typically provided within 24 hours on business days.
+      </li>
+      <li>
+        <b>Support the project:</b> If any of the tools have saved you time in your research,
+        consider <a href="https://buymeacoffee.com/mudasiribrahim30" target="_blank">supporting the project</a>.
+        This helps cover hosting, maintenance, and further development costs.
+      </li>
+      <li>
+        <b>YouTube tutorials:</b> <a href="https://www.youtube.com/@mudasirmohammedibrahim1026" target="_blank">YouTube channel</a>
+      </li>
+    </ul>
 
-<hr>
+    <hr>
 
-</div><!-- end .page-wrap -->
+  </div><!-- end .page-wrap -->
+
+</div><!-- end .layout-wrap -->
 
 <!-- SITE FOOTER -->
 <footer class="site-footer">
-  <p>ShinyHealthTools &copy; 2025&ndash;Present &nbsp;&mdash;&nbsp; Created and maintained by Mudasir Mohammed Ibrahim &nbsp;&mdash;&nbsp; MIT License</p>
-  <p>100% Free &nbsp;|&nbsp; Open Source (MIT License)</p>
+  <div class="footer-inner">
+    <div class="footer-left">
+      <span>ShinyHealthTools &copy; 2025&ndash;<span id="footer-year"></span> &nbsp;&mdash;&nbsp; 100% Free | Open Source (MIT License)</span>
+      <a class="footer-github" href="https://github.com/shinyhealthtools/apps/tree/main" target="_blank" title="Source code on GitHub" aria-label="Source code on GitHub">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+        </svg>
+      </a>
+    </div>
+    <div class="footer-right">
+      This page was last edited on <span id="footer-lastmod"></span>.
+    </div>
+  </div>
 </footer>
 
 <script>
-  var isDark = false;
+  function toggleMenu() {
+    var sidebar  = document.querySelector('.sidebar');
+    var overlay  = document.getElementById('sidebar-overlay');
+    var isOpen   = sidebar.classList.contains('open');
+    if (isOpen) {
+      sidebar.classList.remove('open');
+      overlay.classList.remove('open');
+    } else {
+      sidebar.classList.add('open');
+      overlay.classList.add('open');
+    }
+  }
+
+  function closeMenu() {
+    document.querySelector('.sidebar').classList.remove('open');
+    document.getElementById('sidebar-overlay').classList.remove('open');
+  }
+
+  // Close sidebar on link click (mobile)
+  document.querySelectorAll('.sidebar nav a').forEach(function(a) {
+    a.addEventListener('click', function() {
+      if (window.innerWidth <= 768) closeMenu();
+    });
+  });
+
+  var isYellow = false;
+
   (function() {
     try {
-      if (localStorage.getItem('sht-theme') === 'dark') {
-        isDark = true;
-        document.getElementById('html-root').classList.add('dark');
-        document.getElementById('theme-btn').innerHTML = '&#9728; Light Mode';
+      var saved = localStorage.getItem('sht-theme');
+      if (saved === 'yellow') {
+        isYellow = true;
+        document.getElementById('html-root').classList.add('yellow');
+        document.getElementById('theme-btn').innerHTML = '&#9788; White';
       }
     } catch(e) {}
   })();
@@ -753,18 +1130,252 @@
   function toggleTheme() {
     var root = document.getElementById('html-root');
     var btn  = document.getElementById('theme-btn');
-    if (isDark) {
-      root.classList.remove('dark');
-      btn.innerHTML = '&#9790; Dark Mode';
-      isDark = false;
+    if (isYellow) {
+      root.classList.remove('yellow');
+      btn.innerHTML = '&#9788; Yellow';
+      isYellow = false;
     } else {
-      root.classList.add('dark');
-      btn.innerHTML = '&#9728; Light Mode';
-      isDark = true;
+      root.classList.add('yellow');
+      btn.innerHTML = '&#9788; White';
+      isYellow = true;
     }
-    try { localStorage.setItem('sht-theme', isDark ? 'dark' : 'light'); } catch(e) {}
+    try { localStorage.setItem('sht-theme', isYellow ? 'yellow' : 'white'); } catch(e) {}
   }
-</script>
 
+  // ── FAQ ACCORDION ──
+  function toggleFaq(btn) {
+    var item = btn.closest('.faq-item');
+    var isOpen = item.classList.contains('open');
+    // Close all
+    document.querySelectorAll('.faq-item.open').forEach(function(el) {
+      el.classList.remove('open');
+      el.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+    });
+    // Open clicked if it was closed
+    if (!isOpen) {
+      item.classList.add('open');
+      btn.setAttribute('aria-expanded', 'true');
+    }
+  }
+
+  // Highlight active sidebar link on scroll
+  (function() {
+    var sections = [
+      'about-resource','categories','sample-size','survival','mediation',
+      'regression','factor','visualization','epidemiology','data-tools',
+      'testimonials','why-use','citation','faq','about','contact'
+    ];
+    var links = {};
+    sections.forEach(function(id) {
+      var a = document.querySelector('.sidebar a[href="#' + id + '"]');
+      if (a) links[id] = a;
+    });
+
+    function onScroll() {
+      var scrollY = window.scrollY || window.pageYOffset;
+      var current = sections[0];
+      sections.forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top + window.scrollY - 80 <= scrollY) {
+          current = id;
+        }
+      });
+      sections.forEach(function(id) {
+        if (links[id]) links[id].classList.remove('active');
+      });
+      if (links[current]) links[current].classList.add('active');
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+
+  // ── SEARCH ENGINE ──
+  var searchIndex = [];
+
+  function buildSearchIndex() {
+    var content = document.querySelector('.page-wrap');
+    if (!content) return;
+
+    // Walk every element inside page-wrap
+    var allEls = content.querySelectorAll('h2, h3, p, li, blockquote');
+    var currentSection = { id: 'about-resource', label: 'About This Resource' };
+
+    // Map anchor IDs to human labels
+    var sectionMap = {};
+    content.querySelectorAll('.section-anchor[id]').forEach(function(anchor) {
+      var id = anchor.id;
+      // find the next sibling heading
+      var next = anchor.nextElementSibling;
+      while (next && !next.matches('h2,h3')) next = next.nextElementSibling;
+      sectionMap[id] = next ? next.textContent.trim() : id;
+    });
+
+    // Walk elements, track which section we're in
+    var lastAnchorId = 'about-resource';
+    allEls.forEach(function(el) {
+      // Check if preceding siblings contain a section-anchor
+      var prev = el.previousElementSibling;
+      while (prev) {
+        if (prev.classList && prev.classList.contains('section-anchor') && prev.id) {
+          lastAnchorId = prev.id;
+          break;
+        }
+        prev = prev.previousElementSibling;
+      }
+
+      var text = el.textContent.trim();
+      if (!text || text.length < 3) return;
+
+      searchIndex.push({
+        text: text,
+        anchorId: lastAnchorId,
+        sectionLabel: sectionMap[lastAnchorId] || lastAnchorId,
+        isHeading: el.matches('h2,h3')
+      });
+    });
+  }
+
+  function escapeRegex(s) {
+    return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+
+  function highlight(text, query) {
+    var re = new RegExp('(' + escapeRegex(query) + ')', 'gi');
+    // Show a snippet around first match
+    var idx = text.search(re);
+    var snippet = text;
+    if (text.length > 120) {
+      var start = Math.max(0, idx - 40);
+      snippet = (start > 0 ? '…' : '') + text.slice(start, start + 120) + (start + 120 < text.length ? '…' : '');
+    }
+    return snippet.replace(re, '<mark>$1</mark>');
+  }
+
+  var focusedIndex = -1;
+
+  function doSearch(q) {
+    q = q.trim();
+    var box = document.getElementById('search-results');
+    focusedIndex = -1;
+    if (q.length < 2) { box.innerHTML = ''; return; }
+
+    var re = new RegExp(escapeRegex(q), 'i');
+    var seen = {};
+    var hits = [];
+
+    searchIndex.forEach(function(entry) {
+      if (!re.test(entry.text)) return;
+      // Deduplicate by anchorId + first 60 chars of text
+      var key = entry.anchorId + '|' + entry.text.slice(0, 60);
+      if (seen[key]) return;
+      seen[key] = true;
+      hits.push(entry);
+    });
+
+    // Sort: headings first, then by section order
+    hits.sort(function(a, b) {
+      if (a.isHeading && !b.isHeading) return -1;
+      if (!a.isHeading && b.isHeading) return 1;
+      return 0;
+    });
+
+    hits = hits.slice(0, 20); // cap at 20
+
+    if (hits.length === 0) {
+      box.innerHTML = '<div class="sr-none">No results for "' + q + '"</div>';
+      return;
+    }
+
+    box.innerHTML = hits.map(function(h, i) {
+      return '<a class="sr-item" data-anchor="' + h.anchorId + '" onclick="goToResult(\'' + h.anchorId + '\')" tabindex="-1">' +
+        '<span class="sr-section">' + h.sectionLabel + '</span>' +
+        '<span class="sr-snippet">' + highlight(h.text.slice(0, 160), q) + '</span>' +
+        '</a>';
+    }).join('');
+  }
+
+  function goToResult(anchorId) {
+    closeSearch();
+    var el = document.getElementById(anchorId);
+    if (el) {
+      var top = el.getBoundingClientRect().top + window.scrollY - 60;
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    }
+  }
+
+  function searchKeyNav(e) {
+    var items = document.querySelectorAll('#search-results .sr-item');
+    if (!items.length) return;
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      focusedIndex = Math.min(focusedIndex + 1, items.length - 1);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      focusedIndex = Math.max(focusedIndex - 1, 0);
+    } else if (e.key === 'Enter') {
+      if (focusedIndex >= 0 && items[focusedIndex]) {
+        items[focusedIndex].click();
+      }
+      return;
+    } else if (e.key === 'Escape') {
+      closeSearch(); return;
+    } else { return; }
+    items.forEach(function(it, i) {
+      it.classList.toggle('focused', i === focusedIndex);
+    });
+    if (items[focusedIndex]) items[focusedIndex].scrollIntoView({ block: 'nearest' });
+  }
+
+  function toggleSearch() {
+    var box = document.getElementById('search-box');
+    var inp = document.getElementById('search-input');
+    var isHidden = box.classList.contains('hidden');
+    if (isHidden) {
+      if (searchIndex.length === 0) buildSearchIndex();
+      box.classList.remove('hidden');
+      inp.value = '';
+      document.getElementById('search-results').innerHTML = '';
+      inp.focus();
+    } else {
+      closeSearch();
+    }
+  }
+
+  function closeSearch() {
+    document.getElementById('search-box').classList.add('hidden');
+    document.getElementById('search-results').innerHTML = '';
+    document.getElementById('search-input').value = '';
+    focusedIndex = -1;
+  }
+
+  // Close search when clicking outside
+  document.addEventListener('click', function(e) {
+    var wrap = document.getElementById('search-wrap');
+    if (wrap && !wrap.contains(e.target)) closeSearch();
+  });
+
+  // Auto year
+  document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+  // Last modified — reads the document's last-modified date from the browser
+  (function() {
+    var lm = document.lastModified; // e.g. "04/26/2026 14:35:00"
+    try {
+      var d = new Date(lm);
+      var months = ['January','February','March','April','May','June',
+                    'July','August','September','October','November','December'];
+      var day    = d.getDate();
+      var month  = months[d.getMonth()];
+      var year   = d.getFullYear();
+      var hh     = String(d.getHours()).padStart(2,'0');
+      var mm     = String(d.getMinutes()).padStart(2,'0');
+      document.getElementById('footer-lastmod').textContent =
+        day + ' ' + month + ' ' + year + ', at ' + hh + ':' + mm;
+    } catch(e) {
+      document.getElementById('footer-lastmod').textContent = lm;
+    }
+  })();
+</script>
 </body>
 </html>
