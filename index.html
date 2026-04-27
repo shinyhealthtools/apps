@@ -290,7 +290,7 @@
     border-right: 1px solid var(--sidebar-bd);
     background-color: var(--sidebar-bg);
     padding: 14px 0 30px 0;
-    transition: background-color 0.2s, border-color 0.2s;
+    transition: width 0.25s ease, min-width 0.25s ease, background-color 0.2s, border-color 0.2s;
   }
 
   .sidebar-title {
@@ -352,6 +352,7 @@
     min-width: 0;
     max-width: 980px;
     padding: 22px 32px 50px 32px;
+    transition: max-width 0.25s ease;
   }
 
   /* ── TYPOGRAPHY ── */
@@ -618,6 +619,11 @@
   .sidebar.collapsed nav { display: none; }
   .sidebar.collapsed .sidebar-title-text { display: none; }
 
+  /* page-wrap expands when sidebar is collapsed */
+  .sidebar.collapsed ~ .page-wrap {
+    max-width: calc(100% - 28px);
+  }
+
   /* sidebar needs relative positioning for desktop collapse */
   .sidebar { position: sticky; }
 
@@ -796,6 +802,11 @@
       transform: translateX(0);
     }
 
+    /* on mobile, collapsed sidebar should not affect page-wrap */
+    .sidebar.collapsed ~ .page-wrap {
+      max-width: 100%;
+    }
+
     .page-wrap {
       padding: 16px 16px 40px 16px;
       max-width: 100%;
@@ -885,7 +896,7 @@
     ShinyHealthTools was built on a single conviction: that advanced statistical analysis should never be locked behind commercial software or require programming expertise. The name reflects its origins, as many of the tools were initially developed as Shiny applications to make complex analyses interactive, intuitive, and user friendly.
   </p>
   <p>
-    As the platform has evolved, practical limitations have driven a transition toward more scalable solutions. The Shiny-based tools are hosted on shinyapps.io under a free plan, which means they may occasionally be slow to load, go to sleep after a period of inactivity, or become temporarily unavailable when monthly usage hours are exhausted. To address these constraints, many tools have been re-engineered into lightweight, browser-based HTML applications that run entirely on your device with no server dependency. Continuous efforts are underway to migrate the remaining apps into this format, ensuring improved performance, broader accessibility, and long-term sustainability. The name ShinyHealthTools is retained to represent not only its origins, but also its ongoing commitment to clarity, interactivity, and simplicity in data analysis.
+    As the platform has evolved, practical limitations have driven a transition toward more scalable solutions. The Shiny-based tools are hosted on shinyapps.io under a free plan, which means they may occasionally be slow to load, go to sleep after a period of inactivity, or become temporarily unavailable when monthly usage hours are exhausted. To address these constraints, many tools have been re-engineered into lightweight, browser-based HTML applications that run entirely on your device with no server dependency. Alternatively, users can download the source code of any Shiny tool from GitHub and run it locally in <a href="https://posit.co/download/rstudio-desktop/" target="_blank">RStudio</a> or <a href="https://code.visualstudio.com/" target="_blank">VS Code</a> with R — ensuring timeless, offline access independent of any hosting limitations. Continuous efforts are underway to migrate the remaining apps into this format, ensuring improved performance, broader accessibility, and long-term sustainability. The name ShinyHealthTools is retained to represent not only its origins, but also its ongoing commitment to clarity, interactivity, and simplicity in data analysis.
   </p>
   <p>
     These tools are offered freely to academics, clinicians, government researchers, and students worldwide, with no fees, no subscriptions, and no installation required. All applications run directly in any modern web browser. Source code is openly available on GitHub under the MIT License, supporting transparency, collaboration, and reproducibility.
